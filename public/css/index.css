@@ -1,0 +1,33 @@
+body{
+    display: flex;
+}
+
+.video-preview-background{
+    background-color: #202020;
+    margin: 100px auto;
+    max-width: 1200px;
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+}
+.video-preview{
+    width: auto;
+    height: 200px;
+    background-color: #BB86FC;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 44px;
+}
+
+
+@media(max-width: 1200px){
+    .video-preview-background{
+    grid-template-columns: repeat(2,1fr);
+
+    }
+}

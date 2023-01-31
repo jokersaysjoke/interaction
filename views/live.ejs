@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="/css/global.css">
+        <link rel="stylesheet" href="/css/user.css">
+        <link rel="stylesheet" href="/css/live.css">
+        <link rel="stylesheet" href="/css/socketio.css">
+        </head>
+        <style>
+
+        </style>
+    </head>
+    <body>
+
+    <!-- Register -->
+    <div class="register-window">
+        <div class="user-login">
+            <form>
+                <input id="user-login-id" class="user-login-input" placeholder="Username or email address">
+                <input id="user-login-pw" class="user-login-input" placeholder="Password">
+            </form>
+            <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
+        </div>
+        <div class="register">
+            <form>
+                <input id="user-register-username" class="register-input" placeholder="Username">
+                <input id="user-register-email" class="register-input" placeholder="Email">
+                <input id="user-register-password" class="register-input" placeholder="Password">
+            </form>
+            <input type="submit" id="register-btn" class="btn" value="Register" onclick="signUp()">    
+        </div>
+        <br>
+        <br>
+        <div class="login-callout">
+            <span class="have-account">還沒有帳戶?</span>
+            <span class="click-status">點此註冊</span>
+        </div>
+        <br>
+        <br>
+        <div class="flash-alert"></div>
+        </div>
+        <!-- 遮罩 -->
+        <div class="register-window-background"></div>
+        <!-- Register END -->
+        <div class="header">
+            <div class="welcome"></div>
+            <div class="create"></div>
+            <div class="account-status"></div>
+        </div>
+        <div class="header-background"></div>
+
+        <div class="main">
+            <div class="setting">
+                <div class="item1 live-window">
+                    <div class="live-video-window-background">#Live-window</div>
+                </div>
+                <div class="item2 live-window">
+                    <div class="live-insight-report">#Live-insight-report</div>
+                </div>
+                <div class="item3 live-window">
+                    <div class="live-setting">#Live-setting</div>
+                </div>
+            </div>
+            <div class="live-chatroom-background">
+                <div class="live-chatroom">
+                    <div id="messages" class="messages"></div>
+                </div>
+                <form id="form" action="">
+                    <input id="input" placeholder="MASTER：" autocomplete="off" />
+                    <!-- <button>Send</button> -->
+                  </form>
+            </div>
+        </div>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/user.js"></script>
+        <script src="/js/live.js"></script>
+        <script src="/js/socketio.js"></script>
+        <!-- <script src="/js/global.js"></script> -->
+    </body>
+</html>
