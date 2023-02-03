@@ -10,10 +10,8 @@ function jwtVerify(cookie) {
     const result=cookie.split("cookie=")[1]
     const response = jwt.verify(result, secret);
     if(response!==null){
-        console.log(response);
     return response
     }else{
-        console.log(response);
         return {response:null};
     }
 };

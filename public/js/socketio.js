@@ -13,16 +13,14 @@ form.addEventListener('submit', function(e) {
 
 const message=document.querySelector('.messages')
 
-socket.on('chat message', function(msg) {
+socket.on('chat message', function(data) {
   const li=document.createElement('li');
-  const welcome=document.querySelector('.welcome')
-  const name=welcome.textContent.split('你好，')[1];
-  const username=document.createElement('span');
-  // username.textContent=`${name}：`;
-  username.textContent='username：'
 
+  const username=document.createElement('span');
+  username.textContent=`${data.username}：`
+  console.log(data)
   const content=document.createElement('span');
-  content.textContent=msg;
+  content.textContent=data.message;
 
 
   li.append(username, content);
@@ -30,8 +28,6 @@ socket.on('chat message', function(msg) {
   window.scrollTo(0, document.body.scrollHeight);
 });
 // socket.on('chat message', function(data) {
-//   var item = document.createElement('li');
 //   item.textContent = data.username + ": " + data.message;
 //   messages.appendChild(item);
-//   window.scrollTo(0, document.body.scrollHeight);
 //   });

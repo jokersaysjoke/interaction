@@ -9,6 +9,7 @@ function openRegister(){
     registerWindow.style.display='block';
     registerWindowBackground.style.display='block';
     registerWindowBackground.addEventListener('click', closeRegister);
+    userLoginID.focus()
 };
 function closeRegister(){
     registerWindow.style.display='none';
@@ -31,6 +32,7 @@ function toggleStatus(){
         haveAccount.textContent='已經有帳戶?';
         clickStatus.textContent='點此登入';
         flashAlert.style.display='none';
+
     }else{
         register.style.display='none';
         userLogin.style.display='block';
@@ -71,8 +73,6 @@ async function memberStatus(){
 
 //會員登入
 async function signIn(){
-    const userLoginID=document.querySelector('#user-login-id');
-    const userLoginPW=document.querySelector('#user-login-pw');
     const flashAlert=document.querySelector(".flash-alert");
     if(userLoginID.value===''||userLoginPW.value===''){
         flashAlert.style.display='block';
@@ -165,3 +165,16 @@ async function signUp(){
     }
 };
 
+// keydown login
+const userLoginID=document.querySelector('#user-login-id');
+const userLoginPW=document.querySelector('#user-login-pw');
+userLoginID.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        signIn();
+    }
+});
+userLoginPW.addEventListener('keyup', (event) => {
+    if (event.keyCode === 13) {
+        signIn(); 
+    }
+});
