@@ -16,7 +16,7 @@
       <div class="user-login">
           <form>
               <input type="text" id="user-login-id" class="user-login-input" placeholder="Username or email address">
-              <input type="text" id="user-login-pw" class="user-login-input" placeholder="Password">
+              <input type="password" id="user-login-pw" class="user-login-input" placeholder="Password">
           </form>
           <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
       </div>
@@ -24,7 +24,7 @@
           <form>
               <input type="text" id="user-register-username" class="register-input" placeholder="Username">
               <input type="text" id="user-register-email" class="register-input" placeholder="Email">
-              <input type="text" id="user-register-password" class="register-input" placeholder="Password">
+              <input type="password" id="user-register-password" class="register-input" placeholder="Password">
           </form>
           <input type="submit" id="register-btn" class="btn" value="Register" onclick="signUp()">    
       </div>
@@ -43,14 +43,15 @@
   <!-- Register END -->
     <div class="header">
       <div class="welcome"></div>
-      <div class="create"></div>
       <div class="account-status"></div>
     </div>
     <div class="header-background"></div>
 
     <div class="main">
       <div class="live-streaming-video-background">
-        <div class="live-streaming-video">#live-streaming-video</div>
+        <div class="live-streaming-video">
+          <video controls class="video" id="chatroom-video" width="100%" controls>#Live-window</video>
+        </div>
       </div>
       <div class="live-chatroom-background">
         <div class="live-chatroom">
@@ -62,10 +63,12 @@
           </form>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chatroom.js"></script>
     <script src="/js/user.js"></script>
     <script src="/js/socketio.js"></script>
+    <script src="/js/hls.js"></script>
     <!-- <script src="/js/global.js"></script> -->
   </body>
 </html>

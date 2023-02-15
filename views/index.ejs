@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/index.css">
+    <script src="https://kit.fontawesome.com/721f2dd150.js" crossorigin="anonymous"></script>
   </head>
   <style>
 
@@ -15,7 +16,7 @@
         <div class="user-login">
             <form>
                 <input type="text" id="user-login-id" class="user-login-input" placeholder="Username or email address">
-                <input type="text" id="user-login-pw" class="user-login-input" placeholder="Password">
+                <input type="password" id="user-login-pw" class="user-login-input" placeholder="Password">
             </form>
             <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
         </div>
@@ -23,7 +24,7 @@
             <form>
                 <input type="text" id="user-register-username" class="register-input" placeholder="Username">
                 <input type="text" id="user-register-email" class="register-input" placeholder="Email">
-                <input type="text" id="user-register-password" class="register-input" placeholder="Password">
+                <input type="password" id="user-register-password" class="register-input" placeholder="Password">
             </form>
             <input type="submit" id="register-btn" class="btn" value="Register" onclick="signUp()">    
         </div>
@@ -44,8 +45,8 @@
 
     <div class="header">
       <div class="welcome"></div>
-      <div class="create"></div>
       <div class="account-status"></div>
+      <div id="" class="create">開直播</div>
     </div>
     <div class="header-background"></div>
 
@@ -55,6 +56,7 @@
       <div class="video-preview">preview#3</div>  
       <div class="video-preview">preview#4</div>  
     </div>
+
 
     <script src="/js/user.js"></script>
     <script src="/js/index.js"></script>

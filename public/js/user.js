@@ -1,15 +1,14 @@
-const urls="http://127.0.0.1:4000";
-
 //click open register window
 const accountStatus=document.querySelector(".account-status");
 const registerWindow=document.querySelector('.register-window');
 const registerWindowBackground=document.querySelector('.register-window-background');
+const create=document.querySelector('.create');
 
 function openRegister(){
     registerWindow.style.display='block';
     registerWindowBackground.style.display='block';
     registerWindowBackground.addEventListener('click', closeRegister);
-    userLoginID.focus()
+    userLoginID.focus();
 };
 function closeRegister(){
     registerWindow.style.display='none';
@@ -32,6 +31,7 @@ function toggleStatus(){
         haveAccount.textContent='已經有帳戶?';
         clickStatus.textContent='點此登入';
         flashAlert.style.display='none';
+        userRegisterUsername.focus();
 
     }else{
         register.style.display='none';
@@ -47,27 +47,25 @@ function toggleStatus(){
 window.onload=memberStatus();
 async function memberStatus(){
     const welcome=document.querySelector('.welcome');
-    accountStatus.textContent="登入/登出";
-    const response=await fetch(`${urls}/api/user`);
+    accountStatus.textContent="登入/註冊";
+    const response=await fetch(`/api/user`);
     const data=await response.json();
 
     if(data.data!==null){
         welcome.textContent=`你好，${data.data.name}`;
+        welcome.addEventListener('click', ()=>{
+            location.href=`/`;
+        });
         accountStatus.textContent='登出';
         accountStatus.addEventListener('click', logOut);
-        if(location.href===`${urls}/`){
-            create.textContent='Create';
-            create.addEventListener('click', ()=>{
-                location.href=`${urls}/live`
-            })    
-        }else if(location.href===`${urls}/live`){
-            create.textContent='Close';
-            create.addEventListener('click', closeRoom)
-        }
+
+        create.classList.add('createDispay');
+        create.addEventListener('click', registerLiveRoom)
+        
     }else if(data.data===null){
-        console.log(data);
         accountStatus.textContent="登入/註冊";
         accountStatus.addEventListener('click', openRegister)
+
     }
 };
 
@@ -79,7 +77,7 @@ async function signIn(){
         flashAlert.style.color="red";
         flashAlert.textContent='Incorrect username or password';
     }else{
-    const response=await fetch(`${urls}/api/user`, {
+    const response=await fetch(`/api/user`, {
                 method:"PUT",
                 body:JSON.stringify({
                 email:userLoginID.value,
@@ -111,24 +109,22 @@ async function signIn(){
 
 //會員登出
 async function logOut(){
-    const response=await fetch(`${urls}/api/user`, {
+    const response=await fetch(`/api/user`, {
         method:"DELETE"
     })
     const data=await response.json();
     if(data.ok){
         accountStatus.textContent=`登入/註冊`
-        setTimeout("location.reload()", 1000)
+        create.style.display='none';
+        setTimeout("location.reload()", 500)
     }else{
         console.log(data)
     }
-}
+};
 
 //會員註冊
 const registerBtn=document.querySelector('#register-btn');
 async function signUp(){
-    const userRegisterUsername=document.querySelector('#user-register-username');
-    const userRegisterEmail=document.querySelector('#user-register-email');
-    const userRegisterPassword=document.querySelector('#user-register-password');
     const flashAlert=document.querySelector(".flash-alert");
 
     if(userRegisterUsername.value===''||userRegisterEmail.value===''||userRegisterPassword.value===''){
@@ -136,7 +132,7 @@ async function signUp(){
         flashAlert.style.display='block';
         flashAlert.textContent='Value can not be empty';
     }else{
-            const response=await fetch(`${urls}/api/user`, {
+            const response=await fetch(`/api/user`, {
                 method:"POST",
                 body:JSON.stringify({
                     name:userRegisterUsername.value,
@@ -146,7 +142,6 @@ async function signUp(){
             headers: new Headers({"Content-type":"application/json"})
         })
         const data=await response.json();
-        console.log(data);
         if(data.ok){
             setTimeout("location.reload()", 500)
         }
@@ -176,5 +171,20 @@ userLoginID.addEventListener('keydown', (event) => {
 userLoginPW.addEventListener('keyup', (event) => {
     if (event.keyCode === 13) {
         signIn(); 
+    }
+});
+
+// keydown register
+const userRegisterUsername=document.querySelector('#user-register-username');
+const userRegisterEmail=document.querySelector('#user-register-email');
+const userRegisterPassword=document.querySelector('#user-register-password');
+userRegisterEmail.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        signUp();
+    }
+});
+userRegisterPassword.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        signUp();
     }
 });

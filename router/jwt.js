@@ -7,13 +7,9 @@ const app = express();
 app.use(cookieParser());
 
 function jwtVerify(cookie) {
-    const result=cookie.split("cookie=")[1]
-    const response = jwt.verify(result, secret);
-    if(response!==null){
+    const response = jwt.verify(cookie, secret);
     return response
-    }else{
-        return {response:null};
-    }
+
 };
 
 function jwtSign(id, name, email) {

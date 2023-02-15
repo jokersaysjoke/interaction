@@ -10,11 +10,10 @@ userAPI.use(bodyParser.json());
 
 // 登入狀態
 userAPI.get('/user', (req, res) => {
-  const cookie=req.headers.cookie
   try {
+    const cookie=req.cookies['cookie'];
     if(cookie){
-      const response=jwtVerify(cookie);
-      if(response){
+        const response=jwtVerify(cookie);
         const id=response['id'];
         const name=response['name'];
         const email=response['email'];
@@ -22,23 +21,21 @@ userAPI.get('/user', (req, res) => {
       }else{
         return res.json({"data":null});
       }
-    }else{
-      return res.json({"data":null});
-    }
+    
   } catch (error) {
       return res.status(500).json({"error":true, "message":"Database error"});
   }
- });
+});
 
 //  登入
 userAPI.put('/user', async (req, res) => {
-  const data=req.body;
-  const email=data.email, password=data.password;
-  let sql = `SELECT *
-             FROM MEMBER
-             WHERE (EMAIL = ? AND PASSWORD = ?)
-             OR (NAME = ? AND PASSWORD = ?)`;
   try {
+    const data=req.body;
+    const email=data.email, password=data.password;
+    let sql = `SELECT *
+               FROM MEMBER
+               WHERE (EMAIL = ? AND PASSWORD = ?)
+               OR (NAME = ? AND PASSWORD = ?)`;
     const [record] = await pool.promise().query(sql, [email, password, email, password])
     if(record.length > 0){
       const result=Object.assign({}, record[0]);
@@ -60,16 +57,17 @@ userAPI.delete('/user', (req, res) => {
   return res.status(200).json({"ok": true});
 })
 
-//  註冊
+// 註冊
 userAPI.post('/user', async (req, res) => {
-  const data=req.body;
-  const name=data.name, email=data.email, password=data.password;
-  let sql = `
-  SELECT *
-  FROM MEMBER
-  WHERE EMAIL = ?`;
   try {
+    const data=req.body;
+    const name=data.name, email=data.email, password=data.password;
+    let sql = `
+    SELECT *
+    FROM MEMBER
+    WHERE EMAIL = ?`;
     const [record] = await pool.promise().query(sql, [email]);
+
     if(record.length > 0){
       return res.status(400).json({"error":true, "message":"Email already exist"});
     }else{
@@ -84,4 +82,4 @@ userAPI.post('/user', async (req, res) => {
       return res.status(500).json({"error":true, "message":"Database error"});
   }
 });
-module.exports=userAPI
+module.exports=userAPI;

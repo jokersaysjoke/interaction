@@ -3,6 +3,7 @@ body{
 }
 
 .video-preview-background{
+    position: relative;
     background-color: #202020;
     margin: 100px auto;
     max-width: 1200px;
@@ -23,7 +24,25 @@ body{
     color: #fff;
     font-size: 44px;
 }
+.create{
+    width: 77px;
+    height: 44px;
+    border-radius: 15px;
+    position: fixed;
+    background-color: #03DAC5;
+    color: #202020;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    cursor: pointer;
+    display: none;
+}
 
+.createDispay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 @media(max-width: 1200px){
     .video-preview-background{
