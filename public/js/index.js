@@ -3,14 +3,15 @@ async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const name=result.data.name;
-    const response=await fetch(`/api/room`, {
+    const email=result.data.email;
+    let response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
             name:name
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
-    const data=await response.json();
+    let data=await response.json();
     if(data.ok){
         location.href=`/live/${name}`
     }else(
@@ -30,6 +31,7 @@ async function fetchLiveRoom(){
     }else{
         console.log(data);
     };
+    
 };
 //載入頁面
 window.onload=fetchLiveRoom();
@@ -55,7 +57,6 @@ async function joinChatRoom(){
         method:'PUT',
         body:JSON.stringify({
             user:user
-
         })
     });
     const data=await response.json();

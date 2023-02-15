@@ -15,7 +15,7 @@ async function closeStreaming(){
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
-    closeLive.textContent='結束串流'
+    closeLive.textContent='CLOSE Room';
     closeLive.addEventListener('click', closeRoom);
 };
 // 關掉房間

@@ -16,9 +16,7 @@ roomAPI.get('/room', async (req, res)=>{
         FROM ROOM
         WHERE STATUS = ?`;
         [record]=await pool.promise().query(sql, "LIVE");
-        console.log(record)
         if(record){
-        console.log(record);
         return res.status(200).json({
             data:record
         })}else{

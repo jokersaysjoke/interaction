@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+
 //socket.io
 const http = require('http');
 const server = http.createServer(app);
@@ -22,16 +23,9 @@ app.get('/', (req, res) => {
   res.render('index.ejs', {})
 });
 
-app.get('/live/:userID', (req, res) => {
-  const cookie=req.cookies['cookie'];
-  const result=jwtVerify(cookie);
-  const userID=result.name;
-  res.render('live.ejs', {});
-});
 
-app.get('/room/:userID', (req, res) => {
-  res.render('chatroom.ejs', {})
-});
+
+
 
 
 // socket.io
@@ -50,10 +44,12 @@ const userAPI=require('./router/api/user');
 app.use('/api', userAPI);
 const roomAPI=require('./router/api/room');
 app.use('/api', roomAPI);
-// const liveAPI=require('./router/api/live');
-// app.use('/api', liveAPI);
-// const liveAPI=require('./router/api/live');
-// app.use('/api', liveAPI);
+const live=require('./router/liveStream');
+app.use('/live', live);
+const room=require('./router/roomStream');
+app.use('/room', room);
+// const live=require('./router/api/liveStream');
+// app.use('/api', live);
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

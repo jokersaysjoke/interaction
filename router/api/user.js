@@ -9,15 +9,21 @@ userAPI.use(cookieParser());
 userAPI.use(bodyParser.json());
 
 // 登入狀態
-userAPI.get('/user', (req, res) => {
+userAPI.get('/user', async(req, res) => {
   try {
     const cookie=req.cookies['cookie'];
+    let sql=`
+    SELECT *
+    FROM ROOM
+    WHERE MASTER = ?
+    `;
     if(cookie){
         const response=jwtVerify(cookie);
         const id=response['id'];
         const name=response['name'];
         const email=response['email'];
-        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email}});
+        const [record]=await pool.promise().query(sql, [name]);
+        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'record':record.length}});
       }else{
         return res.json({"data":null});
       }

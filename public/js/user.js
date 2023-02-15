@@ -50,7 +50,7 @@ async function memberStatus(){
     accountStatus.textContent="登入/註冊";
     const response=await fetch(`/api/user`);
     const data=await response.json();
-
+    console.log(data)
     if(data.data!==null){
         welcome.textContent=`你好，${data.data.name}`;
         welcome.addEventListener('click', ()=>{
@@ -58,9 +58,17 @@ async function memberStatus(){
         });
         accountStatus.textContent='登出';
         accountStatus.addEventListener('click', logOut);
-
-        create.classList.add('createDispay');
-        create.addEventListener('click', registerLiveRoom)
+        if(data.data.record===0){
+            create.classList.add('createDispay');
+            create.addEventListener('click', registerLiveRoom)
+        }else{
+            create.textContent='回直播'
+            create.classList.add('createDispay');
+            create.addEventListener('click', ()=>{
+                location.href=`/live/${data.data.name}`
+            })
+        }
+        
         
     }else if(data.data===null){
         accountStatus.textContent="登入/註冊";
