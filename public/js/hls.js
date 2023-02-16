@@ -1,4 +1,4 @@
-let videoSrc = `https://jokersaysjoke.online/hls/chunyi.m3u8`;
+// let videoSrc = `https://jokersaysjoke.online/hls/chunyi.m3u8`;
 if (Hls.isSupported()) {
     const video = document.querySelector(".video");
     // const streamKey=document.querySelector('.streamKey').value

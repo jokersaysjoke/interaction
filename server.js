@@ -3,12 +3,6 @@ const app = express();
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-//socket.io
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-//socket.io <end>
 
 const path = require('path');
 const {jwtVerify} = require(path.join(__dirname + '/router/jwt'));
@@ -23,20 +17,23 @@ app.get('/', (req, res) => {
   res.render('index.ejs', {})
 });
 
-
-
-
-
-
+const cookie = require("cookie");
 // socket.io
-// io.on('connection', (socket) => {
-//   const cookies = socket.request.headers.cookie;
-//   const result=jwtVerify(cookies);
-//   const username=result.name;
-//   socket.on('chat message', (msg) => {
-//     io.emit('chat message', {username:username, message:msg});
-//   });
-// });
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  const cookies = cookie.parse(socket.handshake.headers.cookie);  
+  const result=jwtVerify(cookies.cookie);
+  const username=result.name;
+  socket.on('chat message', (msg, roomID) => {
+    socket.join(roomID)
+    io.to(roomID).emit('chat message', {username:username, message:msg});
+
+  });
+});
 // socket.io <END>
 
 // API

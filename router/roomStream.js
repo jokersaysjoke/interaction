@@ -16,11 +16,14 @@ room.get('/:ID', async(req, res)=>{
         FROM ROOM
         WHERE MASTER = ?
         `;
+        const cookie=req.cookies['cookie'];
         const [record]=await pool.promise().query(sql, [ID]);
         if(record.name===ID){
+            res.redirect(`/live`)      
+        }else if(cookie){
             res.render('chatroom.ejs', {})
         }else{
-            res.redirect(`/`)        
+            res.redirect(`/`)   
         }
         
     } catch (error) {
