@@ -1,9 +1,8 @@
 const closeLive=document.querySelector('.close-live');
-closeLive.addEventListener('click', closeStreaming);
-const toLiveStream=document.querySelector('#toLiveStream');
-toLiveStream.addEventListener('click', createStreamingRoom);
+closeLive.addEventListener('click', closeRoom);
 // 結束串流
 async function closeStreaming(){
+    hlsPLAYer(streamKey.value);
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
@@ -11,12 +10,20 @@ async function closeStreaming(){
         method:'PUT',
         body:JSON.stringify({
             master:master,
-            status:`Upcomming`
+            status:`Upcoming`,
+            streamkey:streamKey.value
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
     closeLive.textContent='CLOSE Room';
     closeLive.addEventListener('click', closeRoom);
+    closeLive.textContent='QUIT';
+
+    const item3=document.querySelector('.item3');
+    item3.style.display='none';
+    item4.style.display='flex';
+    streamKey.focus();
+    
 };
 // 關掉房間
 async function closeRoom(){
@@ -33,8 +40,18 @@ async function closeRoom(){
     location.href=`/`
 };
 
-// 開始串流
-async function createStreamingRoom(){
+// 發布串流
+async function createStreamingRoom(streamkey){
+    console.log(streamkey);
+    const header=document.querySelector('.header');
+    header.style.display='none';
+    const item3=document.querySelector('.item3');
+    const toLiveStream=document.querySelector('#toLiveStream');
+    item3.style.backgroundColor='#121212';
+    toLiveStream.style.backgroundColor='#121212';
+    toLiveStream.style.cursor='default'
+    toLiveStream.textContent='※LIVE Streaming'
+
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
@@ -42,9 +59,19 @@ async function createStreamingRoom(){
         method:'PUT',
         body:JSON.stringify({
             master:master,
-            status:'LIVE'
+            status:'LIVE',
+            streamkey:`${streamkey}`
         }),
         headers: new Headers({"Content-type":"application/json"})
     })
-    location.reload();
+    // location.reload();
 };
+
+const streamURL=document.querySelector('.streamURL');
+streamURL.addEventListener('click', ()=>{
+    navigator.clipboard.writeText(streamURL.innerText);
+});
+const copy=document.querySelector('.copyURL');
+copy.addEventListener('click', ()=>{
+    navigator.clipboard.writeText(streamURL.innerText);
+});

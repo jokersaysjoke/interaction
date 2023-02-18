@@ -5,6 +5,7 @@ body{
 }
 .header{
     display: flex;
+    justify-content: space-between;
     position: absolute;
     top: 0;
     left: 50%;
@@ -24,33 +25,23 @@ body{
     height: 50px;
 }
 .welcome, .account-status{
-    flex: 1;
+    /* flex: 1; */
     margin: 15px;
     letter-spacing: 3px;
     color: #BB86FC;
     }
     .welcome{
-        flex: 10;
+        /* flex: 10; */
         cursor: pointer;
     }
     .account-status{
-    display: flex;
-    justify-content: right;
-    cursor: pointer;
+        cursor: pointer;
     }
-.run-test{
-    color: #202020;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 111;
-    cursor: pointer;
-}
 input{
     outline: none;
 }
-@media(max-width: 1000px){
+/* @media(max-width: 1000px){
     .welcome{
         flex: 5;
     }
-}
+} */

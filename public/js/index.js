@@ -45,20 +45,5 @@ function createLiveRoom(master){
     div.addEventListener('click', ()=>{
         location.href=`/room/${master}`
     });
-    // div.addEventListener('click', joinChatRoom);
     videoPreviewBackground.appendChild(div);
-};
-
-//join caht room
-async function joinChatRoom(){
-    const welcome=document.querySelector('.welcome');
-    const user=welcome.textContent.split('你好，')[1];
-    const response=await fetch(`/api/room`, {
-        method:'PUT',
-        body:JSON.stringify({
-            user:user
-        })
-    });
-    const data=await response.json();
-    console.log(data);
 };

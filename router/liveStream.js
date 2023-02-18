@@ -15,15 +15,20 @@ live.get('/:ID', async(req, res) => {
     const response=jwtVerify(cookie);
     const name=response['name'];
     let sql=`
-      SELECT *
-      FROM ROOM
-      WHERE MASTER = ?
-      `;
-    if(ID===name){
-      const [record]=await pool.promise().query(sql, [name]);
-      if(record.length===1){
+    SELECT *
+    FROM ROOM
+    WHERE MASTER = ?
+    AND 
+    (STATUS = ? OR STATUS = ?)
+    `;
+    const [record]=await pool.promise().query(sql, [name, 'LIVE', 'Upcoming']);
+    const [{MASTER}]=record;
+
+    if(record!==null){
+      if(ID===MASTER && ID===name && MASTER===name){
         res.render('live.ejs', {});
-      }else if(record.length<2){
+      }else if(record.length<2 && ID===name){
+        console.log('length<2&ID===name');
         res.render('live.ejs', {});
       }else{
         res.redirect(`/`)        

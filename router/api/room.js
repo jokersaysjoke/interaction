@@ -17,8 +17,8 @@ roomAPI.get('/room', async (req, res)=>{
         WHERE STATUS = ?`;
         [record]=await pool.promise().query(sql, "LIVE");
         if(record){
-        return res.status(200).json({
-            data:record
+            return res.status(200).json({
+                data:record
         })}else{
             return res.status(403).json({"data":null, "message":"No room"});
         }
@@ -57,13 +57,14 @@ roomAPI.put('/room', async(req, res)=>{
     try {
         let sql=`
         UPDATE ROOM
-        SET STATUS = ?
+        SET STATUS = ?, STREAMKEY = ?
         WHERE MASTER = ?
         `;
         const body=req.body;
         const status=body['status'];
         const master=body['master'];
-        await pool.promise().query(sql, [status, master]);
+        const streamkey=body['streamkey'];
+        await pool.promise().query(sql, [status, streamkey, master]);
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -86,4 +87,20 @@ roomAPI.delete('/room', async(req, res)=>{
     }
 });
 
+roomAPI.get('/room/join', async (req, res)=>{
+    try {
+        const host=req.query.host;
+        let sql=`
+        SELECT * 
+        FROM ROOM
+        WHERE MASTER = ?
+        `;
+        const [record]=await pool.promise().query(sql, [host]);
+        const [{STREAMKEY:streamkey}]=record;
+        res.status(200).json({data:streamkey})
+        
+    } catch (error) {
+        return res.status(500).json({"error":true, "message":"Database error"});
+    }
+});
 module.exports=roomAPI;

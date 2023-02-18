@@ -15,23 +15,32 @@ room.get('/:ID', async(req, res)=>{
         SELECT *
         FROM ROOM
         WHERE MASTER = ?
+        AND STATUS = ?
         `;
         const cookie=req.cookies['cookie'];
-        const [record]=await pool.promise().query(sql, [ID]);
-        if(record.name===ID){
-            res.redirect(`/live`)      
-        }else if(cookie){
-            res.render('chatroom.ejs', {})
+        const response=jwtVerify(cookie);
+        const name=response['name'];
+        const [record]=await pool.promise().query(sql, [ID, 'LIVE']);
+        if(record!==null){
+            const [{ MASTER }]=record
+            if(MASTER===name){
+                res.redirect(`/live/${ID}`)   
+            }else if(cookie){
+                res.render('chatroom.ejs', {})
+            }else{
+                res.redirect(`/`)   
+            }
         }else{
             res.redirect(`/`)   
         }
-        
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
         
     }    
+});
 
+room.get('/', async(req, res)=>{
+    res.redirect(`/`)   
 
-})
-
+});
 module.exports=room;

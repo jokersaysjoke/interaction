@@ -46,35 +46,55 @@
         <div class="register-window-background"></div>
         <!-- Register END -->
         <div class="header">
-            <div class="welcome"></div>
+            <div class="welcome" onclick="location.href='/'">首頁</div>
             <div class="account-status"></div>
         </div>
         <div class="header-background"></div>
-
-        <div class="main">
-            <div class="setting">
-                <div class="item1 live-window">
-                    <div class="live-video-window-background">
-                        <video type="application/x-mpegURL" class="video" id="video" width="100%" controls>#Live-window</video>
+        <!-- streaming -->
+        <div class="background">
+            <div class="main-background">
+                <div class="main">
+                    <div class="setting">
+                        <div class="item1 live-window">
+                            <div class="live-video-window-background">
+                                <video type="application/x-mpegURL" class="video" id="video" width="100%" controls>#Live-window</video>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="item2 live-window">
-                    <div class="close-live">#END Stream</div>
+                <div class="main">
+                    <div class="item2 live-window">
+                        <div class="close-live">QUIT</div>
+                    </div>
+                    <div class="item3 live-window">
+                        <div id="toLiveStream" class="to-Live-Stream">Publish</div>
+                    </div>
+                    <form class="item4 live-window" action="">
+                        <input type="text" class="streamKey" placeholder="StreamKey"></input>
+                    </form>
                 </div>
-                <div class="item3 live-window">
-                    <div id="toLiveStream" class="to-Live-Stream">#START Live Stream</div>
-                    <input type="text" class="streamKey" placeholder="setStreamKey"></input>
+                <div class="main">
+                    <div class="item5 live-window">
+                        <span>請在推流軟體輸入此串流網址&nbsp;:&nbsp;</span>
+                        <div class="streamURL">rtmp://jokersaysjoke.online/live</div>
+                        <span class="copyURL">&nbsp;&nbsp;點擊複製</span>
+                    </div>
                 </div>
             </div>
-            <div class="live-chatroom-background">
-                <div class="live-chatroom">
-                    <div id="messages" class="messages"></div>
+            <div class="main-background chat-background">
+                <div class="live-chatroom-background">
+                    <div class="live-chatroom">
+                        <div id="messages" class="messages"></div>
+                    </div>
+                    <form id="form" action="">
+                        <input id="input" placeholder="HOST：" autocomplete="off" />
+                    </form>
                 </div>
-                <form id="form" action="">
-                    <input id="input" placeholder="HOST：" autocomplete="off" />
-                  </form>
             </div>
         </div>
+
+        
+        <!-- streaming END-->
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script src="/socket.io/socket.io.js"></script>
         <!-- <script src="/js/user.js"></script> -->

@@ -50,7 +50,6 @@ async function memberStatus(){
     accountStatus.textContent="登入/註冊";
     const response=await fetch(`/api/user`);
     const data=await response.json();
-    console.log(data)
     if(data.data!==null){
         welcome.textContent=`你好，${data.data.name}`;
         welcome.addEventListener('click', ()=>{
@@ -59,8 +58,11 @@ async function memberStatus(){
         accountStatus.textContent='登出';
         accountStatus.addEventListener('click', logOut);
         if(data.data.record===0){
-            create.classList.add('createDispay');
-            create.addEventListener('click', registerLiveRoom)
+            if(create){
+                create.classList.add('createDispay');
+                create.addEventListener('click', registerLiveRoom)
+            }
+            
         }else{
             create.textContent='回直播'
             create.classList.add('createDispay');
@@ -70,9 +72,9 @@ async function memberStatus(){
         }
         
         
-    }else if(data.data===null){
+    }else{
         accountStatus.textContent="登入/註冊";
-        accountStatus.addEventListener('click', openRegister)
+        accountStatus.addEventListener('click', openRegister())
 
     }
 };
@@ -123,7 +125,9 @@ async function logOut(){
     const data=await response.json();
     if(data.ok){
         accountStatus.textContent=`登入/註冊`
-        create.style.display='none';
+        if(create){
+            create.style.display='none';
+        }
         setTimeout("location.reload()", 500)
     }else{
         console.log(data)
