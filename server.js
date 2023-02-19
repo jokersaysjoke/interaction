@@ -25,13 +25,18 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-  const cookies = cookie.parse(socket.handshake.headers.cookie);  
-  const result=jwtVerify(cookies.cookie);
-  const username=result.name;
   socket.on('chat message', (msg, roomID) => {
-    socket.join(roomID)
-    io.to(roomID).emit('chat message', {username:username, message:msg});
+    const username=msg.username;
+    const message=msg.message;
 
+    if(roomID===''){
+      console.log(`no roomID`);
+    }else{
+      socket.to(roomID).emit('receive-message', {username:username, message:message});
+    }
+  });
+  socket.on('join-room', roomID => {
+    socket.join(roomID)
   });
 });
 // socket.io <END>
@@ -45,8 +50,6 @@ const live=require('./router/liveStream');
 app.use('/live', live);
 const room=require('./router/roomStream');
 app.use('/room', room);
-// const live=require('./router/api/liveStream');
-// app.use('/api', live);
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
