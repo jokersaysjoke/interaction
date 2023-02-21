@@ -25,23 +25,27 @@ body{
     height: 50px;
 }
 .welcome, .account-status{
-    /* flex: 1; */
     margin: 15px;
+    height: 13px;
     letter-spacing: 3px;
-    color: #BB86FC;
-    }
-    .welcome{
-        /* flex: 10; */
-        cursor: pointer;
-    }
-    .account-status{
-        cursor: pointer;
-    }
+    color: #202020;
+    background-color: #BB86FC;
+    padding: 11px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.account-status{
+    display: none;
+}
+
 input{
     outline: none;
 }
-/* @media(max-width: 1000px){
-    .welcome{
-        flex: 5;
-    }
-} */
+
+a {
+    cursor: pointer;
+    text-decoration:none;
+}

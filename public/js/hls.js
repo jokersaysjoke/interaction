@@ -1,10 +1,16 @@
-const item4=document.querySelector('.item4')
-const streamKey=document.querySelector('.streamKey');
-streamKey.focus();
-item4.addEventListener('submit', function(e){
-    e.preventDefault();
-    hlsPLAYer(streamKey.value);
-    streamKey.value='';
+const streamKey=document.querySelector('.streamkey');
+const toLiveStream=document.querySelector('#toLiveStream');
+toLiveStream.addEventListener('click', ()=>{
+    if(videoHeader.value==='' || videoHeader.value.length>99){
+        const dontnull=document.querySelector('.dontnull');
+        dontnull.style.color='red';
+        dontnull.textContent='(*必填且字串99字以內><)'
+        videoHeader.focus();
+    }else{
+        hlsPLAYer(streamKey.innerText)
+        createStreamingRoom(streamKey.innerText)
+    }
+    
 });
 
 function hlsPLAYer(streamkey){
@@ -15,33 +21,23 @@ function hlsPLAYer(streamkey){
         hls.loadSource(videoSrc);
         hls.attachMedia(video);
         hls.on(Hls.Events.FRAG_LOADED, function(event, data) {
-            // disappear streamkey input
-            item4.style.display='none'
-            // disappear stream URL
-            const item5=document.querySelector('.item5');
-            item5.style.display='none';
-            // appear publish btn
-            const item3=document.querySelector('.item3');
-            item3.style.display='block';
-            const toLiveStream=document.querySelector('#toLiveStream');
-            // toLiveStream.addEventListener('click', createStreamingRoom);
-            toLiveStream.addEventListener('click', ()=>{
-                createStreamingRoom(streamkey)
-            });
+            // disappear 
+            const mainignore=document.querySelectorAll('.main-ignore');
+            for(let i=0; i<mainignore.length; i++){
+                mainignore[i].style.display='none';
+            }
             // appear end stream btn
-            closeLive.removeEventListener('click', closeRoom);
-            closeLive.addEventListener('click', closeStreaming);
-            closeLive.textContent='END Stream'
+            const item1=document.querySelector('.item1');
+            item1.addEventListener('click', closeStreaming);
+            item1.style.display='flex'
             // appear chat
             const chat=document.querySelector('.chat-background');
             chat.style.display='block';
-
             
-        });
-        }else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            video.src = videoSrc;
-        }
+            input.focus();
+            
+    });
+    }else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoSrc;
+    }
 };
-
-
-

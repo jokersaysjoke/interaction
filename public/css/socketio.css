@@ -23,13 +23,24 @@
    outline: none; 
 }
 #messages { 
+    max-height: 92%;
     position: absolute;
     list-style-type: none; 
+    max-width: 100%;
     margin: 0; 
     padding: 0; 
-    bottom: 30px;
+    bottom: 33px;
+    overflow-y: auto; 
 }
+
 #messages > li { 
     padding: 0.5rem 1rem; 
 }
 
+.chat-content{
+    word-wrap:break-word;
+}
+
+#messages::-webkit-scrollbar {
+    display: none;
+}

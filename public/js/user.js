@@ -16,7 +16,7 @@ function closeRegister(){
     window.location.reload();
 };
 
-//toggle login/register
+// toggle login/register
 let isLogin = true;
 const clickStatus=document.querySelector('.click-status');
 clickStatus.addEventListener('click', toggleStatus);
@@ -43,18 +43,19 @@ function toggleStatus(){
     isLogin = !isLogin;
 };
 
-//登入狀態
-window.onload=memberStatus();
+// 登入狀態
 async function memberStatus(){
     const welcome=document.querySelector('.welcome');
-    accountStatus.textContent="登入/註冊";
+    // accountStatus.textContent="登入/註冊";
     const response=await fetch(`/api/user`);
     const data=await response.json();
     if(data.data!==null){
         welcome.textContent=`你好，${data.data.name}`;
+        // welcome.textContent=`交互作用`;
         welcome.addEventListener('click', ()=>{
             location.href=`/`;
         });
+        accountStatus.style.display='flex';
         accountStatus.textContent='登出';
         accountStatus.addEventListener('click', logOut);
         if(data.data.record===0){
@@ -62,7 +63,6 @@ async function memberStatus(){
                 create.classList.add('createDispay');
                 create.addEventListener('click', registerLiveRoom)
             }
-            
         }else{
             create.textContent='回直播'
             create.classList.add('createDispay');
@@ -200,3 +200,8 @@ userRegisterPassword.addEventListener('keydown', (event) => {
         signUp();
     }
 });
+
+// display account detail
+function displayAccount(){
+
+};

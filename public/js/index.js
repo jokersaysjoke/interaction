@@ -1,4 +1,9 @@
-//register live room
+//載入頁面
+window.onload=memberStatus();
+window.onload=fetchLiveRoom();
+
+
+// register live room
 async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
@@ -33,8 +38,6 @@ async function fetchLiveRoom(){
     };
     
 };
-//載入頁面
-window.onload=fetchLiveRoom();
 
 //create live-room
 function createLiveRoom(master){

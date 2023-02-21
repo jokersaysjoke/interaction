@@ -42,26 +42,4 @@ live.get('/:ID', async(req, res) => {
 
 });
 
-// live.put('/:userID', async(req, res) => {
-//     try {
-//       let sql=`
-//       SELECT *
-//       FROM ROOM
-//       WHERE NAME = ?
-//       AND EMAIL = ?
-//       `;
-//       if(){
-        
-//         res.render('live.ejs', {});
-//       }else{
-//         return res.status(403).json({"data":null, "message":"Not A User"});
-//       }
-//     } catch (error) {
-//       return res.status(500).json({"error":true, "message":"Database error"});
-//     }
-//   });
-
-
-
-
 module.exports=live;

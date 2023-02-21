@@ -1,8 +1,10 @@
+const videoHeader=document.querySelector('.setting-detail-type');
+videoHeader.focus();
 const closeLive=document.querySelector('.close-live');
 closeLive.addEventListener('click', closeRoom);
 // 結束串流
 async function closeStreaming(){
-    hlsPLAYer(streamKey.value);
+    hlsPLAYer('');
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
@@ -15,15 +17,10 @@ async function closeStreaming(){
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
-    closeLive.textContent='CLOSE Room';
-    closeLive.addEventListener('click', closeRoom);
-    closeLive.textContent='QUIT';
+    const item1=document.querySelector('.item1');
+    item1.addEventListener('click', closeRoom);
+    item1.textContent='QUIT';
 
-    const item3=document.querySelector('.item3');
-    item3.style.display='none';
-    item4.style.display='flex';
-    streamKey.focus();
-    
 };
 // 關掉房間
 async function closeRoom(){
@@ -42,15 +39,9 @@ async function closeRoom(){
 
 // 發布串流
 async function createStreamingRoom(streamkey){
-    console.log(streamkey);
-    const header=document.querySelector('.header');
-    header.style.display='none';
-    const item3=document.querySelector('.item3');
-    const toLiveStream=document.querySelector('#toLiveStream');
-    item3.style.backgroundColor='#121212';
-    toLiveStream.style.backgroundColor='#121212';
-    toLiveStream.style.cursor='default'
-    toLiveStream.textContent='※LIVE Streaming'
+
+    // const header=document.querySelector('.header');
+    // header.style.display='none';
 
     const user=await fetch(`/api/user`);
     const result=await user.json();
@@ -64,14 +55,14 @@ async function createStreamingRoom(streamkey){
         }),
         headers: new Headers({"Content-type":"application/json"})
     })
-    // location.reload();
 };
 
+// copy streamURL、streamKEY
 const streamURL=document.querySelector('.streamURL');
-streamURL.addEventListener('click', ()=>{
+function copyStreamUEL(){
     navigator.clipboard.writeText(streamURL.innerText);
-});
-const copy=document.querySelector('.copyURL');
-copy.addEventListener('click', ()=>{
-    navigator.clipboard.writeText(streamURL.innerText);
-});
+};
+
+function copyStremKEY(){
+    navigator.clipboard.writeText(streamKey.innerText);
+};

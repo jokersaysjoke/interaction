@@ -5,6 +5,8 @@ const input = document.getElementById('input');
 const url = window.location.href.split("/");
 const roomID = url.pop();
 
+
+
 socket.on('receive-message', message => {
   displayMessage(message);
 })
@@ -36,9 +38,13 @@ function displayMessage(data){
     username.textContent=`${data.username}：`
     
     const content=document.createElement('span');
+    content.classList.add('chat-content');
     content.textContent=data.message;
     
     li.append(username, content);
     message.appendChild(li);
+
+    message.scrollTop = message.scrollHeight;
+
     window.scrollTo(0, document.body.scrollHeight);
 };

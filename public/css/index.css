@@ -24,6 +24,47 @@ body{
     color: #fff;
     font-size: 44px;
 }
+.video-detail{
+    margin-top: 5px;
+    color: #fff;
+    display: flex;
+}
+.video-account-pic-background{
+    width: 50px;
+    margin-top: 10px;
+}
+.video-account-pic{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.video-title{
+    margin: 10px;
+    
+}
+.video-title-head{
+    width: 100%;
+    height: 33px;
+    max-height: 66px;
+    overflow: hidden;
+}
+.video-creater, .video-status-live-background{
+    margin-top: 10px;
+
+}
+.video-status-live{
+    background-color: red;
+    border-radius: 3px;
+    padding: 4px;
+    font-weight: bold;
+}
+.video-view-count, .video-status-live-rate, .video-creater{
+    color: gray;
+}
+.video-view-count, .video-status{
+    /* display: none; */
+}
 .create{
     width: 77px;
     height: 44px;

@@ -26,6 +26,34 @@
     border-radius: 5px;
     display: flex;
 }
+.setting-detail-background{
+    color: gray;
+}
+.setting-detail{
+    background-color: #202020;
+    margin: 5px 10px;
+    width: 100%;
+    border-radius: 5px;
+    padding: 22px;
+}
+
+.setting-detail-type{
+    margin: 11px auto;
+    background-color: #121212;
+    color: #fff;
+    font-size: 18px;
+}
+.streamkey{
+    margin: 20px auto;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+.copyKEY{
+    margin-left: 10px;
+    color: gray;
+    cursor: pointer;
+}
 .live-window{
     background-color: #BB86FC;
     margin: 5px 10px;
@@ -41,7 +69,7 @@
 .streamKey,
 .item5{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     border-radius: 5px;
     color: #fff;
     background-color: #202020;
@@ -52,21 +80,24 @@
     font-size: 22px;
 }
 .close-live{
+    height: 50%;
     color: red;
-    border: 1px solid #202020;
+    border: 1px solid red;
     cursor: pointer;
 }
 .to-Live-Stream{
     width: 100%;
+    height: 50%;
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 22px;
-    color: #03DAC5;
-    background-color: #202020;
-    border: 1px solid #202020;
+    color: #200220;
+    background-color: #03DAC5;
+    border: 1px solid #03DAC5;
     cursor: pointer;
+    border-radius: 5px;
 }
 .live-chatroom-background{
     background-color: #BB86FC;
@@ -88,20 +119,15 @@
     border-radius: 5px;
     color: #fff;
     background-color: #202020;
-    overflow: hidden;
-
 }
-.master-message{
-    color: #03DAC5;
+
+.live-chatroom{
 }
 .live-streaming-video{
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 22px;
-}
-.item3{
-    display: none;
 }
 .item5>span{
     font-size: 17px;
@@ -123,6 +149,17 @@
 .client-chat{
     max-width: 33%;
 }
-@media(max-width:1200px){
-
+.item1{
+    margin: 10px;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    color: #202020;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: red;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
 }
