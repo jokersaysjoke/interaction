@@ -6,7 +6,7 @@ async function joinRoom(){
     const data=await response.json();
     const dd=data.data;
 
-    hlsClientPLAYer(dd);
+    // hlsClientPLAYer(dd);
 };
 
 function hlsClientPLAYer(streamkey){

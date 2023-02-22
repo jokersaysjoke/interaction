@@ -121,8 +121,6 @@
     background-color: #202020;
 }
 
-.live-chatroom{
-}
 .live-streaming-video{
     display: flex;
     justify-content: center;
@@ -162,4 +160,49 @@
     font-size: 22px;
     cursor: pointer;
     display: none;
+}
+
+.video-head{
+    margin: 10px;
+    color: #fff;
+    font-size: 22px;
+    display: none;
+}
+.video-detail-background{
+    background-color: #202020;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 4px;
+    display: none;
+}
+.video-detail{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+.video-creator-pic{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.video-creator{
+    margin: auto 10px;
+}
+.video-date-background{
+    margin-left: auto;
+}
+.video-type-live{
+    background-color: red;
+    border-radius: 3px;
+    padding: 4px;
+}
+.video-view{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    width: auto;
+    font-size: 17px;
+
 }

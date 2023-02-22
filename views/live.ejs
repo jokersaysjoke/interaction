@@ -70,13 +70,13 @@
                 <div class="main setting-detail-background main-ignore" >
                     <div class="setting-detail ">
                         <div class="setting-detail-head">影片標題<span class="dontnull"> (*必填)</span></div>
-                        <textarea  class="setting-detail-type" placeholder="字數請限制在99字以內" rows="4" cols="40" ></textarea >
+                        <textarea  class="setting-detail-type" placeholder="字數請限制在99字以內" rows="4" cols="33" ></textarea >
                             
                     </div>
 
                     <div class="setting-detail main-ignore">
                         <div>串流金鑰<span class="copyKEY" onclick="copyStremKEY()">(點擊複製)</span></div>
-                        <div class="streamkey" onclick="copyStremKEY()">chunyi</div>
+                        <div class="streamkey" onclick="copyStremKEY()"></div>
                         <div>請將此金鑰貼到推流軟體</div>
 
                     </div>
@@ -88,7 +88,22 @@
                     </div>
                     
                 </div>
-
+                <!-- video-detail -->
+                <div class="video-head"></div>
+                <div class="video-detail-background">
+                    <div class="video-detail">
+                      <div class="video-creator-pic"></div>
+                      <div class="video-creator"></div>
+                      <div class="video-date-background">開始日期：<span class="video-date"></span></div>
+                    </div>
+            
+                    <div class="video-view">
+                      <div class="video-type">類型：<span class="video-type-live">※正在直播</span></div>
+                      <div class="video-count">觀看次數：次</div>
+                      <div class="video-concurrent"></div>
+                    </div>
+                </div>
+                <!-- video-detail END -->
                 <div class="item1">END Stream</div>
 
             </div>
@@ -105,9 +120,6 @@
             </div>
 
         </div>
-        
-
-
         
         <!-- streaming END-->
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>

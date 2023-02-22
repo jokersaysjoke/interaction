@@ -57,14 +57,15 @@ roomAPI.put('/room', async(req, res)=>{
     try {
         let sql=`
         UPDATE ROOM
-        SET STATUS = ?, STREAMKEY = ?
+        SET STATUS = ?, STREAMKEY = ?, HEAD = ?, VIEWCOUNT = ?
         WHERE MASTER = ?
         `;
         const body=req.body;
         const status=body['status'];
         const master=body['master'];
         const streamkey=body['streamkey'];
-        await pool.promise().query(sql, [status, streamkey, master]);
+        const head=body['head'];
+        await pool.promise().query(sql, [status, streamkey, head, 0, master]);
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -103,4 +104,25 @@ roomAPI.get('/room/join', async (req, res)=>{
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
+
+// creator got video detail
+roomAPI.get('/room/auth', async(req, res)=>{
+    try {
+        const cookie=req.cookies['cookie'];
+        const response=jwtVerify(cookie);
+        const name=response['name'];
+
+        let sql=`
+        SELECT *
+        FROM ROOM
+        WHERE MASTER = ?
+        `;
+        
+        const [record]=await pool.promise.query(sql, [name]);
+    } catch (error) {
+        
+    }
+});
+
+
 module.exports=roomAPI;

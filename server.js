@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
+const pool=require('./router/model');
 app.use(cookieParser());
 
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 const cookie = require("cookie");
+
 // socket.io
 const http = require('http');
 const server = http.createServer(app);
@@ -35,9 +37,28 @@ io.on('connection', (socket) => {
       socket.to(roomID).emit('receive-message', {username:username, message:message});
     }
   });
-  socket.on('join-room', roomID => {
+  socket.on('join-room', async roomID => {
+    let sql=`
+    UPDATE ROOM
+    SET CONCURRENT = ?
+    WHERE MASTER = ?
+    `;
+
     socket.join(roomID)
+    io.to(roomID).emit('roomCount', io.sockets.adapter.rooms.get(roomID).size);
+    const count=io.sockets.adapter.rooms.get(roomID).size;
+    await pool.promise().query(sql, [count, roomID]);
+    
+    socket.on('disconnecting',async ()=>{
+      io.to(roomID).emit('roomCount', io.sockets.adapter.rooms.get(roomID).size -1);
+      const discount=io.sockets.adapter.rooms.get(roomID).size -1;
+      await pool.promise().query(sql, [discount, roomID]);
+
+    });
+
+    // io.to(roomID).emit('viewCount', io.sockets.adapter.rooms.get(roomID).size);
   });
+
 });
 // socket.io <END>
 

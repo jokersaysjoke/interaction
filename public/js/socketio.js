@@ -5,12 +5,31 @@ const input = document.getElementById('input');
 const url = window.location.href.split("/");
 const roomID = url.pop();
 
+// join room
+function joinRoom(){
+  socket.emit('join-room', roomID)
+}
+joinRoom();
 
+// listen room count
+socket.on('roomCount', (count)=>{
+  const videoConcrrent=document.querySelector('.video-concurrent');
+  videoConcrrent.innerText=`${count} 人正在觀看`;
 
+})
+
+// view total count
+socket.on('viewCount', (count)=>{
+  const videoCount=document.querySelector('.video-count');
+  videoCount.innerText=`觀看次數：${count}次`;
+})
+
+// listen receive-message
 socket.on('receive-message', message => {
   displayMessage(message);
 })
 
+// send message to server
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
   
@@ -26,11 +45,7 @@ form.addEventListener('submit', async function(e) {
 
 });
 
-function joinRoom(){
-  socket.emit('join-room', roomID)
-}
-joinRoom();
-
+// make message
 function displayMessage(data){
     const li=document.createElement('li');
     

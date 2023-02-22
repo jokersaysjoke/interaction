@@ -138,7 +138,9 @@ async function logOut(){
 const registerBtn=document.querySelector('#register-btn');
 async function signUp(){
     const flashAlert=document.querySelector(".flash-alert");
-
+    
+    randomStreamkey();
+    console.log(randomkey)
     if(userRegisterUsername.value===''||userRegisterEmail.value===''||userRegisterPassword.value===''){
         flashAlert.style.color="red";
         flashAlert.style.display='block';
@@ -149,7 +151,8 @@ async function signUp(){
                 body:JSON.stringify({
                     name:userRegisterUsername.value,
                     email:userRegisterEmail.value,
-                    password:userRegisterPassword.value
+                    password:userRegisterPassword.value,
+                    streamkey:randomkey
             }),
             headers: new Headers({"Content-type":"application/json"})
         })
@@ -201,7 +204,22 @@ userRegisterPassword.addEventListener('keydown', (event) => {
     }
 });
 
-// display account detail
-function displayAccount(){
+// random stream key
+const aZ="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ns="0123456789";
+let randomkey='';
 
+function randomStreamkey(){
+    for(let i=0; i<3; i++){
+        let randomIndex=Math.floor(Math.random()*aZ.length);
+        randomkey+=aZ[randomIndex];
+    };
+    for(let i=0; i<3; i++){
+        let randomIndex=Math.floor(Math.random()*ns.length);
+        randomkey+=ns[randomIndex];
+    };
+    for(let i=0; i<3; i++){
+        let randomIndex=Math.floor(Math.random()*randomkey.length);
+        randomkey+=randomkey[randomIndex];
+    }
 };

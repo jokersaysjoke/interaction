@@ -22,8 +22,9 @@ userAPI.get('/user', async(req, res) => {
         const id=response['id'];
         const name=response['name'];
         const email=response['email'];
+        const streamkey=response['streamkey'];
         const [record]=await pool.promise().query(sql, [name]);
-        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'record':record.length}});
+        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'record':record.length}});
       }else{
         return res.json({"data":null});
       }
@@ -45,7 +46,7 @@ userAPI.put('/user', async (req, res) => {
     const [record] = await pool.promise().query(sql, [email, password, email, password])
     if(record.length > 0){
       const result=Object.assign({}, record[0]);
-      const token=jwtSign(result.ID, result.NAME, result.EMAIL);
+      const token=jwtSign(result.ID, result.NAME, result.EMAIL, result.STREAMKEY);
       res.cookie('cookie', token);
       return res.status(200).json({"ok":true});
     }else{
@@ -67,7 +68,7 @@ userAPI.delete('/user', (req, res) => {
 userAPI.post('/user', async (req, res) => {
   try {
     const data=req.body;
-    const name=data.name, email=data.email, password=data.password;
+    const name=data.name, email=data.email, password=data.password, streamkey=data.streamkey;
     let sql = `
     SELECT *
     FROM MEMBER
@@ -77,10 +78,10 @@ userAPI.post('/user', async (req, res) => {
     if(record.length > 0){
       return res.status(400).json({"error":true, "message":"Email already exist"});
     }else{
-      let sql = `INSERT INTO MEMBER (NAME, EMAIL, PASSWORD) 
-                 VALUES (?,?,?)`;
+      let sql = `INSERT INTO MEMBER (NAME, EMAIL, PASSWORD, STREAMKEY) 
+                 VALUES (?,?,?,?)`;
 
-      await pool.promise().query(sql, [name, email, password]);
+      await pool.promise().query(sql, [name, email, password, streamkey]);
       return res.status(200).json({"ok":true});
     }
   } 

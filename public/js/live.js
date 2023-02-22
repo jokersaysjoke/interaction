@@ -2,6 +2,8 @@ const videoHeader=document.querySelector('.setting-detail-type');
 videoHeader.focus();
 const closeLive=document.querySelector('.close-live');
 closeLive.addEventListener('click', closeRoom);
+createVideoDate();
+
 // 結束串流
 async function closeStreaming(){
     hlsPLAYer('');
@@ -39,22 +41,38 @@ async function closeRoom(){
 
 // 發布串流
 async function createStreamingRoom(streamkey){
-
-    // const header=document.querySelector('.header');
-    // header.style.display='none';
-
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
-    await fetch(`/api/room`, {
-        method:'PUT',
-        body:JSON.stringify({
-            master:master,
-            status:'LIVE',
-            streamkey:`${streamkey}`
-        }),
-        headers: new Headers({"Content-type":"application/json"})
-    })
+    const videoHeader=document.querySelector('.setting-detail-type');
+    const response=await fetch(`/api/room`, {
+            method:'PUT',
+            body:JSON.stringify({
+                master:master,
+                status:'LIVE',
+                streamkey:streamkey,
+                head:videoHeader.value
+            }),
+            headers: new Headers({"Content-type":"application/json"})
+        });
+    const data=await response.json();
+    if(data.ok){
+        const videoDetailBack=document.querySelector('.video-detail-background');
+        videoDetailBack.style.display='block';
+        const creator=document.querySelector('.video-creator');
+        creator.textContent=master;
+        const sqlvideoHeader=document.querySelector('.video-head');
+        sqlvideoHeader.style.display='block';
+        sqlvideoHeader.textContent=videoHeader.value;
+    }
+    
+};
+
+// get own streamkey
+async function getOwnStreamkey(){
+    const response=await fetch('/api/user');
+    const data=await response.json();
+    streamKey.textContent=data.data.streamkey
 };
 
 // copy streamURL、streamKEY
@@ -66,3 +84,26 @@ function copyStreamUEL(){
 function copyStremKEY(){
     navigator.clipboard.writeText(streamKey.innerText);
 };
+
+// create video date
+function createVideoDate(){
+    const videoDate=document.querySelector('.video-date');
+    const t=new Date();
+    videoDate.textContent=`${t.getFullYear()}/${t.getMonth()+1}/${t.getDate()}`
+};
+
+// appear video detail
+async function getVideoDetal(){
+    const response=await fetch(`/api/user`);
+    const data=await response.json();
+    const dd=data.data;
+    const roomRes=await fetch('/api/room');
+    const roomData=await roomRes.json();
+    
+    const videoHeader=document.querySelector('.video-head');
+    videoHeader.style.display='block';
+    const videoDetailBack=document.querySelector('.video-detail-background');
+    videoDetailBack.style.display='block';
+    const creator=document.querySelector('.video-creator');
+    creator.textContent=dd.name;
+}
