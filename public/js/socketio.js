@@ -18,7 +18,7 @@ socket.on('roomCount', (count)=>{
 
 })
 
-// view total count
+// listen view total count
 socket.on('viewCount', (count)=>{
   const videoCount=document.querySelector('.video-count');
   videoCount.innerText=`觀看次數：${count}次`;

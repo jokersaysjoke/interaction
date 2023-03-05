@@ -44,25 +44,24 @@ async function createStreamingRoom(streamkey){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
-    const videoHeader=document.querySelector('.setting-detail-type');
+    const videoDate=document.querySelector('.video-date');
+
     const response=await fetch(`/api/room`, {
             method:'PUT',
             body:JSON.stringify({
                 master:master,
                 status:'LIVE',
                 streamkey:streamkey,
-                head:videoHeader.value
+                head:videoHeader.value,
+                date:videoDate.textContent
             }),
             headers: new Headers({"Content-type":"application/json"})
         });
     const data=await response.json();
     if(data.ok){
-        const videoDetailBack=document.querySelector('.video-detail-background');
-        videoDetailBack.style.display='block';
         const creator=document.querySelector('.video-creator');
         creator.textContent=master;
         const sqlvideoHeader=document.querySelector('.video-head');
-        sqlvideoHeader.style.display='block';
         sqlvideoHeader.textContent=videoHeader.value;
     }
     
@@ -91,19 +90,3 @@ function createVideoDate(){
     const t=new Date();
     videoDate.textContent=`${t.getFullYear()}/${t.getMonth()+1}/${t.getDate()}`
 };
-
-// appear video detail
-async function getVideoDetal(){
-    const response=await fetch(`/api/user`);
-    const data=await response.json();
-    const dd=data.data;
-    const roomRes=await fetch('/api/room');
-    const roomData=await roomRes.json();
-    
-    const videoHeader=document.querySelector('.video-head');
-    videoHeader.style.display='block';
-    const videoDetailBack=document.querySelector('.video-detail-background');
-    videoDetailBack.style.display='block';
-    const creator=document.querySelector('.video-creator');
-    creator.textContent=dd.name;
-}

@@ -43,9 +43,9 @@ roomAPI.post('/room', async (req, res)=>{
           return res.status(403).json({"error":true, "message":"Room already exist"});
         }else{
             let sql=`
-            INSERT INTO ROOM (MASTER, EMAIL, STATUS) 
-            VALUES (?,?,?)`;
-            await pool.promise().query(sql, [name, email, 'Upcoming']);
+            INSERT INTO ROOM (MASTER, EMAIL, STATUS, VIEWCOUNT)
+            VALUES (?,?,?,?)`;
+            await pool.promise().query(sql, [name, email, 'Upcoming', 0]);
             return res.status(200).json({"ok":true});
         }
     } catch (error) {
@@ -57,7 +57,7 @@ roomAPI.put('/room', async(req, res)=>{
     try {
         let sql=`
         UPDATE ROOM
-        SET STATUS = ?, STREAMKEY = ?, HEAD = ?, VIEWCOUNT = ?
+        SET STATUS = ?, STREAMKEY = ?, HEAD = ?, DATE = ?, VIEWCOUNT = ?
         WHERE MASTER = ?
         `;
         const body=req.body;
@@ -65,7 +65,8 @@ roomAPI.put('/room', async(req, res)=>{
         const master=body['master'];
         const streamkey=body['streamkey'];
         const head=body['head'];
-        await pool.promise().query(sql, [status, streamkey, head, 0, master]);
+        const date=body['date'];
+        await pool.promise().query(sql, [status, streamkey, head, date, 0, master]);
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -97,32 +98,38 @@ roomAPI.get('/room/join', async (req, res)=>{
         WHERE MASTER = ?
         `;
         const [record]=await pool.promise().query(sql, [host]);
-        const [{STREAMKEY:streamkey}]=record;
-        res.status(200).json({data:streamkey})
+        res.status(200).json({data:record})
         
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
 
-// creator got video detail
-roomAPI.get('/room/auth', async(req, res)=>{
+roomAPI.put('/room/join', async(req, res)=>{
     try {
-        const cookie=req.cookies['cookie'];
-        const response=jwtVerify(cookie);
-        const name=response['name'];
-
+        const body=req.body;
+        const host=body['host'];
         let sql=`
-        SELECT *
+        SELECT VIEWCOUNT
         FROM ROOM
         WHERE MASTER = ?
         `;
-        
-        const [record]=await pool.promise.query(sql, [name]);
+        const [record]=await pool.promise().query(sql, [host]);
+
+        if(record){
+            let sql2=`
+            UPDATE ROOM
+            SET VIEWCOUNT = VIEWCOUNT + ?
+            WHERE MASTER = ?
+            `;
+            await pool.promise().query(sql2, [1, host]);
+            return res.status(200).json({"ok":true});
+        }else{
+          return res.status(403).json({"error":true, "message":"no record"});
+        }
     } catch (error) {
-        
+        return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
-
 
 module.exports=roomAPI;

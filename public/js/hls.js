@@ -10,15 +10,15 @@ toLiveStream.addEventListener('click', ()=>{
         dontnull.textContent='(*必填且字串99字以內><)'
         videoHeader.focus();
     }else{
-        // hlsPLAYer(streamKey.textContent)
+        hlsPLAYer(streamKey.textContent)
         createStreamingRoom(streamKey.textContent)
-        fakehlsPLAYer();
+        // fakehlsPLAYer(streamKey.textContent);
     }
     
 });
 
 function hlsPLAYer(streamkey){
-    let videoSrc = `https://jokersaysjoke.online/hls/${streamkey}.m3u8`;
+    let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
     if (Hls.isSupported()) {
         const video = document.querySelector(".video");
         let hls = new Hls();
@@ -27,9 +27,9 @@ function hlsPLAYer(streamkey){
         hls.on(Hls.Events.FRAG_LOADED, function(event, data) {
             // disappear 
             const mainignore=document.querySelectorAll('.main-ignore');
-            for(let i=0; i<mainignore.length; i++){
-                mainignore[i].style.display='none';
-            }
+            mainignore.forEach((elment)=>{
+                elment.style.display='none';
+            })
             // appear end stream btn
             const item1=document.querySelector('.item1');
             item1.addEventListener('click', closeStreaming);
@@ -37,7 +37,12 @@ function hlsPLAYer(streamkey){
             // appear chat
             const chat=document.querySelector('.chat-background');
             chat.style.display='block';
-            
+            // appear detail about video
+            const videoDetailBack=document.querySelector('.video-detail-background');
+            videoDetailBack.style.display='block';
+            const sqlvideoHeader=document.querySelector('.video-head');
+            sqlvideoHeader.style.display='block';
+
             input.focus();
             
     });
@@ -46,19 +51,19 @@ function hlsPLAYer(streamkey){
     }
 };
 
-function fakehlsPLAYer(){
-    // disappear 
-    const mainignore=document.querySelectorAll('.main-ignore');
-    for(let i=0; i<mainignore.length; i++){
-        mainignore[i].style.display='none';
-    }
-    // appear end stream btn
-    const item1=document.querySelector('.item1');
-    item1.addEventListener('click', closeStreaming);
-    item1.style.display='flex'
-    // appear chat
-    const chat=document.querySelector('.chat-background');
-    chat.style.display='block';
+// function fakehlsPLAYer(){
+//     // disappear 
+//     const mainignore=document.querySelectorAll('.main-ignore');
+//     for(let i=0; i<mainignore.length; i++){
+//         mainignore[i].style.display='none';
+//     }
+//     // appear end stream btn
+//     const item1=document.querySelector('.item1');
+//     item1.addEventListener('click', closeStreaming);
+//     item1.style.display='flex'
+//     // appear chat
+//     const chat=document.querySelector('.chat-background');
+//     chat.style.display='block';
     
-    input.focus();
-};
+//     input.focus();
+// };

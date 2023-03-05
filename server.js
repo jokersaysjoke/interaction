@@ -49,14 +49,22 @@ io.on('connection', (socket) => {
     const count=io.sockets.adapter.rooms.get(roomID).size;
     await pool.promise().query(sql, [count, roomID]);
     
-    socket.on('disconnecting',async ()=>{
+    socket.on('disconnecting', async ()=>{
       io.to(roomID).emit('roomCount', io.sockets.adapter.rooms.get(roomID).size -1);
       const discount=io.sockets.adapter.rooms.get(roomID).size -1;
       await pool.promise().query(sql, [discount, roomID]);
-
+     
     });
+    
+    let sql2=`
+    SELECT VIEWCOUNT
+    FROM ROOM
+    WHERE MASTER = ?
+    `;
+    const [record]=await pool.promise().query(sql2, [roomID]);
+    const [{VIEWCOUNT:viewCount}]=record;
+    io.to(roomID).emit('viewCount', viewCount);
 
-    // io.to(roomID).emit('viewCount', io.sockets.adapter.rooms.get(roomID).size);
   });
 
 });
@@ -71,6 +79,7 @@ const live=require('./router/liveStream');
 app.use('/live', live);
 const room=require('./router/roomStream');
 app.use('/room', room);
+
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
