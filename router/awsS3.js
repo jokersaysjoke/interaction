@@ -2,6 +2,7 @@ require('dotenv').config()
 const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3');
 
+
 const bucketName=process.env.AWS_BUCKET_NAME;
 const region=process.env.AWS_BUCKET_REGION;
 const accessKeyId=process.env.AWS_ACCESS_KEY;
@@ -14,15 +15,13 @@ const s3=new S3({
 });
 
 // uploads to s3
-function uploadFile(file){
-    const fileStream=fs.createReadStream(file.path);
-
+function uploadFile(streamkey, content){
+    const fileStream=fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
     const uploadParms={
         Bucket: bucketName,
         Body: fileStream,
-        Key: file.filename
+        Key: `${content}.mp4`
     }
     return s3.upload(uploadParms).promise();
-    
 }
 exports.uploadFile=uploadFile;

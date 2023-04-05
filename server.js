@@ -8,18 +8,18 @@ app.use(cookieParser());
 const path = require('path');
 const {jwtVerify} = require(path.join(__dirname + '/router/jwt'));
 
-// app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', './views'); 
-// app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname + '/public')));
 
 app.get('/', (req, res) => {
   res.render('index.ejs', {})
 });
+app.get('/home', (req, res)=>{
+  res.render('home.ejs', {})
+})
 
 const cookie = require("cookie");
-
 // socket.io
 const http = require('http');
 const server = http.createServer(app);
@@ -49,14 +49,22 @@ io.on('connection', (socket) => {
     const count=io.sockets.adapter.rooms.get(roomID).size;
     await pool.promise().query(sql, [count, roomID]);
     
-    socket.on('disconnecting',async ()=>{
+    socket.on('disconnecting', async ()=>{
       io.to(roomID).emit('roomCount', io.sockets.adapter.rooms.get(roomID).size -1);
       const discount=io.sockets.adapter.rooms.get(roomID).size -1;
       await pool.promise().query(sql, [discount, roomID]);
-
+     
     });
+    
+    let sql2=`
+    SELECT VIEWCOUNT
+    FROM ROOM
+    WHERE MASTER = ?
+    `;
+    const [record]=await pool.promise().query(sql2, [roomID]);
+    const [{VIEWCOUNT:viewCount}]=record;
+    io.to(roomID).emit('viewCount', viewCount);
 
-    // io.to(roomID).emit('viewCount', io.sockets.adapter.rooms.get(roomID).size);
   });
 
 });
@@ -67,10 +75,16 @@ const userAPI=require('./router/api/user');
 app.use('/api', userAPI);
 const roomAPI=require('./router/api/room');
 app.use('/api', roomAPI);
+const s3API=require('./router/api/s3');
+app.use('/api', s3API);
 const live=require('./router/liveStream');
 app.use('/live', live);
 const room=require('./router/roomStream');
 app.use('/room', room);
+// API <END>
+
+
+
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

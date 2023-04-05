@@ -68,6 +68,7 @@ userAPI.delete('/user', (req, res) => {
 userAPI.post('/user', async (req, res) => {
   try {
     const data=req.body;
+    console.log(data);
     const name=data.name, email=data.email, password=data.password, streamkey=data.streamkey;
     let sql = `
     SELECT *

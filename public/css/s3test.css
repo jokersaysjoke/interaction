@@ -1,0 +1,14 @@
+body{
+    margin: 0 auto;
+    background-color: #202020;
+    color: #fff;
+    text-align: center;
+}
+
+img{
+    width: 200px;
+    height: auto;
+}
+p{
+    font-size: 20px;
+}

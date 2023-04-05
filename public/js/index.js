@@ -8,7 +8,6 @@ async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const name=result.data.name;
-    const email=result.data.email;
     let response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
@@ -24,12 +23,10 @@ async function registerLiveRoom(){
     )
 };
 
-//fetch live-room
+// fetch live-room
 async function fetchLiveRoom(){
     const response=await fetch(`/api/room`);
     const data=await response.json();
-    
-    console.log(data);
     
     if(data.data){
         const dd=data.data;
@@ -44,7 +41,6 @@ async function fetchLiveRoom(){
 
 //create live-room
 function createLiveRoom(data){
-    console.log(data);
 
     // 建立 div 元素
     const div = document.createElement('div');

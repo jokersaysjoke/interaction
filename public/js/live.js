@@ -10,6 +10,7 @@ async function closeStreaming(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
+
     await fetch(`/api/room`, {
         method:'PUT',
         body:JSON.stringify({
@@ -20,7 +21,7 @@ async function closeStreaming(){
         headers: new Headers({"Content-type":"application/json"})
     });
     const item1=document.querySelector('.item1');
-    item1.addEventListener('click', closeRoom);
+    item1.addEventListener('click', upload2S3);
     item1.textContent='QUIT';
 
 };
@@ -36,33 +37,60 @@ async function closeRoom(){
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
+
     location.href=`/`
 };
+
+// 上傳 s3
+async function upload2S3(){
+    const user=await fetch(`/api/user`);
+    const result=await user.json();
+    const master=result.data.name;
+    await fetch(`/api/room`, {
+        method:'DELETE',
+        body:JSON.stringify({
+            master:master
+        }),
+        headers: new Headers({"Content-type":"application/json"})
+    });
+
+    await fetch(`/api/s3`, {
+        method:'POST',
+        body:JSON.stringify({
+            streamkey:streamKey.textContent,
+            head:videoHeader.value
+        }),
+        headers: new Headers({"Content-type":"application/json"})
+
+    })
+
+    location.href=`/`
+};
+
 
 // 發布串流
 async function createStreamingRoom(streamkey){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const master=result.data.name;
-    const videoHeader=document.querySelector('.setting-detail-type');
+    const videoDate=document.querySelector('.video-date');
+
     const response=await fetch(`/api/room`, {
             method:'PUT',
             body:JSON.stringify({
                 master:master,
                 status:'LIVE',
                 streamkey:streamkey,
-                head:videoHeader.value
+                head:videoHeader.value,
+                date:videoDate.textContent
             }),
             headers: new Headers({"Content-type":"application/json"})
         });
     const data=await response.json();
     if(data.ok){
-        const videoDetailBack=document.querySelector('.video-detail-background');
-        videoDetailBack.style.display='block';
         const creator=document.querySelector('.video-creator');
         creator.textContent=master;
         const sqlvideoHeader=document.querySelector('.video-head');
-        sqlvideoHeader.style.display='block';
         sqlvideoHeader.textContent=videoHeader.value;
     }
     
@@ -77,7 +105,7 @@ async function getOwnStreamkey(){
 
 // copy streamURL、streamKEY
 const streamURL=document.querySelector('.streamURL');
-function copyStreamUEL(){
+function copyStreamURL(){
     navigator.clipboard.writeText(streamURL.innerText);
 };
 
@@ -91,19 +119,3 @@ function createVideoDate(){
     const t=new Date();
     videoDate.textContent=`${t.getFullYear()}/${t.getMonth()+1}/${t.getDate()}`
 };
-
-// appear video detail
-async function getVideoDetal(){
-    const response=await fetch(`/api/user`);
-    const data=await response.json();
-    const dd=data.data;
-    const roomRes=await fetch('/api/room');
-    const roomData=await roomRes.json();
-    
-    const videoHeader=document.querySelector('.video-head');
-    videoHeader.style.display='block';
-    const videoDetailBack=document.querySelector('.video-detail-background');
-    videoDetailBack.style.display='block';
-    const creator=document.querySelector('.video-creator');
-    creator.textContent=dd.name;
-}
