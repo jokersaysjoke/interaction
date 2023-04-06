@@ -14,8 +14,8 @@
         <div class="register-window">
             <div class="user-login">
                 <form>
-                    <input id="user-login-id" class="user-login-input" placeholder="Username or email address">
-                    <input id="user-login-pw" class="user-login-input" placeholder="Password" type="password">
+                    <input type="text" id="user-login-id" class="user-login-input" placeholder="Username or email address" value="test">
+                    <input type="password" id="user-login-pw" class="user-login-input" placeholder="Password" value="test">
                 </form>
                 <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
             </div>
@@ -42,12 +42,12 @@
         <!-- Register END -->
         <!-- head -->
         <div class="header">
-            <div class="header-left">
-                <a class="welcome" href="/" >交互作用</a>
-                <a class="logo" href="/">Interaction</a>
+            <div class="header-left" onclick="location.href='/'">
+                <span class="welcome">交互作用</span>
+                <span class="logo">Interaction</span>
             </div>
             <div class="header-right">
-                <div class="account-status">Sign in</div>
+                <div class="account-status"></div>
                 <div class="create-btn">開始直播</div>
             </div>
             
@@ -64,7 +64,7 @@
                     透過 OBS 進行直播，來分享畫面或遊戲過程等娛樂。
                     或者，
                     <br>
-                    在進行第一次直播前，可以參考<a>教學步驟</a>。
+                    在進行第一次直播前，可以參考<a href="/description">教學步驟</a>。
                 </p>
                 <div class="create-btn">開始直播</div>
             </div>
@@ -74,7 +74,12 @@
             </div>
         </div>
         <!-- main END -->
-        <div class="main-background account">還沒有帳戶？<a>點此註冊</a></div>
-        <footer class="main-background copyright">Copyright © 2023 Interaction</footer>
+        <div class="main-background account">還沒有帳戶？<a onclick="register()">點此註冊</a></div>
+        <footer class="main-background copyright">Copyright © 2023 Interaction&nbsp;
+            <a href="https://github.com/jokersaysjoke/interaction">
+                <img src="img/github.png" height="22px" cursor="pointer">
+            </a>
+        </footer>
+        <script src="/js/user.js"></script>
     </body>
 </html>

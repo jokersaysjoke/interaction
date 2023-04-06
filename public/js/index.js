@@ -1,5 +1,4 @@
 //載入頁面
-window.onload=memberStatus();
 window.onload=fetchLiveRoom();
 
 

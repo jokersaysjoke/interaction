@@ -18,6 +18,9 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res)=>{
   res.render('home.ejs', {})
 })
+app.get('/description', (req, res)=>{
+  res.render('desc.ejs', {})
+})
 
 const cookie = require("cookie");
 // socket.io

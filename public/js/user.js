@@ -1,8 +1,10 @@
-//click open register window
+// click open register window
 const accountStatus=document.querySelector(".account-status");
 const registerWindow=document.querySelector('.register-window');
 const registerWindowBackground=document.querySelector('.register-window-background');
 const create=document.querySelector('.create');
+const account=document.querySelector('.account');
+
 
 function openRegister(){
     registerWindow.style.display='block';
@@ -14,6 +16,13 @@ function closeRegister(){
     registerWindow.style.display='none';
     registerWindowBackground.style.display='none';
     window.location.reload();
+};
+function register(){
+    registerWindow.style.display='block';
+    registerWindowBackground.style.display='block';
+    registerWindowBackground.addEventListener('click', closeRegister);
+    toggleStatus();
+    userLoginID.focus();
 };
 
 // toggle login/register
@@ -45,18 +54,17 @@ function toggleStatus(){
 
 // 登入狀態
 async function memberStatus(){
+    const createStreamBtn=document.querySelectorAll('.create-btn');
     const welcome=document.querySelector('.welcome');
-    // accountStatus.textContent="登入/註冊";
     const response=await fetch(`/api/user`);
     const data=await response.json();
     if(data.data!==null){
-        welcome.textContent=`你好，${data.data.name}`;
-        // welcome.textContent=`交互作用`;
+
         welcome.addEventListener('click', ()=>{
-            location.href=`/`;
+            location.href=`/home`;
         });
         accountStatus.style.display='flex';
-        accountStatus.textContent='登出';
+        accountStatus.textContent='Sign out';
         accountStatus.addEventListener('click', logOut);
         if(data.data.record===0){
             if(create){
@@ -71,11 +79,12 @@ async function memberStatus(){
             })
         }
         
-        
     }else{
-        accountStatus.textContent="登入/註冊";
-        accountStatus.addEventListener('click', openRegister())
-
+        accountStatus.textContent='Sign in';
+        accountStatus.addEventListener('click', openRegister);
+        createStreamBtn.forEach((item, index)=>{
+            item.addEventListener('click', openRegister)
+        });
     }
 };
 
@@ -124,7 +133,7 @@ async function logOut(){
     })
     const data=await response.json();
     if(data.ok){
-        accountStatus.textContent=`登入/註冊`
+        accountStatus.textContent=`Sign in`
         if(create){
             create.style.display='none';
         }
@@ -223,3 +232,6 @@ function randomStreamkey(){
         randomkey+=randomkey[randomIndex];
     }
 };
+
+// 載入頁面
+window.onload=memberStatus();

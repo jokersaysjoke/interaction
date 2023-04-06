@@ -30,6 +30,9 @@ body{
     display: flex;
     align-items: center;
 }
+.header-left{
+    cursor: pointer;
+}
 .header-right{
     justify-content: space-between;
     width: 366px;
