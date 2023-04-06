@@ -12,15 +12,14 @@ toLiveStream.addEventListener('click', ()=>{
     }else{
         hlsPLAYer(streamKey.textContent)
         createStreamingRoom(streamKey.textContent)
-        // fakehlsPLAYer();
+
     }
     
 });
 
 function hlsPLAYer(streamkey){
     let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
-    // let videoSrc = `https://jokersaysjoke.online/hls/${streamkey}.m3u8`;
-    console.log(videoSrc);
+
     if (Hls.isSupported()) {
         const video = document.querySelector(".video");
         let hls = new Hls();
