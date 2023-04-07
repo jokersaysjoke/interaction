@@ -21,25 +21,41 @@
 .main-background>span, .main-contain>span{
     color: #BB86FC;
 }
-.main-background>img{
+.main-img>img{
     width: 100%;
-    z-index: 1;
+}
+.main-img-detail-background{
+    display: flex;
+    max-width: 300px;
+    width: 100%;
+    padding: 10px;
 }
 .main-contain-background{
     margin: -33px auto;
     display: flex;
     justify-content: space-around;
-
-
+}
+.main-img-detail{
+    overflow: hidden;
+    width: 155px;
+    height: 155px;
+}
+.main-img-detail>img{
+    width: 100%;
+    object-fit: cover;
 }
 .main-contain{
-    background-color: #252525;
-    z-index: -1;
-    width: 22%;
-    height: 200px;
-    border-radius: 11px;
+    width: 33%;
+    line-height: 30px;
     font-size: 18px;
     padding: 22px;
+}
+.main-contain>div{
+    color: #F0047F;
+    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 10px auto;
 }
 footer{
     display: flex;
@@ -55,3 +71,4 @@ footer{
     height: calc(11vh);
     font-size: 16px;
 }
+
