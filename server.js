@@ -1,19 +1,23 @@
+// 導入 express
 const express = require('express');
 const app = express();
+const path = require('path');
+app.use(express.static('./public'));
+
 const cookieParser = require('cookie-parser');
 const pool=require('./router/model');
 app.use(cookieParser());
 
-
-const path = require('path');
-const {jwtVerify} = require(path.join(__dirname + '/router/jwt'));
-
 app.set('view engine', 'ejs');
 app.set('views', './views'); 
-app.use(express.static(path.join(__dirname + '/public')));
 
 app.get('/', (req, res) => {
-  res.render('index.ejs', {})
+  const cookie=req.cookies['cookie'];
+  if(cookie){
+    res.render('index.ejs', {});
+  }else{
+    res.redirect('/home');
+  }
 });
 app.get('/home', (req, res)=>{
   res.render('home.ejs', {})

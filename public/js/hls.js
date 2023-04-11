@@ -7,14 +7,15 @@ toLiveStream.addEventListener('click', ()=>{
     if(videoHeader.value==='' || videoHeader.value.length>99){
         const dontnull=document.querySelector('.dontnull');
         dontnull.style.color='red';
-        dontnull.textContent='(*必填且字串99字以內><)'
+        dontnull.textContent='(*必填且字串99字以內)'
         videoHeader.focus();
     }else{
-        hlsPLAYer(streamKey.textContent)
-        createStreamingRoom(streamKey.textContent)
+        // hlsPLAYer(streamKey.textContent);
+        fakehlsPLAYer(streamKey.textContent);
+
+        createStreamingRoom(streamKey.textContent);
 
     }
-    
 });
 
 function hlsPLAYer(streamkey){
@@ -52,19 +53,19 @@ function hlsPLAYer(streamkey){
     }
 };
 
-// function fakehlsPLAYer(){
-//     // disappear 
-//     const mainignore=document.querySelectorAll('.main-ignore');
-//     for(let i=0; i<mainignore.length; i++){
-//         mainignore[i].style.display='none';
-//     }
-//     // appear end stream btn
-//     const item1=document.querySelector('.item1');
-//     item1.addEventListener('click', closeStreaming);
-//     item1.style.display='flex'
-//     // appear chat
-//     const chat=document.querySelector('.chat-background');
-//     chat.style.display='block';
+function fakehlsPLAYer(){
+    // disappear 
+    const mainignore=document.querySelectorAll('.main-ignore');
+    for(let i=0; i<mainignore.length; i++){
+        mainignore[i].style.display='none';
+    }
+    // appear end stream btn
+    const item1=document.querySelector('.item1');
+    item1.addEventListener('click', closeStreaming);
+    item1.style.display='flex'
+    // appear chat
+    const chat=document.querySelector('.chat-background');
+    chat.style.display='block';
     
-//     input.focus();
-// };
+    input.focus();
+};

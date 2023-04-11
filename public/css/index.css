@@ -1,8 +1,8 @@
 .video-preview-background{
     position: relative;
     background-color: #202020;
-    margin: 100px auto;
-    max-width: 1200px;
+    margin: 30px auto;
+    max-width: 999px;
     width: 90%;
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -72,17 +72,4 @@
     top: 10px;
     cursor: pointer;
     display: none;
-}
-
-.createDispay{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@media(max-width: 1200px){
-    .video-preview-background{
-    grid-template-columns: repeat(2,1fr);
-
-    }
 }

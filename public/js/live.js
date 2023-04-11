@@ -21,7 +21,8 @@ async function closeStreaming(){
         headers: new Headers({"Content-type":"application/json"})
     });
     const item1=document.querySelector('.item1');
-    item1.addEventListener('click', upload2S3);
+    // item1.addEventListener('click', upload2S3);
+    item1.addEventListener('click', closeRoom);
     item1.textContent='QUIT';
 
 };
@@ -38,7 +39,7 @@ async function closeRoom(){
         headers: new Headers({"Content-type":"application/json"})
     });
 
-    location.href=`/`
+    location.href=`/home`
 };
 
 // 上傳 s3
@@ -90,8 +91,13 @@ async function createStreamingRoom(streamkey){
     if(data.ok){
         const creator=document.querySelector('.video-creator');
         creator.textContent=master;
+        
         const sqlvideoHeader=document.querySelector('.video-head');
         sqlvideoHeader.textContent=videoHeader.value;
+        sqlvideoHeader.style.display='block';
+
+        const vdb=document.querySelector('.video-detail-background');
+        vdb.style.display='block';
     }
     
 };

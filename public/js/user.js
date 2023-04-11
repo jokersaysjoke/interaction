@@ -2,7 +2,7 @@
 const accountStatus=document.querySelector(".account-status");
 const registerWindow=document.querySelector('.register-window');
 const registerWindowBackground=document.querySelector('.register-window-background');
-const create=document.querySelector('.create');
+const createStreamBtn=document.querySelectorAll('.create-btn');
 const account=document.querySelector('.account');
 
 
@@ -54,7 +54,10 @@ function toggleStatus(){
 
 // 登入狀態
 async function memberStatus(){
-    const createStreamBtn=document.querySelectorAll('.create-btn');
+    
+    createStreamBtn.forEach((item, index)=>{
+        item.textContent='開始直播';
+    })
     const welcome=document.querySelector('.welcome');
     const response=await fetch(`/api/user`);
     const data=await response.json();
@@ -67,15 +70,15 @@ async function memberStatus(){
         accountStatus.textContent='Sign out';
         accountStatus.addEventListener('click', logOut);
         if(data.data.record===0){
-            if(create){
-                create.classList.add('createDispay');
-                create.addEventListener('click', registerLiveRoom)
-            }
+            createStreamBtn.forEach((item, index)=>{
+                item.addEventListener('click', registerLiveRoom)
+            })
+            
         }else{
-            create.textContent='回直播'
-            create.classList.add('createDispay');
-            create.addEventListener('click', ()=>{
-                location.href=`/live/${data.data.name}`
+            createStreamBtn.forEach((item, index)=>{
+                item.addEventListener('click', ()=>{
+                    location.href=`/live/${data.data.name}`
+                })
             })
         }
         
@@ -134,12 +137,7 @@ async function logOut(){
     const data=await response.json();
     if(data.ok){
         accountStatus.textContent=`Sign in`
-        if(create){
-            create.style.display='none';
-        }
         setTimeout("location.reload()", 500)
-    }else{
-        console.log(data)
     }
 };
 
@@ -149,7 +147,6 @@ async function signUp(){
     const flashAlert=document.querySelector(".flash-alert");
     
     randomStreamkey();
-    console.log(randomkey)
     if(userRegisterUsername.value===''||userRegisterEmail.value===''||userRegisterPassword.value===''){
         flashAlert.style.color="red";
         flashAlert.style.display='block';
@@ -235,3 +232,21 @@ function randomStreamkey(){
 
 // 載入頁面
 window.onload=memberStatus();
+
+// register live room
+async function registerLiveRoom(){
+    const user=await fetch(`/api/user`);
+    const result=await user.json();
+    const name=result.data.name;
+    let response=await fetch(`/api/room`, {
+        method:'POST',
+        body:JSON.stringify({
+            name:name
+        }),
+        headers: new Headers({"Content-type":"application/json"})
+    });
+    let data=await response.json();
+    if(data.ok){
+        location.href=`/live/${name}`
+    }
+};

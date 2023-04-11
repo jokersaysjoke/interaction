@@ -11,41 +11,19 @@
         <link rel="stylesheet" href="/css/socketio.css">
     </head>
     <body>
-        <!-- Register -->
-        <div class="register-window">
-            <div class="user-login">
-                <form>
-                    <input id="user-login-id" class="user-login-input" placeholder="Username or email address">
-                    <input id="user-login-pw" class="user-login-input" placeholder="Password" type="password">
-                </form>
-                <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
-            </div>
-            <div class="register">
-                <form>
-                    <input id="user-register-username" class="register-input" placeholder="Username">
-                    <input id="user-register-email" class="register-input" placeholder="Email">
-                    <input id="user-register-password" class="register-input" placeholder="Password" type="password">
-                </form>
-                <input type="submit" id="register-btn" class="btn" value="Register" onclick="signUp()">    
-            </div>
-            <br>
-            <br>
-            <div class="login-callout">
-                <span class="have-account">還沒有帳戶?</span>
-                <span class="click-status">點此註冊</span>
-            </div>
-            <br>
-            <br>
-            <div class="flash-alert"></div>
-        </div>
-        <!-- 遮罩 -->
-        <div class="register-window-background"></div>
-        <!-- Register END -->
+        <!-- head -->
         <div class="header">
-            <a class="welcome" href="/" onclick="location.href='/'">首頁</a>
-            <div class="account-status"></div>
+            <a class="header-left" href="/" >
+                <span class="welcome">交互作用</span>
+                <span class="logo">Interaction</span>
+            </a>
+            <div class="header-right">
+                <div class="account-status"></div>
+                <div class="create-btn">開始直播</div>
+            </div>
         </div>
         <div class="header-background"></div>
+        <!-- head END-->
         <!-- streaming -->
         <div class="background">
             <div class="main-background">
@@ -70,7 +48,7 @@
                 <div class="main setting-detail-background main-ignore" >
                     <div class="setting-detail ">
                         <div class="setting-detail-head">影片標題<span class="dontnull"> (*必填)</span></div>
-                        <textarea  class="setting-detail-type" placeholder="字數請限制在99字以內" rows="4" cols="33" ></textarea >
+                        <textarea  class="setting-detail-type" placeholder="字數請限制在99字以內" rows="4" cols="33" >串流直播：測試</textarea >
                             
                     </div>
 
@@ -120,7 +98,6 @@
             </div>
 
         </div>
-        
         <!-- streaming END-->
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         <script src="/socket.io/socket.io.js"></script>

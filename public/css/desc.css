@@ -31,14 +31,13 @@
     padding: 10px;
 }
 .main-contain-background{
-    margin: -33px auto;
+    margin: -22px auto;
     display: flex;
     justify-content: space-around;
 }
 .main-img-detail{
     overflow: hidden;
     width: 155px;
-    height: 155px;
 }
 .main-img-detail>img{
     width: 100%;
@@ -57,18 +56,5 @@
     justify-content: center;
     margin: 20px auto 10px auto;
 }
-footer{
-    display: flex;
-    justify-content: center;
-    margin: 30px auto;
-    max-width: 999px;
-    width: 100%;
-    
-}
-.copyright{
-    align-items: center;
-    bottom: 0;
-    height: calc(11vh);
-    font-size: 16px;
-}
+
 

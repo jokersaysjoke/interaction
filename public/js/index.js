@@ -2,26 +2,6 @@
 window.onload=fetchLiveRoom();
 
 
-// register live room
-async function registerLiveRoom(){
-    const user=await fetch(`/api/user`);
-    const result=await user.json();
-    const name=result.data.name;
-    let response=await fetch(`/api/room`, {
-        method:'POST',
-        body:JSON.stringify({
-            name:name
-        }),
-        headers: new Headers({"Content-type":"application/json"})
-    });
-    let data=await response.json();
-    if(data.ok){
-        location.href=`/live/${name}`
-    }else(
-        console.log(data)
-    )
-};
-
 // fetch live-room
 async function fetchLiveRoom(){
     const response=await fetch(`/api/room`);
