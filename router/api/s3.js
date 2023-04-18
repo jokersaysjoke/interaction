@@ -31,13 +31,12 @@ s3API.post('/s3', async(req, res)=>{
     try {
         const streamkey=req.body.streamkey;
         const content=req.body.head;
-        uploadFile(streamkey, content);
+        await uploadFile(streamkey, content);
         
         return res.status(200).json({"data":"OK"});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
-
 
 module.exports=s3API;
