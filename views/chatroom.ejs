@@ -8,89 +8,64 @@
     <link rel="stylesheet" href="/css/socketio.css">
   </head>
   <body>
-    <!-- Register -->
-    <div class="register-window">
-      <div class="user-login">
-          <form>
-              <input type="text" id="user-login-id" class="user-login-input" placeholder="Username or email address">
-              <input type="password" id="user-login-pw" class="user-login-input" placeholder="Password">
-          </form>
-          <input type="submit" id="login-btn" class="btn" value="Sign in" onclick="signIn()">
-      </div>
-      <div class="register">
-          <form>
-              <input type="text" id="user-register-username" class="register-input" placeholder="Username">
-              <input type="text" id="user-register-email" class="register-input" placeholder="Email">
-              <input type="password" id="user-register-password" class="register-input" placeholder="Password">
-          </form>
-          <input type="submit" id="register-btn" class="btn" value="Register" onclick="signUp()">    
-      </div>
-      <br>
-      <br>
-      <div class="login-callout">
-          <span class="have-account">還沒有帳戶?</span>
-          <span class="click-status">點此註冊</span>
-      </div>
-      <br>
-      <br>
-      <div class="flash-alert"></div>
-  </div>
-  <!-- 遮罩 -->
-  <div class="register-window-background"></div>
-  <!-- Register END -->
+    <!-- head -->
     <div class="header">
-      <a class="welcome" href="/" onclick="location.href='/'">首頁</a>
-      <div class="account-status"></div>
+        <a class="header-left" href="/" >
+            <span class="welcome">交互作用</span>
+            <span class="logo">Interaction</span>
+        </a>
+        <div class="header-right">
+            <div class="account-status"></div>
+        </div>
     </div>
-    <div class="header-background"></div>
+    <!-- head END-->
+      <div class="header-background"></div>
+      <div class="background">
+        <!-- 影片 -->
+        <div class="main-background">
+          <div class="main">
+              <div class="setting">
+                  <div class="live-window">
+                      <div class="live-video-window-background">
+                          <video type="application/x-mpegURL" class="video" id="video" width="100%" controls autoplay>#Live-window</video>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-    <div class="background">
-      <!-- 影片 -->
-      <div class="main-background">
-        <div class="main">
-            <div class="setting">
-                <div class="live-window">
-                    <div class="live-video-window-background">
-                        <video type="application/x-mpegURL" class="video" id="video" width="100%" controls autoplay>#Live-window</video>
-                    </div>
+          <div class="video-head"></div>
+
+          <div class="video-detail-background">
+            <div class="video-detail">
+              <div class="video-creator-pic"></div>
+              <div class="video-creator">ChunYi</div>
+              <div class="video-date-background">開始日期：<span class="video-date"></span></div>      
+            </div>
+    
+            <div class="video-view">
+              <div class="video-type">類型：<span class="video-type-live">※正在直播</span></div>
+              <div class="video-count"></div>
+              <div class="video-concurrent"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 影片 END-->
+        <!-- 聊天室 -->
+        <div class="main-background client-chat">
+            <div class="live-chatroom-background">
+                <div class="live-chatroom">
+                    <div id="messages" class="messages"></div>
                 </div>
+                <form id="form" action="">
+                  <input id="input" placeholder="留言......." autocomplete="off" />
+                </form>
             </div>
         </div>
-
-        <div class="video-head"></div>
-
-        <div class="video-detail-background">
-          <div class="video-detail">
-            <div class="video-creator-pic"></div>
-            <div class="video-creator">ChunYi</div>
-            <div class="video-date-background">開始日期：<span class="video-date"></span></div>      
-          </div>
-  
-          <div class="video-view">
-            <div class="video-type">類型：<span class="video-type-live">※正在直播</span></div>
-            <div class="video-count"></div>
-            <div class="video-concurrent"></div>
-          </div>
-        </div>
-      </div>
-      <!-- 影片 END-->
-      <!-- 聊天室 -->
-      <div class="main-background client-chat">
-          <div class="live-chatroom-background">
-              <div class="live-chatroom">
-                  <div id="messages" class="messages"></div>
-              </div>
-              <form id="form" action="">
-                <input id="input" placeholder="留言......." autocomplete="off" />
-              </form>
-          </div>
-      </div>
-      <!-- 聊天室 END-->
-  </div>
+        <!-- 聊天室 END-->
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/user.js"></script>
     <script src="/js/socketio.js"></script>
     <script src="/js/chatroom.js"></script>
   </body>

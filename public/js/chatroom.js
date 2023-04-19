@@ -21,14 +21,7 @@ async function joinRoom(){
 
     hlsClientPLAYer(dd.STREAMKEY);
 
-    // view count
-    await fetch(`/api/room/join`, {
-        method:'PUT',
-        body:JSON.stringify({
-            host:roomID
-        }),
-        headers: new Headers({"Content-type":"application/json"})
-    });
+
 
 };
 

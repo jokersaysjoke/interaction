@@ -1,8 +1,16 @@
+const createStreamBtn=document.querySelector('.create-btn');
+createStreamBtn.className='item1';
+createStreamBtn.textContent='END Stream';
+
+const logo=document.querySelector('.header-left');
+logo.addEventListener('click', closeRoom);
+
 const videoHeader=document.querySelector('.setting-detail-type');
 videoHeader.focus();
 const closeLive=document.querySelector('.close-live');
 closeLive.addEventListener('click', closeRoom);
 createVideoDate();
+
 
 // 結束串流
 async function closeStreaming(){
@@ -21,8 +29,7 @@ async function closeStreaming(){
         headers: new Headers({"Content-type":"application/json"})
     });
     const item1=document.querySelector('.item1');
-    // item1.addEventListener('click', upload2S3);
-    item1.addEventListener('click', closeRoom);
+    item1.addEventListener('click', upload2S3);
     item1.textContent='QUIT';
 
 };
@@ -65,7 +72,6 @@ async function upload2S3(){
 
     })
 
-    location.href=`/`
 };
 
 
@@ -89,6 +95,7 @@ async function createStreamingRoom(streamkey){
         });
     const data=await response.json();
     if(data.ok){
+
         const creator=document.querySelector('.video-creator');
         creator.textContent=master;
         
@@ -98,6 +105,10 @@ async function createStreamingRoom(streamkey){
 
         const vdb=document.querySelector('.video-detail-background');
         vdb.style.display='block';
+
+        window.onbeforeunload= async (event)=>{
+            return '';
+        }
     }
     
 };

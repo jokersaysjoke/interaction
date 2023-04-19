@@ -6,10 +6,19 @@ const url = window.location.href.split("/");
 const roomID = url.pop();
 
 // join room
-function joinRoom(){
+async function ioJoinRoom(){
+  await fetch(`/api/room/join`, {
+    method:'PUT',
+    body:JSON.stringify({
+        host:roomID
+    }),
+    headers: new Headers({"Content-type":"application/json"})
+  });
+  console.log(`join`)
   socket.emit('join-room', roomID)
+
 }
-joinRoom();
+ioJoinRoom();
 
 // listen room count
 socket.on('roomCount', (count)=>{

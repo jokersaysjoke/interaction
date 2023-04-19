@@ -57,7 +57,7 @@ roomAPI.put('/room', async(req, res)=>{
     try {
         let sql=`
         UPDATE ROOM
-        SET STATUS = ?, STREAMKEY = ?, HEAD = ?, DATE = ?, VIEWCOUNT = ?
+        SET STATUS = ?, STREAMKEY = ?, HEAD = ?, DATE = ?
         WHERE MASTER = ?
         `;
         const body=req.body;
@@ -66,7 +66,7 @@ roomAPI.put('/room', async(req, res)=>{
         const streamkey=body['streamkey'];
         const head=body['head'];
         const date=body['date'];
-        await pool.promise().query(sql, [status, streamkey, head, date, 0, master]);
+        await pool.promise().query(sql, [status, streamkey, head, date, master]);
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -115,7 +115,7 @@ roomAPI.put('/room/join', async(req, res)=>{
         WHERE MASTER = ?
         `;
         const [record]=await pool.promise().query(sql, [host]);
-
+        console.log({record});
         if(record){
             let sql2=`
             UPDATE ROOM
@@ -123,6 +123,8 @@ roomAPI.put('/room/join', async(req, res)=>{
             WHERE MASTER = ?
             `;
             await pool.promise().query(sql2, [1, host]);
+            console.log(record);
+
             return res.status(200).json({"ok":true});
         }else{
           return res.status(403).json({"error":true, "message":"no record"});

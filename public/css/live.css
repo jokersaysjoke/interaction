@@ -147,17 +147,7 @@
     max-width: 33%;
 }
 .item1{
-    margin: 10px;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    color: #202020;
-    width: 150px;
-    height: 50px;
-    border-radius: 5px;
     background-color: red;
-    font-size: 22px;
-    cursor: pointer;
     display: none;
 }
 
