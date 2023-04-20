@@ -25,8 +25,9 @@ async function uploadFile(streamkey, content){
 
     try{
         await s3.upload(uploadParms).promise();
-        await fs.promises.unlink(`/tmp/record/${streamkey}`);
-
+        await fs.promises.unlink(`/tmp/record/${streamkey}.mp4`);
+        return
+        
     } catch(err){console.error(err);}
 };
 
