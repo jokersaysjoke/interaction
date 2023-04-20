@@ -55,7 +55,6 @@ io.on('connection', (socket) => {
     const count=io.sockets.adapter.rooms.get(roomID).size;
     io.to(roomID).emit('roomCount', count);
     await pool.promise().query(sql, [count, roomID]);
-    console.log(`view:${count}`);
 
     socket.on('disconnecting', async ()=>{
       const discount=count-1;
@@ -69,11 +68,8 @@ io.on('connection', (socket) => {
     WHERE MASTER = ?
     `;
     const [record]=await pool.promise().query(sql2, [roomID]);
-    console.log('record'+JSON.stringify(record));
-
     const [{VIEWCOUNT:viewCount}]=record;
     io.to(roomID).emit('viewCount', viewCount);
-    console.log(`toltalViewed:${viewCount}`);
 
   });
 

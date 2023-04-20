@@ -9,9 +9,6 @@ s3API.use(cookieParser());
 s3API.use(bodyParser.json());
 
 
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/' });
-
 s3API.get('/s3', async(req, res)=>{
     try {
         let sql = `

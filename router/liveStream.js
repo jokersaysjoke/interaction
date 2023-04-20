@@ -28,7 +28,6 @@ live.get('/:ID', async(req, res) => {
       if(ID===MASTER && ID===name && MASTER===name){
         res.render('live.ejs', {});
       }else if(record.length<2 && ID===name){
-        console.log('length<2&ID===name');
         res.render('live.ejs', {});
       }else{
         res.redirect(`/`)        

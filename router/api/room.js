@@ -115,7 +115,6 @@ roomAPI.put('/room/join', async(req, res)=>{
         WHERE MASTER = ?
         `;
         const [record]=await pool.promise().query(sql, [host]);
-        console.log({record});
         if(record){
             let sql2=`
             UPDATE ROOM
@@ -123,8 +122,6 @@ roomAPI.put('/room/join', async(req, res)=>{
             WHERE MASTER = ?
             `;
             await pool.promise().query(sql2, [1, host]);
-            console.log(record);
-
             return res.status(200).json({"ok":true});
         }else{
           return res.status(403).json({"error":true, "message":"no record"});

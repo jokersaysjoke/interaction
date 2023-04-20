@@ -14,7 +14,6 @@ async function ioJoinRoom(){
     }),
     headers: new Headers({"Content-type":"application/json"})
   });
-  console.log(`join`)
   socket.emit('join-room', roomID)
 
 }
