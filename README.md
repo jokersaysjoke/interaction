@@ -9,6 +9,9 @@ Test account:
 
 ## System Design
 
+<img src='https://user-images.githubusercontent.com/110945189/234387600-8980df3a-6da4-4c02-95e7-14ee952509d0.png' width='700px'>
+
+
 ## Backend Technique
 #### Key Points
 - MVC pattern
