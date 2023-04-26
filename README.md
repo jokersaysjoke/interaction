@@ -44,5 +44,5 @@ Test account:
 - Route 53
 
 ## Contact
-- `Chen, Chun-Yi`
+- Author: `Chen, Chun-Yi`
 - Email: `jokersaysjoke@gmail.com`
