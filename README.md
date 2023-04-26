@@ -4,7 +4,7 @@
 Here is website link => <https://jokersaysjoke.online/home>
 
 Test account:
-- User : `test1`
+- User : `test`
 - Password : `test`
 
 ## System Design
@@ -42,6 +42,9 @@ Test account:
 - AWS CloudFront
 - AWS RDS
 - Route 53
+
+## Version Control
+- Git/GitHub
 
 ## Contact
 - Author: `Chen, Chun-Yi`
