@@ -44,7 +44,7 @@ Test account:
 - Route 53
 
 ## Version Control
-- Git/GitHub
+- Git / GitHub
 
 ## Contact
 - Author: `Chen, Chun-Yi`
