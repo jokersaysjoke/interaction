@@ -20,7 +20,7 @@ Test account:
 - Docker-compose
 
 #### Web Server Framework
-- Node.js / Express.js
+- Node.js / Express
 
 #### Database
 - MySQL
