@@ -9,7 +9,7 @@ Test account:
 
 ## System Design
 
-<img src='https://user-images.githubusercontent.com/110945189/234688286-465a3cda-e61b-465c-92d6-a253be503839.png' width='700px'>
+<img src='https://user-images.githubusercontent.com/110945189/234706389-e0da46b1-0a63-4960-931c-c1b7738216cd.png' width='700px'>
 
 ## Backend Technique
 #### Key Points
