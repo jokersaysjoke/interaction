@@ -36,7 +36,7 @@ Test account:
 #### Streaming Media Server
 - Nginx RTMP Module
 
-## Cloud Services
+## AWS Services
 - AWS EC2: As the backend host machine running the application logic
 - AWS S3: Stores the streaming video
 - AWS CloudFront: Provides global CDN to speed up media transmission
