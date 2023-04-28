@@ -9,7 +9,7 @@ Test account:
 
 ## System Design
 
-<img src='https://user-images.githubusercontent.com/110945189/234706389-e0da46b1-0a63-4960-931c-c1b7738216cd.png' width='700px'>
+<img src='https://user-images.githubusercontent.com/110945189/235046826-ae92ab4d-bce2-4f33-9452-a64a04538139.png' width='700px'>
 
 ## Backend Technique
 #### Key Points
@@ -20,7 +20,7 @@ Test account:
 - Docker-compose
 
 #### Web Server Framework
-- Node.js / Express
+- Node.js / Express.js
 
 #### Database
 - MySQL
@@ -37,11 +37,11 @@ Test account:
 - Nginx RTMP Module
 
 ## Cloud Services
-- AWS EC2
-- AWS S3
-- AWS CloudFront
-- AWS RDS
-- Route 53
+- AWS EC2: As the backend host machine running the application logic
+- AWS S3: Stores the streaming video
+- AWS CloudFront: Provides global CDN to speed up media transmission
+- AWS RDS: A relational database service for storing application data
+- AWS Route 53: Manage DNS CNAME and A record
 
 ## Version Control
 - Git / GitHub
