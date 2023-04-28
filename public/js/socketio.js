@@ -47,10 +47,13 @@ form.addEventListener('submit', async function(e) {
   const name=dd.name;
   const msg=input.value;
 
-  displayMessage({username:name, message:msg});
-  socket.emit('chat message', {username:name, message:msg}, roomID);
-  input.value = '';
-
+  if(msg.length>0){
+    displayMessage({username:name, message:msg});
+    socket.emit('chat message', {username:name, message:msg}, roomID);
+    input.value = '';
+  }else{
+    return
+  }
 });
 
 // make message
