@@ -17,7 +17,7 @@ Test account:
 - Websocket
 
 #### Deployment
-- Docker-compose
+- Docker
 
 #### Web Server Framework
 - Node.js / Express.js
@@ -48,4 +48,4 @@ Test account:
 
 ## Contact
 - Author: `Chen, Chun-Yi`
-- Email: `jokersaysjoke@gmail.com`
+- Email: `chun.yii.chen@gmail.com`
