@@ -1,5 +1,5 @@
 # [Interaction](https://jokersaysjoke.online/home)
-**
+*"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 ## Demo
 Here is website link => <https://jokersaysjoke.online/home>
 
