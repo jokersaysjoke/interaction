@@ -6,9 +6,8 @@ window.onload=fetchLiveRoom();
 async function fetchLiveRoom(){
     const response=await fetch(`/api/room`);
     const data=await response.json();
-    
-    if(data.data){
-        const dd=data.data;
+    const dd=data.data;
+    if(dd){
         for(let i=0; i<dd.length; i++){
             createLiveRoom(dd[i]);
         }

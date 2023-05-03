@@ -1,4 +1,5 @@
 const {Server}=require('socket.io');
+const redis=require('./redis.js');
 const pool=require('./model');
 
 function socket(server){
@@ -38,10 +39,8 @@ function socket(server){
         FROM ROOM
         WHERE MASTER = ?
         `;
-        const [record]=await pool.promise().query(sql2, [roomID]);
-        const [{VIEWCOUNT:viewCount}]=record;
+        const viewCount=await redis.hgetCache(roomID, 'totalViews')
         io.to(roomID).emit('viewCount', viewCount);
-    
       })
     
     })

@@ -3,8 +3,8 @@ const pool=require('../model');
 const roomAPI=express.Router();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-
-const { jwtVerify, jwtSign } = require('../jwt');
+const redis=require('../redis')
+const { jwtVerify } = require('../jwt');
 roomAPI.use(cookieParser());
 roomAPI.use(bodyParser.json());
 
@@ -15,7 +15,8 @@ roomAPI.get('/room', async (req, res)=>{
         SELECT * 
         FROM ROOM
         WHERE STATUS = ?`;
-        [record]=await pool.promise().query(sql, "LIVE");
+        const [record]=await pool.promise().query(sql, "LIVE");
+        
         if(record){
             return res.status(200).json({
                 data:record
@@ -23,11 +24,11 @@ roomAPI.get('/room', async (req, res)=>{
             return res.status(403).json({"data":null, "message":"No room"});
         }
     } catch (error) {
+        console.error(err);
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
 
-// master create room
 roomAPI.post('/room', async (req, res)=>{
     try {
         const cookie=req.cookies['cookie'];
@@ -40,12 +41,16 @@ roomAPI.post('/room', async (req, res)=>{
         WHERE MASTER = ?`;
         const [record] = await pool.promise().query(sql, [email]);
         if(record.length > 0){
-          return res.status(403).json({"error":true, "message":"Room already exist"});
+
+            return res.status(403).json({"error":true, "message":"Room already exist"});
         }else{
             let sql=`
             INSERT INTO ROOM (MASTER, EMAIL, STATUS, VIEWCOUNT)
             VALUES (?,?,?,?)`;
             await pool.promise().query(sql, [name, email, 'Upcoming', 0]);
+
+            await redis.hsetCache(email, 0);
+
             return res.status(200).json({"ok":true});
         }
     } catch (error) {
@@ -66,14 +71,15 @@ roomAPI.put('/room', async(req, res)=>{
         const streamkey=body['streamkey'];
         const head=body['head'];
         const date=body['date'];
+
         await pool.promise().query(sql, [status, streamkey, head, date, master]);
+        
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 });
 
-// master close room
 roomAPI.delete('/room', async(req, res)=>{
     try {
         let sql=`
@@ -81,8 +87,10 @@ roomAPI.delete('/room', async(req, res)=>{
         FROM ROOM
         WHERE MASTER = ?
         `;
-        const master=req.body['master'];
-        await pool.promise().query(sql, master);
+        const host=req.body['master'];
+        await pool.promise().query(sql, host);
+        await redis.cleanCache(host);
+        
         return res.status(200).json({"ok":true});
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -98,7 +106,7 @@ roomAPI.get('/room/join', async (req, res)=>{
         WHERE MASTER = ?
         `;
         const [record]=await pool.promise().query(sql, [host]);
-        res.status(200).json({data:record})
+        return res.status(200).json({data:record})
         
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
@@ -118,10 +126,13 @@ roomAPI.put('/room/join', async(req, res)=>{
         if(record){
             let sql2=`
             UPDATE ROOM
-            SET VIEWCOUNT = VIEWCOUNT + ?
+            SET VIEWCOUNT = ?
             WHERE MASTER = ?
             `;
-            await pool.promise().query(sql2, [1, host]);
+            const viewcount=await redis.updateCache(host);
+            console.log(viewcount)
+            await pool.promise().query(sql2, [viewcount, host]);
+
             return res.status(200).json({"ok":true});
         }else{
           return res.status(403).json({"error":true, "message":"no record"});
