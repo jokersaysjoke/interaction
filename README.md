@@ -1,5 +1,5 @@
 # [Interaction](https://jokersaysjoke.online/home)
-**
+*"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 ## Demo
 Here is website link => <https://jokersaysjoke.online/home>
 
@@ -17,7 +17,7 @@ Test account:
 - Websocket
 
 #### Deployment
-- Docker-compose
+- Docker
 
 #### Web Server Framework
 - Node.js / Express.js
@@ -48,4 +48,4 @@ Test account:
 
 ## Contact
 - Author: `Chen, Chun-Yi`
-- Email: `jokersaysjoke@gmail.com`
+- Email: `chun.yii.chen@gmail.com`
