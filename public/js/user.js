@@ -1,10 +1,11 @@
 // click open register window
 const accountStatus=document.querySelector(".account-status");
+const accountImg=accountStatus.querySelector('img');
 const registerWindow=document.querySelector('.register-window');
 const registerWindowBackground=document.querySelector('.register-window-background');
 const createStreamBtn=document.querySelectorAll('.create-btn');
 const account=document.querySelector('.account');
-
+const accountContent=document.querySelector('.account-status-content');
 
 function openRegister(){
     registerWindow.style.display='block';
@@ -54,7 +55,6 @@ function toggleStatus(){
 
 // 登入狀態
 async function memberStatus(){
-    
     createStreamBtn.forEach((item, index)=>{
         item.textContent='開始直播';
     })
@@ -62,14 +62,21 @@ async function memberStatus(){
     const response=await fetch(`/api/user`);
     const data=await response.json();
     if(data.data!==null){
-
+        console.log(1);
+        await fetchImg();
+        console.log(2);
         welcome.addEventListener('click', ()=>{
             location.href=`/home`;
         });
         accountStatus.style.display='flex';
-        accountStatus.textContent='Sign out';
-        accountStatus.addEventListener('click', logOut);
-        if(data.data.record===0){
+        accountStatus.classList.add('account-status-in')
+        accountStatus.addEventListener('click', ()=>{
+            window.location='/profile'
+        });
+        accountContent.textContent='Sign out';
+        accountContent.addEventListener('click', logOut)
+
+        if(data.data.room===0){
             createStreamBtn.forEach((item, index)=>{
                 item.addEventListener('click', registerLiveRoom)
             })
@@ -89,6 +96,7 @@ async function memberStatus(){
             item.addEventListener('click', openRegister)
         });
     }
+    accountImg.style.display='block'
 };
 
 //會員登入
@@ -136,7 +144,6 @@ async function logOut(){
     })
     const data=await response.json();
     if(data.ok){
-        accountStatus.textContent=`Sign in`
         setTimeout("location.reload()", 500)
     }
 };
@@ -183,7 +190,9 @@ async function signUp(){
 
 // keydown login
 const userLoginID=document.querySelector('#user-login-id');
+userLoginID.value='test@test.com'
 const userLoginPW=document.querySelector('#user-login-pw');
+userLoginPW.value='test'
 userLoginID.addEventListener('keydown', (event) => {
     if (event.keyCode === 13) {
         signIn();
@@ -238,15 +247,24 @@ async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const name=result.data.name;
-    let response=await fetch(`/api/room`, {
+    const response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
             name:name
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
-    let data=await response.json();
+    const data=await response.json();
     if(data.ok){
         location.href=`/live/${name}`
     }
 };
+
+// profile img
+async function fetchImg(){
+    const response=await fetch('/api/image');
+    const data=await response.json();
+    const dd=data.data
+    console.log(dd.address);
+    accountImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+}

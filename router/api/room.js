@@ -33,8 +33,10 @@ roomAPI.post('/room', async (req, res)=>{
     try {
         const cookie=req.cookies['cookie'];
         const response=jwtVerify(cookie);
-        const name=response['name'];
+        const body=req.body
+        const name=body.name
         const email=response['email'];
+
         let sql=`
         SELECT *
         FROM ROOM
@@ -130,7 +132,6 @@ roomAPI.put('/room/join', async(req, res)=>{
             WHERE MASTER = ?
             `;
             const viewcount=await redis.updateCache(host);
-            console.log(viewcount)
             await pool.promise().query(sql2, [viewcount, host]);
 
             return res.status(200).json({"ok":true});

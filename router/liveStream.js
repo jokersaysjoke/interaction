@@ -11,9 +11,11 @@ live.use(bodyParser.json());
 live.get('/:ID', async(req, res) => {
   try {
     const {ID}=req.params
-    const cookie=req.cookies['cookie'];
-    const response=jwtVerify(cookie);
-    const name=response['name'];
+    // const cookie=req.cookies['cookie'];
+    // const response=jwtVerify(cookie);
+    // const name=response['name'];
+    // console.log(name);
+
     let sql=`
     SELECT *
     FROM ROOM
@@ -21,13 +23,13 @@ live.get('/:ID', async(req, res) => {
     AND 
     (STATUS = ? OR STATUS = ?)
     `;
-    const [record]=await pool.promise().query(sql, [name, 'LIVE', 'Upcoming']);
+    const [record]=await pool.promise().query(sql, [ID, 'LIVE', 'Upcoming']);
     const [{MASTER}]=record;
 
     if(record!==null){
-      if(ID===MASTER && ID===name && MASTER===name){
+      if(ID===MASTER && MASTER===ID){
         res.render('live.ejs', {});
-      }else if(record.length<2 && ID===name){
+      }else if(record.length<2 && ID===MASTER){
         res.render('live.ejs', {});
       }else{
         res.redirect(`/`)        

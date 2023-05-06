@@ -56,10 +56,9 @@ body{
     font-size: 12px;
     font-weight: bold;
 }
-.logo, .account-status{
+.logo{
     color: #fff;
     font-size: 30px;
-    margin: 15px;
     cursor: pointer;
 }
 .welcome>img{
@@ -68,6 +67,39 @@ body{
 .account-status{
     color: gray;
     font-size: 21px;
+    transition: 0.3s;
+}
+.create-btn{
+    transition: 0.3s;
+}
+.account-status:hover,
+.account-status-content:hover,
+.create-btn:hover
+ {
+    opacity: 0.7;
+}
+.account-status-content{
+    overflow: hidden;
+    font-size: 21px;
+    letter-spacing: 3px;
+    color: gray;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    
+}
+.account-status-img{
+    display: none;
+    max-height: 100%;
+}
+.account-status-in{
+    background-color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    
+    /* img */
+    background-size: cover;
+    background-position: center;
 }
 .create-btn, .item1{
     background-color: #03DAC5;
@@ -78,7 +110,9 @@ body{
     font-size: 21px;
     font-weight: bold;
 }
-
+.upload{
+    display: none;
+}
 input{
     outline: none;
 }

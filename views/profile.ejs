@@ -4,7 +4,7 @@
     <title>交互作用 Interaction</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/user.css">
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/profile.css">
     <script src="https://kit.fontawesome.com/721f2dd150.js" crossorigin="anonymous"></script>
   </head>
   <style>
@@ -59,10 +59,54 @@
     <div class="header-background"></div>
     <!-- head END-->
 
-    <div class="video-preview-background"></div>
+    <div class="main-background">
 
+      <div class="member-content flex">
+        <div class="member-content-title"></div>
+
+        <div class="member-content-title flex">
+          <div class="member-img flex">
+            <img src="" alt="">
+            <input type="file" name="image" id="file-uploader" accept="image/png" multiple="multiple"/>
+          </div>
+        </div>
+        <button type="submit" id="upload" class="upload submit"></button>
+        <div class="edit img-edit">edit</div>
+      </div>
+
+      <div class="member-content flex">
+        <div class="member-content-title">Email</div>
+        <P class="member-email"></P>
+        <div class="edit" ></div>
+      </div>
+      <br>
+      <div class="member-content flex">
+        <div class="member-content-title">Username</div>
+        <input class="input username"  type="text">
+        <div class="edit username-edit" onclick=newName()>edit</div>
+      </div>
+      <br>
+      <div class="member-content flex">
+        <div class="member-content-title">Password</div>
+        <input  class="input previous" placeholder="previous password" type="password">     
+        <div class="member-content-title"></div>
+      </div>
+
+      <div class="member-content flex">
+        <div class="member-content-title"></div>
+        <input class="input new" placeholder="new password" type="password">
+        <div class="member-content-title"></div>
+      </div>
+
+      <div class="member-content flex">
+        <div class="member-content-title"></div>
+        <input class="input confirm" placeholder="confirm password" type="password">
+        <div class="edit password-edit" onclick=newPassword()>edit</div>
+      </div>
+    </div>
 
     <script src="/js/user.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="/js/profile.js"></script>
+
   </body>
 </html>

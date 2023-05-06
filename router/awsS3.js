@@ -31,4 +31,16 @@ async function uploadFile(streamkey, content){
     } catch(err){console.error(err);}
 };
 
-module.exports=uploadFile;
+function uploadImg(file){
+    const fileStream=fs.createReadStream(file.path);
+
+    const uploadParms={
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+    }
+    return s3.upload(uploadParms).promise();
+    
+}
+
+module.exports={uploadFile, uploadImg};

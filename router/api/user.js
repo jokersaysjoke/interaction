@@ -13,21 +13,28 @@ userAPI.get('/user', async(req, res) => {
   try {
     const cookie=req.cookies['cookie'];
     let sql=`
-    SELECT *
-    FROM ROOM
-    WHERE MASTER = ?
+    SELECT ID, NAME, EMAIL, STREAMKEY
+    FROM MEMBER
+    WHERE EMAIL = ?
     `;
     if(cookie){
-        const response=jwtVerify(cookie);
-        const id=response['id'];
-        const name=response['name'];
-        const email=response['email'];
-        const streamkey=response['streamkey'];
-        const [record]=await pool.promise().query(sql, [name]);
-        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'record':record.length}});
-      }else{
-        return res.json({"data":null});
-      }
+      const response=jwtVerify(cookie);
+      const target=response.email
+      const [record]=await pool.promise().query(sql, [target]);
+      const [{ID:id}]=record
+      const [{NAME:name}]=record
+      const [{EMAIL:email}]=record
+      const [{STREAMKEY:streamkey}]=record
+      let sql2=`
+      SELECT *
+      FROM ROOM
+      WHERE MASTER = ?
+      `;
+      const [room]=await pool.promise().query(sql2, [name])
+      return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'room':room.length}});
+    }else{
+      return res.json({"data":null});
+    }
     
   } catch (error) {
       return res.status(500).json({"error":true, "message":"Database error"});
@@ -89,4 +96,51 @@ userAPI.post('/user', async (req, res) => {
       return res.status(500).json({"error":true, "message":"Database error"});
   }
 });
+
+userAPI.put('/user/update', async(req, res)=>{
+  try {
+    const cookie=req.cookies['cookie'];
+    const data=req.body;
+    if(data.new){
+      const newName=data.new;
+      const email=data.email;
+  
+      let sql=`
+      UPDATE MEMBER
+      SET NAME = ?
+      WHERE EMAIL = ?
+      `
+      await pool.promise().query(sql, [newName, email])
+      return res.status(200).json({ok:true});
+    }
+    
+    if(data.pw){
+      const pw=data.pw;
+      const newPw=data.newPw
+      const email=data.email;
+      let sql=`
+      SELECT PASSWORD
+      FROM MEMBER
+      WHERE EMAIL = ?
+      `
+      const [record]=await pool.promise().query(sql, [email]);
+      const [{PASSWORD:oldPw}]=record
+      if(oldPw===pw){
+        let sql2=`
+        UPDATE MEMBER
+        SET PASSWORD = ?
+        WHERE EMAIL = ?
+        `
+        await pool.promise().query(sql2, [newPw, email])
+        return res.status(200).json({ok:true});
+      }else{
+        return res.status(200).json({error:true});
+      }
+    }
+
+  } catch (error) {
+    return res.status(500).json({"error":true, "message":"Database error"});
+  }
+})
+
 module.exports=userAPI;
