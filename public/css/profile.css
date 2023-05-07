@@ -50,6 +50,7 @@ img{
     font-style: italic;
 }
 .edit{
+    font-size: 22px;
     color: #F0047F;
     margin: 0 11px;
     flex: 1;

@@ -4,7 +4,7 @@ const form = document.getElementById('form');
 const input = document.getElementById('input');
 const url = window.location.href.split("/");
 const roomID = url.pop();
-
+const creatroImg=document.querySelector('.video-creator-img');
 // join room
 async function ioJoinRoom(){
   await fetch(`/api/room/join`, {

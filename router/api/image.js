@@ -5,6 +5,7 @@ const pool = require('../model');
 const { jwtVerify, jwtSign } = require('../jwt');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const fs=require('fs')
 
 imgAPI.get('/image', async(req, res)=>{
     try {
@@ -19,9 +20,13 @@ imgAPI.get('/image', async(req, res)=>{
         CONTENT = ?
         `
         const [record]=await pool.promise().query(sql, [host]);
-        const [{ADDRESS:address}]=record;
-        console.log(address);
-        return res.status(200).json({'data':{'address':address}})
+        if(record.length>0){
+            const [{ADDRESS:address}]=record;
+            return res.status(200).json({'data':{'address':address}})
+        }else{
+            return res.status(200).json({'data':null})
+        }
+        
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});
     }
@@ -31,16 +36,36 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
     try {
         const file=req.file;
         const fileName=file.filename;
-        const content=req.body.host;
-        await s3.uploadImg(file);
+        const host=req.body.host;
         let sql=`
-        INSERT INTO
-        CONNECT (CONTENT, ADDRESS)
-        VALUE (?, ?)
+        SELECT *
+        FROM CONNECT
+        WHERE CONTENT = ?
         `
-        await pool.promise().query(sql, [content, fileName]);
+        const [record]=await pool.promise().query(sql, [host])
+        if(record.length>0){
+            await s3.uploadImg(file);
+            // await s3.cleanImg(file);
+            let sql=`
+            UPDATE CONNECT
+            SET ADDRESS = ?
+            WHERE CONTENT = ?
+            `
+            await pool.promise().query(sql, [fileName, host]);
+            fs.unlinkSync(file.path);
+            return res.status(200).json({'ok':true})
+        }else{
+            await s3.uploadImg(file);
+            let sql=`
+            INSERT INTO
+            CONNECT (CONTENT, ADDRESS)
+            VALUE (?, ?)
+            `
+            await pool.promise().query(sql, [host, fileName]);
+            fs.unlinkSync(file.path);
+            return res.status(200).json({'ok':true})
+        }
         
-        return res.status(200).json({'ok':true})
 
     } catch (error) {
         return res.status(500).json({"error":true, "message":"Database error"});

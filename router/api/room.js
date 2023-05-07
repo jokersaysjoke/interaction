@@ -15,11 +15,18 @@ roomAPI.get('/room', async (req, res)=>{
         SELECT * 
         FROM ROOM
         WHERE STATUS = ?`;
-        const [record]=await pool.promise().query(sql, "LIVE");
+        let [record]=await pool.promise().query(sql, "LIVE");
         
         if(record){
+            let sql2=`
+            SELECT ROOM.*, CONNECT.ADDRESS
+            FROM ROOM
+            LEFT JOIN CONNECT
+            ON ROOM.EMAIL = CONNECT.CONTENT
+            `
+            let [result]=await pool.promise().query(sql2, [])
             return res.status(200).json({
-                data:record
+                data:result
         })}else{
             return res.status(403).json({"data":null, "message":"No room"});
         }
@@ -103,10 +110,12 @@ roomAPI.get('/room/join', async (req, res)=>{
     try {
         const host=req.query.host;
         let sql=`
-        SELECT * 
+        SELECT ROOM.*, CONNECT.ADDRESS
         FROM ROOM
-        WHERE MASTER = ?
-        `;
+        LEFT JOIN CONNECT
+        ON ROOM.EMAIL = CONNECT.CONTENT
+        WHERE ROOM.MASTER = ?
+        `
         const [record]=await pool.promise().query(sql, [host]);
         return res.status(200).json({data:record})
         

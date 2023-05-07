@@ -43,4 +43,16 @@ function uploadImg(file){
     
 }
 
-module.exports={uploadFile, uploadImg};
+function cleanImg(file){
+    const fileStream=fs.createReadStream(file.path);
+
+    const uploadParms={
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+    }
+    return s3.deleteObject(uploadParms).promise();
+
+}
+
+module.exports={uploadFile, uploadImg, cleanImg};

@@ -62,9 +62,7 @@ async function memberStatus(){
     const response=await fetch(`/api/user`);
     const data=await response.json();
     if(data.data!==null){
-        console.log(1);
         await fetchImg();
-        console.log(2);
         welcome.addEventListener('click', ()=>{
             location.href=`/home`;
         });
@@ -265,6 +263,8 @@ async function fetchImg(){
     const response=await fetch('/api/image');
     const data=await response.json();
     const dd=data.data
-    console.log(dd.address);
-    accountImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+    if(dd!==null){
+        accountImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+    }
+    return
 }

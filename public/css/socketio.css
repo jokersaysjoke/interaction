@@ -44,3 +44,14 @@
 #messages::-webkit-scrollbar {
     display: none;
 }
+/* socket.io <END> */
+
+.video-creator-pic{
+
+    background-size: cover;
+    background-position: center;
+}
+
+.video-creator-img{
+    max-height: 100%;
+}

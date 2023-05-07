@@ -5,7 +5,9 @@ async function joinRoom(){
     const response=await fetch(`/api/room/join?host=${roomID}`)
     const data=await response.json();
     const dd=data.data[0];
-
+    
+    creatroImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${dd.ADDRESS}`
+    
     const videoDetailBack=document.querySelector('.video-detail-background');
     videoDetailBack.style.display='block';
     

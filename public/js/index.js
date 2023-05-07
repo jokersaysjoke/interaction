@@ -48,6 +48,12 @@ function createLiveRoom(data){
         const videoAccountPic = document.createElement('div');
         videoAccountPic.classList.add('video-account-pic');
         videoAccountPicBackground.appendChild(videoAccountPic);
+        
+        // 建立 img 元素
+        const videoAccountImg = document.createElement('img');
+        videoAccountImg.classList.add('video-account-img');
+        videoAccountImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${data.ADDRESS}`
+        videoAccountPic.appendChild(videoAccountImg);
 
         // 建立 video-title 元素
         const videoTitle = document.createElement('div');

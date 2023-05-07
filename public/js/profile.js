@@ -3,7 +3,6 @@ const editImg=imgBackground.querySelector('img');
 const fileUploader=document.querySelector('#file-uploader');
 const upload=document.querySelector("#upload");
 const imgEdit=document.querySelector('.img-edit');
-const submit=document.querySelector('.submit');
 const email=document.querySelector('.member-email');
 const username=document.querySelector('.username');
 const previous=document.querySelector('.previous');
@@ -26,7 +25,10 @@ async function fetchImgtoEdit(){
     const response=await fetch('/api/image');
     const data=await response.json();
     const dd=data.data
-    editImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+    if(dd!==null){
+        editImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+    }
+    
 }
 
 upload.addEventListener('click', async()=>{
@@ -40,14 +42,15 @@ upload.addEventListener('click', async()=>{
 
     const response=await fetch('/api/image', {
         method: 'POST',
-        body: formData,
+        body: formData
     })
     const data=await response.json();
     if(data.ok){
-        location.reload
+        window.location.reload();
     }else{
         console.log(data);
     }
+
 })
 
 imgBackground.addEventListener('click', async()=>{
@@ -55,7 +58,7 @@ imgBackground.addEventListener('click', async()=>{
 })
 
 imgEdit.addEventListener('click', async()=>{
-    submit.click();
+    upload.click();
 })
 
 fileUploader.addEventListener('change', ()=>{
@@ -147,3 +150,4 @@ async function newPassword(){
         }
     }
 }
+console.log(previous);

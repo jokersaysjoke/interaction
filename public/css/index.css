@@ -34,6 +34,12 @@
     height: 44px;
     border-radius: 50%;
     background-color: #fff;
+    
+    background-size: cover;
+    background-position: center;
+}
+.video-account-img{
+    max-height: 100%;
 }
 .video-title{
     margin: 10px;
