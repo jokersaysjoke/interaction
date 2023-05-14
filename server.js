@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const http = require('http');
 const { socket } = require('./router/socket');
 const pool = require('./router/model')
+const port=3000
 
 const imgAPI = require('./router/api/image');
 const userAPI = require('./router/api/user');
@@ -36,7 +37,8 @@ app.get('/', async (req, res) => {
   `
   const cookie = req.cookies['cookie'];
   const [record]=await pool.promise().query(sql, [])
-  if (cookie) {
+  
+  if (cookie&&record.length>0) {
     res.render('index.ejs', {});
   } else {
     res.redirect('/home');
@@ -62,6 +64,6 @@ app.get('/profile', async(req, res)=>{
 
 socket(server);
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(port, () => {
+  console.log(`listening on *:${port}`);
 });

@@ -1,9 +1,7 @@
 .background{
-    margin: 0 auto;
+    margin: 33px auto;
     display: flex;
-    max-width: 1000px;
-    width: 90%;
-    height: 80vh;
+    width: 80%;
 }
 .main-background{
     display: block;
@@ -21,7 +19,6 @@
 
 }
 .setting{
-    margin-top: 50px;
     flex: 4;
     border-radius: 5px;
     display: flex;
@@ -99,27 +96,57 @@
     border-radius: 5px;
 }
 .live-chatroom-background{
-    background-color: #BB86FC;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    margin: 55px 10px;
+    padding: 5px;
     position: relative;
     flex: 2;
-    max-width: 500px;
-    max-height: 500px;
     height: 100%;
+
 
 }
 .live-chatroom, .live-streaming-video{
     position: relative;
-    margin: 5px;
     width: 100%;
     border-radius: 5px;
     color: #fff;
     background-color: #202020;
+    border: 1px solid gray;
+    border-bottom: none;
 }
+.live-chatroom{
+    height: 70vh;
+    overflow: hidden;
+}
+.user-type-background{
+    padding: 11px;
+    display: flex;
 
+}
+.user-type-border{
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.avatar-background{
+    
+    background-size: cover;
+    background-position: center;
+}
+.avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    overflow: hidden;
+}
+.user-type{
+    font-size: 18px;
+    margin: 0 11px;
+    width: 90%;
+    /* height: 80px; */
+}
+.test-message{
+    white-space: normal;
+}
 .live-streaming-video{
     display: flex;
     justify-content: center;
@@ -175,6 +202,10 @@
     height: 44px;
     border-radius: 50%;
     background-color: #fff;
+    overflow: hidden;
+    
+    background-size: cover;
+    background-position: center;
 }
 .video-creator{
     margin: auto 10px;
@@ -194,4 +225,13 @@
     width: auto;
     font-size: 17px;
 
+}
+
+.chat-time, .chat-user{
+    color: gray;
+    margin-right: 11px;
+}
+
+.chat-user{
+    max-width: 100%;
 }

@@ -150,4 +150,3 @@ async function newPassword(){
         }
     }
 }
-console.log(previous);

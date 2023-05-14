@@ -9,11 +9,12 @@ function socket(server){
       socket.on('chat message', (msg, roomID) => {
         const username=msg.username;
         const message=msg.message;
-    
+        const img=msg.img;
+        
         if(roomID===''){
           console.log(`no roomID`);
         }else{
-          socket.to(roomID).emit('receive-message', {username:username, message:message});
+          socket.to(roomID).emit('receive-message', {username:username, message:message, img:img});
         }
       });
       socket.on('join-room', async roomID => {

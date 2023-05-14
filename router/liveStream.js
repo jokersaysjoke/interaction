@@ -11,11 +11,6 @@ live.use(bodyParser.json());
 live.get('/:ID', async(req, res) => {
   try {
     const {ID}=req.params
-    // const cookie=req.cookies['cookie'];
-    // const response=jwtVerify(cookie);
-    // const name=response['name'];
-    // console.log(name);
-
     let sql=`
     SELECT *
     FROM ROOM

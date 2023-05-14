@@ -143,4 +143,32 @@ userAPI.put('/user/update', async(req, res)=>{
   }
 })
 
+userAPI.get('/user/auth', async(req, res) => {
+  try {
+    const cookie=req.cookies['cookie'];
+    if(cookie){
+      const sql=`
+      SELECT MEMBER.NAME, CONNECT.ADDRESS
+      FROM MEMBER
+      JOIN CONNECT
+      ON MEMBER.EMAIL = CONNECT.CONTENT
+      WHERE MEMBER.EMAIL = ?
+      `
+      const response=jwtVerify(cookie);
+      const email=response.email
+      const [data]=await pool.promise().query(sql, [email]);
+      const [{NAME:name}]=data;
+      const [{ADDRESS:address}]=data;
+
+      return res.status(200).json({'data':{'name':name, 'address':address}})
+
+    }else{
+      return res.status(403).json({'data':null})
+    }
+    
+  } catch (error) {
+    return res.status(500).json({"error":true, "message":"Database error"});
+  }  
+})
+
 module.exports=userAPI;

@@ -1,11 +1,6 @@
 /* socket.io */
 #form { 
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    display: flex; 
+    margin: 7px auto 0;
     height: 2rem; 
     box-sizing: border-box; 
     backdrop-filter: blur(10px); 
@@ -14,31 +9,27 @@
 #input {
     color: #fff;
     border: none; 
-    padding: 0 1rem; 
-    background-color: #303030;
+    border-bottom: 1px solid #fff;
+    font-size: 14px;
+    background-color: #121212;
     flex-grow: 1; 
-    border-radius: 2rem; 
+    width: 90%;
 }
 #input:focus { 
    outline: none; 
 }
 #messages { 
-    max-height: 92%;
+    width: 100%;
+    max-height: 100%;
     position: absolute;
     list-style-type: none; 
-    max-width: 100%;
+
     margin: 0; 
     padding: 0; 
-    bottom: 33px;
+    bottom: 11px;
     overflow-y: auto; 
-}
-
-#messages > li { 
-    padding: 0.5rem 1rem; 
-}
-
-.chat-content{
     word-wrap:break-word;
+
 }
 
 #messages::-webkit-scrollbar {

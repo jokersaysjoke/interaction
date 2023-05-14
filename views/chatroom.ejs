@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/user.css">
     <link rel="stylesheet" href="/css/live.css">
     <link rel="stylesheet" href="/css/socketio.css">
+    <link rel="stylesheet" href="/css/chatroom.css">
   </head>
   <body>
     <!-- head -->
@@ -19,12 +20,12 @@
             <img src="" alt="" class="account-status-img">
           </div>
           <div class="account-status-content"></div>
-          <div class="create-btn"></div>
+          <!-- <div class="create-btn"></div> -->
       </div>
     </div>
     <!-- head END-->
       <div class="header-background"></div>
-      <div class="background">
+      <div class="background chat-back">
         <!-- 影片 -->
         <div class="main-background">
           <div class="main">
@@ -62,9 +63,21 @@
                 <div class="live-chatroom">
                     <div id="messages" class="messages"></div>
                 </div>
-                <form id="form" action="">
-                  <input id="input" placeholder="留言......." autocomplete="off" />
-                </form>
+
+                <div class="user-type-background user-type-border">
+                  <div class="avatar-background">
+                    <img src="" alt="" class="avatar">
+                  </div>
+                  
+                  <div class="user-type">
+                    <div class="user-type-name"></div>
+                    <form id="form" action="">
+                      <input id="input" placeholder="寫點東西......." autocomplete="off" />
+                    </form>
+                  </div>
+                  
+                </div>
+                
             </div>
         </div>
         <!-- 聊天室 END-->
@@ -74,6 +87,5 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/socketio.js"></script>
     <script src="/js/chatroom.js"></script>
-    <script src="/js/user.js"></script>
   </body>
 </html>

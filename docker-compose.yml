@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+
+    container_name: redis
+
+    ports:
+      - "6379:6379"
+
+    command: ["redis-server"]
+    
+  web:
+    image: interaction
+
+    env_file:
+      - .env
+    
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - "/tmp/record:/tmp/record"
+
+    depends_on:
+      - redis
+
+    command: ["npm", "start"]
+
