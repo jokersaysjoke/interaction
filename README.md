@@ -1,15 +1,15 @@
 # [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 ## Demo
-Here is website link => <https://jokersaysjoke.online/home>
+Website URL => <https://jokersaysjoke.online/home>
 
 Test account:
-- User : `test`
+- User : `test@test.com`
 - Password : `test`
 
 ## System Design
 
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/62110516-4674-42eb-a56a-cd2d0d74cb9b' width='700px'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/96e2de3f-7646-4668-bb70-733bec3a6424' width='700px'>
 
 ## Backend Technique
 #### Key Points
@@ -17,13 +17,15 @@ Test account:
 - Websocket
 
 #### Deployment
-- Docker
+- Docker-compose
 
 #### Web Server Framework
 - Node.js / Express.js
 
 #### Database
 - MySQL
+
+#### Cache
 - Redis
 
 #### Networking and Security
@@ -37,6 +39,11 @@ Test account:
 #### Streaming Media Server
 - Nginx RTMP Module
 
+#### Third Party Library
+- Socket.IO
+- aws-sdk
+- jsonwebtoken
+
 ## AWS Services
 - AWS EC2: As the backend host machine
 - AWS S3: Store avatars and recordings
@@ -48,5 +55,5 @@ Test account:
 - Git / GitHub
 
 ## Contact
-- Author: `Chen, Chun-Yi`
+- Author: `Chen, Chun-Yi 陳群嶧`
 - Email: `chun.yii.chen@gmail.com`
