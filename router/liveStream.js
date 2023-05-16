@@ -14,17 +14,17 @@ live.get('/:ID', async(req, res) => {
     let sql=`
     SELECT *
     FROM ROOM
-    WHERE MASTER = ?
+    WHERE HOST = ?
     AND 
     (STATUS = ? OR STATUS = ?)
     `;
     const [record]=await pool.promise().query(sql, [ID, 'LIVE', 'Upcoming']);
-    const [{MASTER}]=record;
+    const [{HOST}]=record;
 
     if(record!==null){
-      if(ID===MASTER && MASTER===ID){
+      if(ID===HOST && HOST===ID){
         res.render('live.ejs', {});
-      }else if(record.length<2 && ID===MASTER){
+      }else if(record.length<2 && ID===HOST){
         res.render('live.ejs', {});
       }else{
         res.redirect(`/`)        

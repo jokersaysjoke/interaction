@@ -19,10 +19,10 @@ roomAPI.get('/room', async (req, res)=>{
         
         if(record){
             let sql2=`
-            SELECT ROOM.*, CONNECT.ADDRESS
+            SELECT ROOM.*, AVATAR.ADDRESS
             FROM ROOM
-            LEFT JOIN CONNECT
-            ON ROOM.EMAIL = CONNECT.CONTENT
+            LEFT JOIN AVATAR
+            ON ROOM.EMAIL = AVATAR.EMAIL
             `
             let [result]=await pool.promise().query(sql2, [])
             return res.status(200).json({
@@ -47,14 +47,14 @@ roomAPI.post('/room', async (req, res)=>{
         let sql=`
         SELECT *
         FROM ROOM
-        WHERE MASTER = ?`;
+        WHERE HOST = ?`;
         const [record] = await pool.promise().query(sql, [email]);
         if(record.length > 0){
 
             return res.status(403).json({"error":true, "message":"Room already exist"});
         }else{
             let sql=`
-            INSERT INTO ROOM (MASTER, EMAIL, STATUS, VIEWCOUNT)
+            INSERT INTO ROOM (HOST, EMAIL, STATUS, VIEWCOUNT)
             VALUES (?,?,?,?)`;
             await pool.promise().query(sql, [name, email, 'Upcoming', 0]);
 
@@ -72,16 +72,16 @@ roomAPI.put('/room', async(req, res)=>{
         let sql=`
         UPDATE ROOM
         SET STATUS = ?, STREAMKEY = ?, HEAD = ?, DATE = ?
-        WHERE MASTER = ?
+        WHERE HOST = ?
         `;
         const body=req.body;
         const status=body['status'];
-        const master=body['master'];
+        const host=body['host'];
         const streamkey=body['streamkey'];
         const head=body['head'];
         const date=body['date'];
 
-        await pool.promise().query(sql, [status, streamkey, head, date, master]);
+        await pool.promise().query(sql, [status, streamkey, head, date, host]);
         
         return res.status(200).json({"ok":true});
     } catch (error) {
@@ -94,9 +94,9 @@ roomAPI.delete('/room', async(req, res)=>{
         let sql=`
         DELETE
         FROM ROOM
-        WHERE MASTER = ?
+        WHERE HOST = ?
         `;
-        const host=req.body['master'];
+        const host=req.body['host'];
         await pool.promise().query(sql, host);
         await redis.cleanCache(host);
         
@@ -110,11 +110,11 @@ roomAPI.get('/room/join', async (req, res)=>{
     try {
         const host=req.query.host;
         let sql=`
-        SELECT ROOM.*, CONNECT.ADDRESS
+        SELECT ROOM.*, AVATAR.ADDRESS
         FROM ROOM
-        LEFT JOIN CONNECT
-        ON ROOM.EMAIL = CONNECT.CONTENT
-        WHERE ROOM.MASTER = ?
+        LEFT JOIN AVATAR
+        ON ROOM.EMAIL = AVATAR.EMAIL
+        WHERE ROOM.HOST = ?
         `
         const [record]=await pool.promise().query(sql, [host]);
         return res.status(200).json({data:record})
@@ -131,14 +131,14 @@ roomAPI.put('/room/join', async(req, res)=>{
         let sql=`
         SELECT VIEWCOUNT
         FROM ROOM
-        WHERE MASTER = ?
+        WHERE HOST = ?
         `;
         const [record]=await pool.promise().query(sql, [host]);
         if(record){
             let sql2=`
             UPDATE ROOM
             SET VIEWCOUNT = ?
-            WHERE MASTER = ?
+            WHERE HOST = ?
             `;
             const viewcount=await redis.updateCache(host);
             await pool.promise().query(sql2, [viewcount, host]);

@@ -28,7 +28,7 @@ userAPI.get('/user', async(req, res) => {
       let sql2=`
       SELECT *
       FROM ROOM
-      WHERE MASTER = ?
+      WHERE HOST = ?
       `;
       const [room]=await pool.promise().query(sql2, [name])
       return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'room':room.length}});
@@ -148,10 +148,10 @@ userAPI.get('/user/auth', async(req, res) => {
     const cookie=req.cookies['cookie'];
     if(cookie){
       const sql=`
-      SELECT MEMBER.NAME, CONNECT.ADDRESS
+      SELECT MEMBER.NAME, AVATAR.ADDRESS
       FROM MEMBER
-      JOIN CONNECT
-      ON MEMBER.EMAIL = CONNECT.CONTENT
+      JOIN AVATAR
+      ON MEMBER.EMAIL = AVATAR.EMAIL
       WHERE MEMBER.EMAIL = ?
       `
       const response=jwtVerify(cookie);

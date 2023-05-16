@@ -13,7 +13,7 @@ s3API.get('/s3', async(req, res)=>{
     try {
         let sql = `
         SELECT *
-        FROM CONNECT
+        FROM AVATAR
         ORDER BY ID DESC
       `;
         const [rows, fields] = await pool.promise().query(sql);

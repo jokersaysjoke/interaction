@@ -12,7 +12,7 @@ async function joinRoom(){
     videoDetailBack.style.display='block';
     
     const creator=document.querySelector('.video-creator');
-    creator.textContent=dd.MASTER;
+    creator.textContent=dd.HOST;
     
     const sqlvideoHeader=document.querySelector('.video-head');
     sqlvideoHeader.style.display='block';
@@ -28,9 +28,6 @@ async function joinRoom(){
 };
 
 function hlsClientPLAYer(streamkey){
-
-    // let videoSrc = `https://jokersaysjoke.online/hls/${streamkey}.m3u8`;
-    // let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
 
     let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
 

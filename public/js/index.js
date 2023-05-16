@@ -26,9 +26,9 @@ function createLiveRoom(data){
     // 建立 video-preview 元素
     const videoPreview = document.createElement('div');
     videoPreview.classList.add('video-preview');
-    videoPreview.innerText = data.MASTER;
+    videoPreview.innerText = data.HOST;
     videoPreview.addEventListener('click', ()=>{
-        location.href=`/room/${data.MASTER}`
+        location.href=`/room/${data.HOST}`
     });
     div.appendChild(videoPreview);
 
@@ -65,14 +65,14 @@ function createLiveRoom(data){
         videoTitleHead.classList.add('video-title-head');
         videoTitleHead.innerText = data.HEAD;
         videoTitleHead.addEventListener('click', ()=>{
-            location.href=`/room/${data.MASTER}`
+            location.href=`/room/${data.HOST}`
         });
         videoTitle.appendChild(videoTitleHead);
 
         // 建立 video-creator 元素
         const videoCreator = document.createElement('div');
         videoCreator.classList.add('video-creator');
-        videoCreator.innerText = data.MASTER;
+        videoCreator.innerText = data.HOST;
         videoTitle.appendChild(videoCreator);
 
         // 建立 video-view-count 元素

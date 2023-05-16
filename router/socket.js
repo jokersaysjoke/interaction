@@ -21,7 +21,7 @@ function socket(server){
         let sql=`
         UPDATE ROOM
         SET CONCURRENT = ?
-        WHERE MASTER = ?
+        WHERE HOST = ?
         `;
     
         socket.join(roomID)
@@ -38,7 +38,7 @@ function socket(server){
         let sql2=`
         SELECT VIEWCOUNT
         FROM ROOM
-        WHERE MASTER = ?
+        WHERE HOST = ?
         `;
         const viewCount=await redis.hgetCache(roomID, 'totalViews')
         io.to(roomID).emit('viewCount', viewCount);

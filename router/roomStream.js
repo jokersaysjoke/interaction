@@ -14,7 +14,7 @@ room.get('/:ID', async(req, res)=>{
         let sql=`
         SELECT *
         FROM ROOM
-        WHERE MASTER = ?
+        WHERE HOST = ?
         AND STATUS = ?
         `;
         const cookie=req.cookies['cookie'];
@@ -22,8 +22,8 @@ room.get('/:ID', async(req, res)=>{
         const name=response['name'];
         const [record]=await pool.promise().query(sql, [ID, 'LIVE']);
         if(record!==null){
-            const [{ MASTER }]=record
-            if(MASTER===name){
+            const [{ HOST }]=record
+            if(HOST===name){
                 res.redirect(`/live/${ID}`)   
             }else if(cookie){
                 res.render('chatroom.ejs', {})

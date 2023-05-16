@@ -17,22 +17,22 @@ async function closeStreaming(){
     hlsPLAYer('');
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const master=result.data.name;
+    const host=result.data.name;
 
     await fetch(`/api/room`, {
         method:'PUT',
         body:JSON.stringify({
-            master:master,
-            status:`Upcoming`,
-            streamkey:streamKey.value
+            host: host,
+            status: `Upcoming`,
+            streamkey: streamKey.value
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
     const item1=document.querySelector('.item1');
     item1.textContent='QUIT';
     item1.addEventListener('click', async ()=>{
-        // await upload2S3();
-        await closeRoom();
+        await upload2S3();
+        // await closeRoom();
 
     });
 
@@ -41,11 +41,11 @@ async function closeStreaming(){
 async function closeRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const master=result.data.name;
+    const host=result.data.name;
     await fetch(`/api/room`, {
         method:'DELETE',
         body:JSON.stringify({
-            master:master
+            host: host
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
@@ -57,11 +57,11 @@ async function closeRoom(){
 async function upload2S3(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const master=result.data.name;
+    const host=result.data.name;
     await fetch(`/api/room`, {
         method:'DELETE',
         body:JSON.stringify({
-            master:master
+            host: host
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
@@ -85,13 +85,13 @@ async function upload2S3(){
 async function createStreamingRoom(streamkey){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const master=result.data.name;
+    const host=result.data.name;
     const videoDate=document.querySelector('.video-date');
 
     const response=await fetch(`/api/room`, {
             method:'PUT',
             body:JSON.stringify({
-                master:master,
+                host:host,
                 status:'LIVE',
                 streamkey:streamkey,
                 head:videoHeader.value,
@@ -101,17 +101,13 @@ async function createStreamingRoom(streamkey){
         });
     const data=await response.json();
     if(data.ok){
-
+        const creatorImg=document.querySelector('.video-creator-img');
+        const userimg=await fetch(`/api/user/auth`);
+        const userdata=await userimg.json();
+        creatorImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${userdata.data.address}`
         const creator=document.querySelector('.video-creator');
-        creator.textContent=master;
-        
-        const sqlvideoHeader=document.querySelector('.video-head');
-        sqlvideoHeader.textContent=videoHeader.value;
-        sqlvideoHeader.style.display='block';
 
-        const vdb=document.querySelector('.video-detail-background');
-        vdb.style.display='block';
-
+        creator.textContent=host;
         window.onbeforeunload= async (event)=>{
             return '';
         }

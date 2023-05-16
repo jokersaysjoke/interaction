@@ -10,8 +10,8 @@ toLiveStream.addEventListener('click', ()=>{
         dontnull.textContent='(*必填且字串99字以內)'
         videoHeader.focus();
     }else{
-        // hlsPLAYer(streamKey.textContent);
-        fakehlsPLAYer(streamKey.textContent);
+        hlsPLAYer(streamKey.textContent);
+        // fakehlsPLAYer(streamKey.textContent);
         createStreamingRoom(streamKey.textContent);
 
     }
@@ -39,10 +39,14 @@ function hlsPLAYer(streamkey){
             const chat=document.querySelector('.chat-background');
             chat.style.display='block';
             // appear detail about video
-            const videoDetailBack=document.querySelector('.video-detail-background');
-            videoDetailBack.style.display='block';
+
+            
             const sqlvideoHeader=document.querySelector('.video-head');
+            sqlvideoHeader.textContent=videoHeader.value;
             sqlvideoHeader.style.display='block';
+    
+            const vdb=document.querySelector('.video-detail-background');
+            vdb.style.display='block';
 
             input.focus();
             
@@ -53,6 +57,15 @@ function hlsPLAYer(streamkey){
 };
 
 function fakehlsPLAYer(){
+
+    
+    const sqlvideoHeader=document.querySelector('.video-head');
+    sqlvideoHeader.textContent=videoHeader.value;
+    sqlvideoHeader.style.display='block';
+
+    const vdb=document.querySelector('.video-detail-background');
+    vdb.style.display='block';
+    
     // disappear 
     const mainignore=document.querySelectorAll('.main-ignore');
     for(let i=0; i<mainignore.length; i++){
@@ -66,5 +79,8 @@ function fakehlsPLAYer(){
     const chat=document.querySelector('.chat-background');
     chat.style.display='block';
     
+    
+
+
     input.focus();
 };
