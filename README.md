@@ -9,7 +9,7 @@ Test account:
 
 ## System Design
 
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/96e2de3f-7646-4668-bb70-733bec3a6424' width='700px'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/488daf04-ae8b-40a6-b788-979da51c1d00' width='700px'>
 
 ## Backend Technique
 #### Key Points
