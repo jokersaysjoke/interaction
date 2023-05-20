@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
 #     environment: production
     env:
-      PRIVATE_KEY: ${{ secrets.}}
+      PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY}}
       HOSTNAME: ${{ secrets.}}
       USER_NAME: ${{ secrets.}}
 
