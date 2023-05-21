@@ -8,10 +8,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    env:
-      PRIVATE_KEY: ${{ secrets.DEPLOY_AWS_PRIVATE_KEY  }}
-      HOSTNAME: ${{ secrets.DEPLOY_HOSTNAME  }}
-      USER_NAME: ${{ secrets.DEPLOY_USERNAME  }}
 
     steps:
       - name: Checkout
@@ -24,7 +20,7 @@ jobs:
           username: ${{secrets.AWS_USERNAME }}
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
-            docker-compose down
-            docker rmi -f interaction:latest
-            echo "y" | docker system prune
+            # docker-compose down
+            # docker rmi -f interaction
+            # echo "y" | docker system prune
             docker-compose up -d
