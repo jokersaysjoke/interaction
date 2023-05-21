@@ -20,7 +20,9 @@ jobs:
           username: ${{secrets.AWS_USERNAME }}
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
-            # docker-compose down
-            # docker rmi -f interaction
-            # echo "y" | docker system prune
+            docker-compose down
+            cd /interaction
+            git pull
+            docker rmi -f interaction
+            echo "y" | docker system prune
             docker-compose up -d
