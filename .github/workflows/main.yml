@@ -25,5 +25,4 @@ jobs:
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
             docker-compose down
-            docker-compose up -d
             echo "y" | docker system prune
