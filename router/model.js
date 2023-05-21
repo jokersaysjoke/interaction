@@ -2,18 +2,18 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 // RDS MYSQL
-const mysql_host=process.env.AWS_RDS_HOST;
-const mysql_user=process.env.AWS_RDS_USER;
-const mysql_password=process.env.AWS_RDS_PASSWORD;
-const mysql_database=process.env.AWS_RDS_DATABASE;
+const rds_host=process.env.AWS_RDS_HOST;
+const rds_user=process.env.AWS_RDS_USER;
+const rds_password=process.env.AWS_RDS_PASSWORD;
+const rds_database=process.env.AWS_RDS_DATABASE;
 
 // connectionPool
 const pool = mysql.createPool({
   connectionLimit : 10,
-  host: mysql_host,
-  user: mysql_user,
-  password: mysql_password,
-  database: mysql_database,
+  host: rds_host,
+  user: rds_user,
+  password: rds_password,
+  database: rds_database,
   port: "3306"
 });
 

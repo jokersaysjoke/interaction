@@ -45,6 +45,7 @@ app.get('/', async (req, res) => {
       res.redirect('/home');
     }
   } catch (error) {
+    console.log('err', error);
     return res.status(500).json({"error":true, "message":"Database error"});
   }
 });
