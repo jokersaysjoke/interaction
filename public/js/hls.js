@@ -10,8 +10,8 @@ toLiveStream.addEventListener('click', ()=>{
         dontnull.textContent='(*必填且字串99字以內)'
         videoHeader.focus();
     }else{
-        hlsPLAYer(streamKey.textContent);
-        // fakehlsPLAYer(streamKey.textContent);
+        // hlsPLAYer(streamKey.textContent);
+        fakehlsPLAYer(streamKey.textContent);
         createStreamingRoom(streamKey.textContent);
 
     }
@@ -78,8 +78,6 @@ function fakehlsPLAYer(){
     // appear chat
     const chat=document.querySelector('.chat-background');
     chat.style.display='block';
-    
-    
 
 
     input.focus();

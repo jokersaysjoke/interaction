@@ -31,17 +31,21 @@ app.use('/room', room);
 // RESTful API <END>
 
 app.get('/', async (req, res) => {
-  let sql=`
-  SELECT * 
-  FROM ROOM
-  `
-  const cookie = req.cookies['cookie'];
-  const [record]=await pool.promise().query(sql, [])
-  
-  if (cookie&&record.length>0) {
-    res.render('index.ejs', {});
-  } else {
-    res.redirect('/home');
+  try {
+    let sql=`
+    SELECT HOST
+    FROM ROOM
+    `
+    const cookie = req.cookies['cookie'];
+    const [record]=await pool.promise().query(sql, []);
+    
+    if (cookie&&record.length>0) {
+      res.render('index.ejs', {});
+    } else {
+      res.redirect('/home');
+    }
+  } catch (error) {
+    return res.status(500).json({"error":true, "message":"Database error"});
   }
 });
 

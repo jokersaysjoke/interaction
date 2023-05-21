@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   redis:
@@ -12,6 +12,10 @@ services:
     command: ["redis-server"]
     
   web:
+    build: 
+      context: .
+      dockerfile: dockerfile
+
     image: interaction
 
     env_file:

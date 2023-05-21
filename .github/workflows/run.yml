@@ -1,0 +1,29 @@
+name: backend CI/CD Pipeline
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      PRIVATE_KEY: ${{ secrets.DEPLOY_AWS_PRIVATE_KEY  }}
+      HOSTNAME: ${{ secrets.DEPLOY_HOSTNAME  }}
+      USER_NAME: ${{ secrets.DEPLOY_USERNAME  }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: SSH into EC2 and update Dcoker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.AWS_HOSTNAME }}
+          username: ${{secrets.AWS_USERNAME }}
+          key: ${{secrets.AWS_PRIVATE_KEY }}
+          script: |
+            docker-compose down
+            docker-compose up -d
+            echo "y" | docker system prune
