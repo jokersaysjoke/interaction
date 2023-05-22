@@ -13,7 +13,7 @@ env:
   AWS_RDS_USER: ${{ secrets.AWS_RDS_USER}}
   AWS_RDS_DATABASE: ${{ secrets.AWS_RDS_DATABASE}}
   AWS_RDS_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD}}
-  
+
   port: ${{ secrets.PORT}}
 
 jobs:
@@ -33,8 +33,4 @@ jobs:
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
             docker-compose down
-            cd /interaction
-            git pull
-            docker build -t interaction .
-            echo "y" | docker system prune
-            docker-compose up -d
+            
