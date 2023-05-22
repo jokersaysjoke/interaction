@@ -14,8 +14,6 @@ env:
   AWS_RDS_DATABASE: ${{ secrets.AWS_RDS_DATABASE}}
   AWS_RDS_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD}}
 
-  port: ${{ secrets.PORT}}
-
 jobs:
   deploy:
     name: Deploy

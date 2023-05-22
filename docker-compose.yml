@@ -36,9 +36,6 @@ services:
       - AWS_RDS_USER=${AWS_RDS_USER}
       - AWS_RDS_DATABASE=${AWS_RDS_DATABASE}
       - AWS_RDS_PASSWORD=${AWS_RDS_PASSWORD}
-      - port=${PORT}
-
-
 
     command: ["npm", "start"]
 

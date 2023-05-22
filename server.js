@@ -3,8 +3,7 @@ const cookieParser = require('cookie-parser');
 const http = require('http');
 const { socket } = require('./router/socket');
 const pool = require('./router/model')
-require('dotenv').config();
-const port=process.env.port;
+const port=3000
 
 const imgAPI = require('./router/api/image');
 const userAPI = require('./router/api/user');
