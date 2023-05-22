@@ -16,21 +16,6 @@ services:
       context: .
       dockerfile: dockerfile
 
-      environment:
-        - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
-        - AWS_BUCKET_REGION=${AWS_BUCKET_REGION}
-        - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
-        - AWS_SECRET_KEY=${AWS_SECRET_KEY}
-
-        - AWS_RDS_HOST= ${AWS_RDS_HOST}
-        - AWS_RDS_USER= ${AWS_RDS_USER}
-        - AWS_RDS_DATABASE= ${AWS_RDS_DATABASE}
-        - AWS_RDS_PASSWORD= ${AWS_RDS_PASSWORD}
-
-        - port= ${PORT}
-
-
-
     image: interaction
     
     ports:
@@ -41,6 +26,21 @@ services:
 
     depends_on:
       - redis
+
+    environment:
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - AWS_BUCKET_REGION=${AWS_BUCKET_REGION}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+
+      - AWS_RDS_HOST= ${AWS_RDS_HOST}
+      - AWS_RDS_USER= ${AWS_RDS_USER}
+      - AWS_RDS_DATABASE= ${AWS_RDS_DATABASE}
+      - AWS_RDS_PASSWORD= ${AWS_RDS_PASSWORD}
+
+      - port= ${PORT}
+
+
 
     command: ["npm", "start"]
 
