@@ -33,7 +33,8 @@ jobs:
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
             docker-compose down
+            cd /interaction
             sudo git pull
             docker build -t interaction .
-            docker system prune
-            docker-compose up
+            echo "y" | docker system prune
+            docker-compose up -d
