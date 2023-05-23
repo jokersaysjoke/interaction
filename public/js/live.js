@@ -31,8 +31,8 @@ async function closeStreaming(){
     const item1=document.querySelector('.item1');
     item1.textContent='QUIT';
     item1.addEventListener('click', async ()=>{
-        // await upload2S3();
-        await closeRoom();
+        await upload2S3();
+        // await closeRoom();
 
     });
 
