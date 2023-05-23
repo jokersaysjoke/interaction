@@ -58,6 +58,9 @@ Test account:
 ## Version Control
 - Git / GitHub
 
+## CI / CD
+- GitHub Actions
+
 ## Contact
 - Author: `Chen, Chun-Yi 陳群嶧`
 - Email: `chun.yii.chen@gmail.com`
