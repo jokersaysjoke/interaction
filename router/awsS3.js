@@ -16,14 +16,14 @@ const s3=new S3({
 
 // uploads to s3
 async function uploadFile(streamkey, content){
-    const fileStream=fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
-    const uploadParms={
-        Bucket: bucketName,
-        Body: fileStream,
-        Key: `${content}.mp4`
-    }
-
     try{
+        const fileStream=fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
+        const uploadParms={
+            Bucket: bucketName,
+            Body: fileStream,
+            Key: `${content}.mp4`
+        }
+    
         await s3.upload(uploadParms).promise();
         await fs.promises.unlink(`/tmp/record/${streamkey}.mp4`);
         return
