@@ -8,7 +8,11 @@ Test account:
 - Password : `test`
 
 ## System Design
+### Server Architecture
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e842191b-10d6-4c85-848e-e9d04a278d75' width='700px'>
 
+
+### Live Stream Platform Architecture
 <img src='https://github.com/jokersaysjoke/interaction/assets/110945189/488daf04-ae8b-40a6-b788-979da51c1d00' width='700px'>
 
 ## Backend Technique
@@ -53,6 +57,9 @@ Test account:
 
 ## Version Control
 - Git / GitHub
+
+## CI / CD
+- GitHub Actions
 
 ## Contact
 - Author: `Chen, Chun-Yi 陳群嶧`
