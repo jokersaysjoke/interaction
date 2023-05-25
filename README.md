@@ -1,6 +1,6 @@
 # [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
-## Demo
+
 Website URL => <https://jokersaysjoke.online/home>
 
 Test account:
@@ -26,10 +26,10 @@ Test account:
 #### Web Server Framework
 - Node.js / Express.js
 
-#### Database
+#### Relational Database
 - MySQL
 
-#### Cache
+#### NoSQL Database
 - Redis
 
 #### Networking and Security
