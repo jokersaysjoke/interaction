@@ -1,15 +1,24 @@
 # [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
-## Demo
+
 Website URL => <https://jokersaysjoke.online/home>
 
 Test account:
 - User : `test@test.com`
 - Password : `test`
 
+## Features
+- RTMP streaming: Enables the server to receive incoming RTMP streams from various sources, including popular broadcasting software like OBS or media encoding devices.
+
+- Live streaming: Support live streaming, allowing broadcasters to stream video content in real-time to connected clients.
+
+- HLS (HTTP Live Streaming): Convert RTMP streams into HLS format.
+
+- Real-time communication: The project allows for real-time, event-driven communication between the server and clients, enabling the exchange of messages.
+
 ## System Design
 ### Server Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e842191b-10d6-4c85-848e-e9d04a278d75' width='700px'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e337d031-0ff7-45a4-aaee-835e473dcba3' width='700px'>
 
 
 ### Live Stream Platform Architecture
@@ -26,10 +35,10 @@ Test account:
 #### Web Server Framework
 - Node.js / Express.js
 
-#### Database
+#### Relational Database
 - MySQL
 
-#### Cache
+#### NoSQL Database
 - Redis
 
 #### Networking and Security
