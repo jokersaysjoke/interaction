@@ -16,6 +16,17 @@ async function ioJoinRoom(){
     }),
     headers: new Headers({"Content-type":"application/json"})
   });
+
+  const response=await fetch(`/api/message?room=${roomID}`);
+  const data=await response.json();
+  if(data.data!==null){
+    const dd=data.data;
+    console.log(dd);
+    for(let i=0; i<dd.length; i++){
+      selectMessage(dd[i]);
+    }
+    
+  }
   socket.emit('join-room', roomID)
 
 }
@@ -61,13 +72,13 @@ form.addEventListener('submit', async function(e) {
   const reponse=await fetch(`/api/user/auth`);
   const data=await reponse.json();
   const dd=data.data;
-  const name=dd.name;
-  const address=dd.address;
-  const msg=input.value;
-  
+  const name=dd.name, address=dd.address, msg=input.value;
+  const t=new Date;
+  const tt=`${t.getHours()}:${t.getMinutes()}`;
+
   if(msg.length>0){
-    displayMessage({username:name, message:msg, img:address});
-    socket.emit('chat message', {username:name, message:msg, img:address}, roomID);
+    displayMessage({username:name, message:msg, img:address, time:tt});
+    socket.emit('chat message', {username:name, message:msg, img:address, time:tt}, roomID);
     input.value = '';
   }else{
     return
@@ -94,8 +105,7 @@ function displayMessage(data){
   
   const chatTime = document.createElement('span');
   chatTime.classList.add('chat-time');
-  const t=new Date();
-  chatTime.textContent=`${t.getHours()}:${t.getMinutes()}`;
+  chatTime.textContent=`${data.time}`;
   userType.appendChild(chatTime);
   
   const chatUser = document.createElement('span');
@@ -106,6 +116,46 @@ function displayMessage(data){
   const chatMessages = document.createElement('span');
   chatMessages.classList.add('chatmessages');
   chatMessages.textContent=data.message;
+  userType.appendChild(chatMessages);
+  
+  li.appendChild(userType);
+
+  message.appendChild(li);
+  message.scrollTop = message.scrollHeight;
+
+  window.scrollTo(0, document.body.scrollHeight);
+};
+
+async function selectMessage(data){
+  const li = document.createElement('li');
+  li.classList.add('user-type-background');
+  
+  const avatarBackground = document.createElement('div');
+  avatarBackground.classList.add('avatar-background');
+  
+  const img = document.createElement('img');
+  img.src = `https://d3i2vvc6rykmk0.cloudfront.net/${data.IMAGE_URL}`;
+  img.classList.add('avatar');
+  
+  avatarBackground.appendChild(img);
+  li.appendChild(avatarBackground);
+  
+  const userType = document.createElement('div');
+  userType.classList.add('user-type');
+  
+  const chatTime = document.createElement('span');
+  chatTime.classList.add('chat-time');
+  chatTime.textContent=`${data.CREATED_AT}`;
+  userType.appendChild(chatTime);
+  
+  const chatUser = document.createElement('span');
+  chatUser.classList.add('chat-user');
+  chatUser.textContent=data.USER_ID;
+  userType.appendChild(chatUser);
+  
+  const chatMessages = document.createElement('span');
+  chatMessages.classList.add('chatmessages');
+  chatMessages.textContent=data.CONTENT;
   userType.appendChild(chatMessages);
   
   li.appendChild(userType);

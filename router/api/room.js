@@ -38,11 +38,8 @@ roomAPI.get('/room', async (req, res)=>{
 
 roomAPI.post('/room', async (req, res)=>{
     try {
-        const cookie=req.cookies['cookie'];
-        const response=jwtVerify(cookie);
         const body=req.body
-        const name=body.name
-        const email=response['email'];
+        const name=body.name, email=body.email;
 
         let sql=`
         SELECT *
@@ -75,11 +72,7 @@ roomAPI.put('/room', async(req, res)=>{
         WHERE HOST = ?
         `;
         const body=req.body;
-        const status=body['status'];
-        const host=body['host'];
-        const streamkey=body['streamkey'];
-        const head=body['head'];
-        const date=body['date'];
+        const status=body.status, host=body.host, streamkey=body.streamkey, head=body.head, date=body.date;
 
         await pool.promise().query(sql, [status, streamkey, head, date, host]);
         

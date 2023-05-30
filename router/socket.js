@@ -6,10 +6,13 @@ function socket(server){
     const io = new Server(server);
 
     io.on('connection', (socket) => {
-      socket.on('chat message', (msg, roomID) => {
-        const username=msg.username;
-        const message=msg.message;
-        const img=msg.img;
+      socket.on('chat message', async (msg, roomID) => {
+        const username=msg.username, message=msg.message, img=msg.img, time=msg.time;
+        let sql=`
+        INSERT INTO MESSAGE (CHATROOM_ID, IMAGE_URL, CREATED_AT, USER_ID, CONTENT)
+        VALUES (?,?,?,?,?)
+        `;
+        await pool.promise().query(sql, [roomID, img, time, username, message]);
         
         if(roomID===''){
           console.log(`no roomID`);

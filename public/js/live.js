@@ -32,7 +32,7 @@ async function closeStreaming(){
     item1.textContent='QUIT';
     item1.addEventListener('click', async ()=>{
         await upload2S3();
-        // await closeRoom();
+        await closeRoom();
 
     });
 
@@ -46,6 +46,14 @@ async function closeRoom(){
         method:'DELETE',
         body:JSON.stringify({
             host: host
+        }),
+        headers: new Headers({"Content-type":"application/json"})
+    });
+
+    await fetch(`/api/message`, {
+        method: 'DELETE',
+        body: JSON.stringify({
+            room: host        
         }),
         headers: new Headers({"Content-type":"application/json"})
     });

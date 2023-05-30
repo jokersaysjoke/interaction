@@ -105,17 +105,28 @@ async function signIn(){
         flashAlert.style.color="red";
         flashAlert.textContent='Incorrect username or password';
     }else{
-    const response=await fetch(`/api/user`, {
+        const response=await fetch(`/api/user`, {
                 method:"PUT",
                 body:JSON.stringify({
-                email:userLoginID.value,
-                password:userLoginPW.value
+                    email:userLoginID.value,
+                    password:userLoginPW.value
             }),
             headers: new Headers({"Content-type":"application/json"})
         })
-    const data=await response.json();
+        const data=await response.json();
     
         if(data.ok){
+            const t=new Date;
+            let td=`${t.getFullYear()}/${t.getMonth()+1}/${t.getDate()} ${t.getHours()}:${t.getMinutes()}:${t.getSeconds()}`;
+            const res=await fetch(`/api/user/post`, {
+                method: "POST",
+                body: JSON.stringify({
+                    email: userLoginID.value,
+                    time: td
+                }),
+                headers: new Headers({"Content-type":"application/json"})
+            });
+
             accountStatus.textContent="登出";
             accountStatus.addEventListener('click', logOut);
             setTimeout("location.reload()", 500);
@@ -244,11 +255,12 @@ window.onload=memberStatus();
 async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const name=result.data.name;
+    const name=result.data.name, email=result.data.email;
     const response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
-            name:name
+            name: name,
+            email: email
         }),
         headers: new Headers({"Content-type":"application/json"})
     });

@@ -141,7 +141,25 @@ userAPI.put('/user/update', async(req, res)=>{
   } catch (error) {
     return res.status(500).json({"error":true, "message":"Database error"});
   }
-})
+});
+
+userAPI.post('/user/post', async(req, res) => {
+  try {
+    let sql=`
+    INSERT INTO LOGIN_HISTORY (USER_ID, LOGIN_TIME)
+    VALUES (?,?)
+    `
+    const data=req.body;
+    const user=data.email;
+    const time=data.time;
+    await pool.promise().query(sql, [user, time]);
+
+    return res.status(200).json({ok:true});
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({"error":true, "message":"Database error"});
+  }
+});
 
 userAPI.get('/user/auth', async(req, res) => {
   try {
