@@ -20,6 +20,7 @@ function socket(server){
           socket.to(roomID).emit('receive-message', {username:username, message:message, img:img});
         }
       });
+      
       socket.on('join-room', async roomID => {
         let sql=`
         UPDATE ROOM
