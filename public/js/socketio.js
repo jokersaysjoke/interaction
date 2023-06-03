@@ -21,7 +21,6 @@ async function ioJoinRoom(){
   const data=await response.json();
   if(data.data!==null){
     const dd=data.data;
-    console.log(dd);
     for(let i=0; i<dd.length; i++){
       selectMessage(dd[i]);
     }
