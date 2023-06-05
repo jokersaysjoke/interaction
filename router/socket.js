@@ -17,7 +17,7 @@ function socket(server){
         if(roomID===''){
           console.log(`no roomID`);
         }else{
-          socket.to(roomID).emit('receive-message', {username:username, message:message, img:img});
+          socket.to(roomID).emit('receive-message', {username:username, message:message, img:img, time:time});
         }
       });
       
@@ -38,12 +38,7 @@ function socket(server){
           io.to(roomID).emit('roomCount', discount);
           await pool.promise().query(sql, [discount, roomID]);
         });
-        
-        let sql2=`
-        SELECT VIEWCOUNT
-        FROM ROOM
-        WHERE HOST = ?
-        `;
+
         const viewCount=await redis.hgetCache(roomID, 'totalViews')
         io.to(roomID).emit('viewCount', viewCount);
       })
