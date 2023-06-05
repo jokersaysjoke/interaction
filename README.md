@@ -1,7 +1,7 @@
 # [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 
-Website URL => <https://jokersaysjoke.online/home>
+Website URL: <https://jokersaysjoke.online/home>
 
 Test account:
 - User : `test@test.com`
