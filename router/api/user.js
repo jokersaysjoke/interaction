@@ -30,8 +30,18 @@ userAPI.get('/user', async(req, res) => {
       FROM ROOM
       WHERE HOST = ?
       `;
-      const [room]=await pool.promise().query(sql2, [name])
-      return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'room':room.length}});
+      const [room]=await pool.promise().query(sql2, [name]);
+      if(email==='host'){
+        let sql3=`
+        SELECT * FROM LOGIN_HISTORY
+        ORDER BY ID DESC;
+        `
+        const [histroy]=await pool.promise().query(sql3, []);
+        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'room':room.length, 'history':histroy}});
+      }else{
+        return res.status(200).json({"data":{'id':id, 'name':name, 'email':email, 'streamkey':streamkey, 'room':room.length}});
+      }
+      
     }else{
       return res.json({"data":null});
     }

@@ -19,6 +19,7 @@ async function fetchEmail(){
     const dd=data.data
     email.textContent=dd.email;
     username.placeholder=dd.name;
+    console.log(dd);
 }
 
 async function fetchImgtoEdit(){
