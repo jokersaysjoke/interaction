@@ -62,6 +62,11 @@ async function memberStatus(){
     const response=await fetch(`/api/user`);
     const data=await response.json();
     if(data.data!==null){
+        if(data.data.history!==null){
+            host(data.data.history);
+
+        }
+
         await fetchImg();
         welcome.addEventListener('click', ()=>{
             location.href=`/home`;
@@ -279,4 +284,26 @@ async function fetchImg(){
         accountImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
     }
     return
+}
+
+function host(ddh){
+    if (ddh) {
+        const mainbk=document.querySelector('.main-background');
+        mainbk.style.display='block';
+        const contain=document.querySelector('.contain');
+        contain.innerHTML='';
+        const main=document.querySelectorAll('.main');
+        main[1].innerHTML='';
+        for(let i=0; i<ddh.length; i++){
+            console.log('id', ddh[i].ID);
+
+            const li=document.createElement('li');
+            li.textContent=`ID:${ddh[i].ID}, user:${ddh[i].USER_ID}, loginAt:${ddh[i].LOGIN_TIME}`;
+            contain.appendChild(li);
+        }
+        return
+    } else {
+        return
+    }
+
 }
