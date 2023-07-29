@@ -12,7 +12,6 @@ toLiveStream.addEventListener('click', ()=>{
     }else{
         hlsPLAYer(streamKey.textContent);
         // fakehlsPLAYer(streamKey.textContent);
-        createStreamingRoom(streamKey.textContent);
 
     }
 });
@@ -49,8 +48,8 @@ function hlsPLAYer(streamkey){
             vdb.style.display='block';
 
             input.focus();
-            
-    });
+            createStreamingRoom(streamKey.textContent);
+        });
     }else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = videoSrc;
     }
