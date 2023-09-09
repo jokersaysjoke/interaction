@@ -71,5 +71,5 @@ Test account:
 - GitHub Actions
 
 ## Contact
-- Author: `Chen, Chun-Yi 陳群嶧`
+- Author: `Chen, Chun-Yi`
 - Email: `chun.yii.chen@gmail.com`
