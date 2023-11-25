@@ -21,7 +21,7 @@ services:
     image: interaction
     
     ports:
-      - "3000:3000"
+      - "3005:3005"
 
     volumes:
       - "/tmp/record:/tmp/record"
