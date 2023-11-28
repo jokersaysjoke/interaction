@@ -20,7 +20,7 @@ jobs:
           username: ${{secrets.AWS_USERNAME }}
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
-            cd /interaction
+            cd /var/projects/interaction
             sudo docker-compose down
             sudo git pull
             sudo docker build -t interaction .
