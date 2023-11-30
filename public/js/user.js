@@ -281,7 +281,7 @@ async function fetchImg(){
     const data=await response.json();
     const dd=data.data
     if(dd!==null){
-        accountImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+        accountImg.setAttribute('src', `https://dmhk9lgz90alf.cloudfront.net/${dd.address}`)
     }
     return
 }

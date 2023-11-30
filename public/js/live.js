@@ -112,7 +112,7 @@ async function createStreamingRoom(streamkey){
         const creatorImg=document.querySelector('.video-creator-img');
         const userimg=await fetch(`/api/user/auth`);
         const userdata=await userimg.json();
-        creatorImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${userdata.data.address}`
+        creatorImg.src=`https://dmhk9lgz90alf.cloudfront.net/${userdata.data.address}`
         const creator=document.querySelector('.video-creator');
 
         creator.textContent=host;
