@@ -29,7 +29,7 @@ async function joinRoom(){
 
 function hlsClientPLAYer(streamkey){
 
-    let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
+    let videoSrc = `https://dsvbvdlaubjve.cloudfront.net/${streamkey}.m3u8`;
 
     if (Hls.isSupported()) {
         const video = document.querySelector(".video");
