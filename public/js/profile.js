@@ -27,7 +27,7 @@ async function fetchImgtoEdit(){
     const data=await response.json();
     const dd=data.data
     if(dd!==null){
-        editImg.setAttribute('src', `https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`)
+        editImg.setAttribute('src', `https://dmhk9lgz90alf.cloudfront.net/${dd.address}`)
     }
     
 }

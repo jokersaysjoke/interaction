@@ -52,7 +52,7 @@ function createLiveRoom(data){
         // 建立 img 元素
         const videoAccountImg = document.createElement('img');
         videoAccountImg.classList.add('video-account-img');
-        videoAccountImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${data.ADDRESS}`
+        videoAccountImg.src=`https://dmhk9lgz90alf.cloudfront.net/${data.ADDRESS}`
         videoAccountPic.appendChild(videoAccountImg);
 
         // 建立 video-title 元素

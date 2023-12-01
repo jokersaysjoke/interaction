@@ -6,7 +6,7 @@ async function joinRoom(){
     const data=await response.json();
     const dd=data.data[0];
     
-    creatroImg.src=`https://d3i2vvc6rykmk0.cloudfront.net/${dd.ADDRESS}`
+    creatroImg.src=`https://dmhk9lgz90alf.cloudfront.net/${dd.ADDRESS}`
     
     const videoDetailBack=document.querySelector('.video-detail-background');
     videoDetailBack.style.display='block';
@@ -29,7 +29,7 @@ async function joinRoom(){
 
 function hlsClientPLAYer(streamkey){
 
-    let videoSrc = `https://d195ib12pdjsv8.cloudfront.net/${streamkey}.m3u8`;
+    let videoSrc = `https://dsvbvdlaubjve.cloudfront.net/${streamkey}.m3u8`;
 
     if (Hls.isSupported()) {
         const video = document.querySelector(".video");

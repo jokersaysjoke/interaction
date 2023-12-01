@@ -38,7 +38,7 @@ async function getAuth(){
     utname.textContent=dd.name;
 
     const img=avatarbk.querySelector('img');
-    img.src=`https://d3i2vvc6rykmk0.cloudfront.net/${dd.address}`
+    img.src=`https://dmhk9lgz90alf.cloudfront.net/${dd.address}`
 
   }
 }
@@ -94,7 +94,7 @@ function displayMessage(data){
   avatarBackground.classList.add('avatar-background');
   
   const img = document.createElement('img');
-  img.src = `https://d3i2vvc6rykmk0.cloudfront.net/${data.img}`;
+  img.src = `https://dmhk9lgz90alf.cloudfront.net/${data.img}`;
   img.classList.add('avatar');
   
   avatarBackground.appendChild(img);
@@ -134,7 +134,7 @@ async function selectMessage(data){
   avatarBackground.classList.add('avatar-background');
   
   const img = document.createElement('img');
-  img.src = `https://d3i2vvc6rykmk0.cloudfront.net/${data.IMAGE_URL}`;
+  img.src = `https://dmhk9lgz90alf.cloudfront.net/${data.IMAGE_URL}`;
   img.classList.add('avatar');
   
   avatarBackground.appendChild(img);
