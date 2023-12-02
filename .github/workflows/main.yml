@@ -23,6 +23,7 @@ jobs:
             cd /var/projects/interaction
             sudo docker-compose down
             sudo git pull origin dev
+            sudo git merge dev
             sudo docker build -t interaction .
             echo "y" | sudo docker system prune
             sudo docker-compose up -d
