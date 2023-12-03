@@ -8,8 +8,9 @@ class Convert {
         this.streamkey = streamkey
     }
     async mp4() {
-        const inputFilePath = `/tmp/record/${streamkey}.*`;
-        const outputFilePath = `/tmp/record/${streamkey}.mp4`;
+        console.log(this.streamkey);
+        const inputFilePath = `/tmp/record/${this.streamkey}.flv`;
+        const outputFilePath = `/tmp/record/${this.streamkey}.mp4`;
         ffmpeg()
             .input(inputFilePath)
             .output(outputFilePath)
