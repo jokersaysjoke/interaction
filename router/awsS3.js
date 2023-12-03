@@ -23,7 +23,7 @@ const s3 = new S3({
 async function uploadFile(streamkey, content) {
     try {
         const convertTo = new Convert(streamkey);
-        convertTo.mp4();
+        await convertTo.mp4();
 
         const fileStream = fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
         const uploadParms = {
@@ -36,6 +36,7 @@ async function uploadFile(streamkey, content) {
             client: s3,
             params: uploadParms
         }).done();
+        await fs.promises.unlink(`/tmp/record/${streamkey}.flv`);
         await fs.promises.unlink(`/tmp/record/${streamkey}.mp4`);
         return
 
