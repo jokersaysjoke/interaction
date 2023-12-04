@@ -7,21 +7,24 @@ class Convert {
     constructor(streamkey) {
         this.streamkey = streamkey
     }
-    async mp4() {
-        const inputFilePath = `/tmp/record/${this.streamkey}.flv`;
-        const outputFilePath = `/tmp/record/${this.streamkey}.mp4`;
+    mp4() {
+        return new Promise((resolve, reject) => {
+            const inputFilePath = `/tmp/record/${this.streamkey}.flv`;
+            const outputFilePath = `/tmp/record/${this.streamkey}.mp4`;
 
-        ffmpeg()
-            .input(inputFilePath)
-            .output(outputFilePath)
-            .on('end', () => {
-                console.log('轉換完成');
-            })
-            .on('error', (err) => {
-                console.error('轉換錯誤:', err);
-            })
-            .run();
-
+            ffmpeg()
+                .input(inputFilePath)
+                .output(outputFilePath)
+                .on('end', () => {
+                    console.log('轉換完成');
+                    resolve(outputFilePath);
+                })
+                .on('error', (err) => {
+                    console.error('轉換錯誤:', err);
+                    reject(err);
+                })
+                .run();
+        });
     }
 }
 module.exports = Convert
