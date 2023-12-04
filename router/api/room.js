@@ -8,6 +8,8 @@ const { jwtVerify } = require('../jwt');
 roomAPI.use(cookieParser());
 roomAPI.use(bodyParser.json());
 
+const Convert = require('../convert');
+
 // preview all of live-room
 roomAPI.get('/room', async (req, res)=>{
     try {
@@ -75,6 +77,9 @@ roomAPI.put('/room', async(req, res)=>{
         const status=body.status, host=body.host, streamkey=body.streamkey, head=body.head, date=body.date;
 
         await pool.promise().query(sql, [status, streamkey, head, date, host]);
+
+        const convertTo = new Convert(streamkey);
+        await convertTo.mp4();
         
         return res.status(200).json({"ok":true});
     } catch (error) {

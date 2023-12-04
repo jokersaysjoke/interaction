@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const { Upload } = require('@aws-sdk/lib-storage');
 const { S3 } = require('@aws-sdk/client-s3');
-const Convert = require('./convert');
+
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
@@ -12,30 +12,39 @@ const secretAccessKey = process.env.AWS_SECRET_KEY;
 
 const s3 = new S3({
     region,
-
     credentials: {
         accessKeyId,
         secretAccessKey
     }
 });
 
+const bucketNameVideo = process.env.AWS_BUCKET_NAME_VIDEO;
+const regionVideo = process.env.AWS_BUCKET_REGION_VIDEO;
+const accessKeyIdVideo = process.env.AWS_ACCESS_KEY_VIDEO;
+const secretAccessKeyVideo = process.env.AWS_SECRET_KEY_VIDEO;
+
+const s3Video = new S3({
+    regionVideo,
+    credentials: {
+        accessKeyIdVideo,
+        secretAccessKeyVideo
+    }
+});
+
 // uploads to s3
 async function uploadFile(streamkey, content) {
     try {
-        const convertTo = new Convert(streamkey);
-        await convertTo.mp4();
-
         const fileStream = fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
-        console.log('file stream:', fileStream);
+        
         const uploadParms = {
-            Bucket: bucketName,
+            Bucket: bucketNameVideo,
             Body: fileStream,
-            Key: `${content}`,
-            ContentType: 'mp4'
+            Key: `${content}`
+            
         }
 
         await new Upload({
-            client: s3,
+            client: s3Video,
             params: uploadParms
         }).done();
         await fs.promises.unlink(`/tmp/record/${streamkey}.mp4`);
