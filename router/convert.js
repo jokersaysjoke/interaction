@@ -9,9 +9,7 @@ class Convert {
     }
     async mp4() {
         const inputFilePath = `/tmp/record/${this.streamkey}.flv`;
-        console.log('inputFilePath:', inputFilePath);
         const outputFilePath = `/tmp/record/${this.streamkey}.mp4`;
-        console.log('outputFilePath:', outputFilePath);
 
         ffmpeg()
             .input(inputFilePath)
@@ -23,6 +21,7 @@ class Convert {
                 console.error('轉換錯誤:', err);
             })
             .run();
+
     }
 }
 module.exports = Convert
