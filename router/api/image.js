@@ -45,7 +45,6 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
         const [record]=await pool.promise().query(sql, [host])
         if(record.length>0){
             await s3.uploadImg(file);
-            // await s3.cleanImg(file);
             let sql=`
             UPDATE AVATAR
             SET ADDRESS = ?
