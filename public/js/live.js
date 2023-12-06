@@ -31,7 +31,7 @@ async function closeStreaming() {
     const item1 = document.querySelector('.item1');
     item1.textContent = 'QUIT';
     item1.addEventListener('click', async () => {
-        await upload2S3();
+        upload2S3();
         await closeRoom();
 
     });
@@ -85,9 +85,7 @@ async function upload2S3() {
         headers: new Headers({ "Content-type": "application/json" })
 
     })
-    const data = await response.json();
-    if (data.data) { location.href = `/home` }
-
+    
 };
 
 
