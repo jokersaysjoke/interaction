@@ -90,7 +90,8 @@ userAPI.post('/user', async (req, res) => {
     const data = req.body;
     const name = data.name, email = data.email, password = data.password, streamkey = data.streamkey;
     const userId = uuid.v4();
-    const createdAt = current.getFormattedTime()
+    const createdAt = current.getTaipeiTime()
+    console.log(createdAt);
     let sql = `
     SELECT *
     FROM MEMBER
