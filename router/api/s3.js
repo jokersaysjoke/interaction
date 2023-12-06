@@ -30,7 +30,7 @@ s3API.post('/s3', async (req, res) => {
     try {
         let sql = `
         INSERT INTO
-        RECORDING (USER_ID, RECORDING_ID, CONTENT, CREATED_AT)
+        RECORDING (RECORDING_ID, USER_ID, CONTENT, CREATED_AT)
         VALUES (?,?,?,?)
         `
         const streamkey = req.body.streamkey;
