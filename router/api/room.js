@@ -1,10 +1,10 @@
 const express=require('express');
-const pool=require('../model');
+const pool=require('../models/model');
 const roomAPI=express.Router();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const redis=require('../redis')
-const { jwtVerify } = require('../jwt');
+const redis=require('../models/redis')
+const { jwtVerify } = require('../models/jwt');
 roomAPI.use(cookieParser());
 roomAPI.use(bodyParser.json());
 

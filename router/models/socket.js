@@ -1,6 +1,6 @@
 const {Server}=require('socket.io');
 const redis=require('./redis.js');
-const pool=require('./model');
+const pool=require('./model.js');
 
 function socket(server){
     const io = new Server(server);

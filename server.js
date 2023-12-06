@@ -1,18 +1,18 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const http = require('http');
-const { socket } = require('./router/socket');
+const { socket } = require('./router/models/socket.js');
 require('dotenv').config();
 const port=process.env.PORT;
 
-const pages = require('./router/pages.js');
+const pages = require('./router/models/pages.js');
 const imgAPI = require('./router/api/image');
 const userAPI = require('./router/api/user');
 const roomAPI = require('./router/api/room');
 const msgAPI = require('./router/api/message');
 const s3API = require('./router/api/s3');
-const live = require('./router/liveStream');
-const room = require('./router/roomStream');
+const live = require('./router/models/liveStream.js');
+const room = require('./router/models/roomStream.js');
 
 const app = express();
 const server = http.createServer(app);

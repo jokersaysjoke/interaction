@@ -66,6 +66,7 @@ async function upload2S3() {
     const user = await fetch(`/api/user`);
     const result = await user.json();
     const host = result.data.name;
+    const userId = result.data.userId;
     await fetch(`/api/room`, {
         method: 'DELETE',
         body: JSON.stringify({
@@ -78,7 +79,8 @@ async function upload2S3() {
         method: 'POST',
         body: JSON.stringify({
             streamkey: streamKey.textContent,
-            head: videoHeader.value
+            head: videoHeader.value,
+            userId: userId
         }),
         headers: new Headers({ "Content-type": "application/json" })
 
