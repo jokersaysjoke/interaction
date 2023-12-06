@@ -1,5 +1,5 @@
 const express=require('express');
-const pool=require('../model');
+const pool=require('../models/model');
 const msgAPI=express.Router();
 
 // preview all of chatroom message

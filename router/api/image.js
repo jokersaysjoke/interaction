@@ -1,8 +1,8 @@
 const express=require('express');
-const s3 = require('../awsS3');
+const s3 = require('../models/awsS3');
 const imgAPI=express.Router();
-const pool = require('../model');
-const { jwtVerify, jwtSign } = require('../jwt');
+const pool = require('../models/model');
+const { jwtVerify, jwtSign } = require('../models/jwt');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const fs=require('fs')

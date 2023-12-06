@@ -18,11 +18,11 @@ Test account:
 
 ## System Design
 ### Server Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e337d031-0ff7-45a4-aaee-835e473dcba3' width='700px'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e337d031-0ff7-45a4-aaee-835e473dcba3' width='100%'>
 
 
 ### Live Stream Platform Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/488daf04-ae8b-40a6-b788-979da51c1d00' width='700px'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/488daf04-ae8b-40a6-b788-979da51c1d00' width='100%'>
 
 ## Backend Technique
 #### Key Points
@@ -53,6 +53,7 @@ Test account:
 - Nginx RTMP Module
 
 #### Third Party Library
+- ffmpeg
 - Socket.IO
 - aws-sdk
 - jsonwebtoken
