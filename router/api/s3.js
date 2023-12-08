@@ -38,7 +38,6 @@ s3API.post('/s3', async (req, res) => {
         const userId = req.body.userId;
         const recordingId = uuid.v4();
         const createdAt = current.getTaipeiTime();
-        console.log(createdAt);
 
         await s3.uploadFile(streamkey, recordingId);
         await pool.promise().query(sql, [recordingId, userId, content, createdAt])

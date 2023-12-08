@@ -12,9 +12,9 @@ function jwtVerify(cookie) {
 
 };
 
-function jwtSign(id, name, email, streamkey) {
+function jwtSign(userId, name, email, streamkey) {
     const token = jwt.sign({
-        id,
+        userId,
         name,
         email,
         streamkey

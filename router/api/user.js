@@ -66,7 +66,7 @@ userAPI.put('/user', async (req, res) => {
     const [record] = await pool.promise().query(sql, [email, password, email, password])
     if (record.length > 0) {
       const result = Object.assign({}, record[0]);
-      const token = jwtSign(result.ID, result.NAME, result.EMAIL, result.STREAMKEY);
+      const token = jwtSign(result.USER_ID, result.NAME, result.EMAIL, result.STREAMKEY);
       res.cookie('cookie', token);
       return res.status(200).json({ "ok": true });
     } else {
@@ -203,6 +203,46 @@ userAPI.get('/user/auth', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
+});
+
+userAPI.get('/user/recording', async(req, res) => {
+  try {
+    const cookie = req.cookies['cookie'];
+
+    let sql = `
+    SELECT 
+    RECORDING.RECORDING_ID, 
+    RECORDING.CONTENT, 
+    RECORDING.CREATED_AT,
+    RECORDING.VISIBILITY,
+    RECORDING.VIEWS,
+    RECORDING.COMMENTS
+
+    FROM
+    RECORDING
+
+    JOIN 
+    MEMBER
+
+    ON 
+    MEMBER.USER_ID = RECORDING.USER_ID
+    
+    WHERE 
+    RECORDING.USER_ID = ?
+    `
+  
+    const response = jwtVerify(cookie);
+    const userId = response.userId;
+  
+    const [data] = await pool.promise().query(sql, [userId]);
+    
+    return res.status(200).json({'data': data});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ "error": true, "message": "Database error" });
+  }
+
+
 })
 
 module.exports = userAPI;
