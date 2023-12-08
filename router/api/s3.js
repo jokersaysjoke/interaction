@@ -30,14 +30,14 @@ s3API.post('/s3', async (req, res) => {
     try {
         let sql = `
         INSERT INTO
-        RECORDING (USER_ID, RECORDING_ID, CONTENT, CREATED_AT)
+        RECORDING (RECORDING_ID, USER_ID, CONTENT, CREATED_AT)
         VALUES (?,?,?,?)
         `
         const streamkey = req.body.streamkey;
         const content = req.body.head;
         const userId = req.body.userId;
         const recordingId = uuid.v4();
-        const createdAt = current.getFormattedTime();
+        const createdAt = current.getTaipeiTime();
 
         await s3.uploadFile(streamkey, recordingId);
         await pool.promise().query(sql, [recordingId, userId, content, createdAt])

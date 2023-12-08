@@ -3,10 +3,9 @@ const fs = require('fs')
 const Convert = require('./convert');
 const { Upload } = require('@aws-sdk/lib-storage');
 const { S3 } = require('@aws-sdk/client-s3');
-const uuid = require('uuid');
 
 // uploads to s3
-async function uploadFile(streamkey, content) {
+async function uploadFile(streamkey, recordingId) {
     try {
         const bucketName = process.env.AWS_BUCKET_NAME_VIDEO;
         const region = process.env.AWS_BUCKET_REGION_VIDEO;
@@ -24,13 +23,11 @@ async function uploadFile(streamkey, content) {
         const convertTo = new Convert(streamkey);
         await convertTo.mp4();
 
-        const filename  = uuid.v4();
-
         const fileStream = fs.createReadStream(`/tmp/record/${streamkey}.mp4`);
         const uploadParms = {
             Bucket: bucketName,
             Body: fileStream,
-            Key: filename
+            Key: recordingId
 
         }
 

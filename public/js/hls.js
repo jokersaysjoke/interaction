@@ -80,4 +80,5 @@ function fakehlsPLAYer(){
 
 
     input.focus();
+    createStreamingRoom(streamKey.textContent);
 };

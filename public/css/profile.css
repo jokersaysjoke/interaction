@@ -1,14 +1,19 @@
-.main-background{
+#recording-detail-body {
+    display: none;
+}
+
+.main-background {
     margin: 30px auto;
     width: 999px;
 }
 
-.member-content{
+.member-content {
     width: 100%;
     margin: 22px 0;
 
 }
-.member-img{
+
+.member-img {
     border-radius: 100px;
     width: 200px;
     height: 200px;
@@ -16,29 +21,29 @@
     cursor: pointer;
     transition: 0.3s ease-in-out;
     overflow: hidden;
-    
+
     /* img */
     background-size: cover;
     background-position: center;
 }
-.member-img:hover{
+
+.member-img:hover {
     opacity: 0.8;
 }
-img{
-    /* width: 100%; */
+
+img {
     max-height: 100%;
-    /* min-width: 100%; */
-    /* min-height: 100%; */
 }
 
-.member-content-title{
+.member-content-title {
     margin: 0 11px;
     font-size: 22px;
     flex: 1;
     text-align: right;
     letter-spacing: 1px;
 }
-.input{
+
+.input {
     margin: 0 11px;
     letter-spacing: 2px;
     padding-left: 11px;
@@ -49,7 +54,8 @@ img{
     text-align: center;
     font-style: italic;
 }
-.edit{
+
+.edit {
     font-size: 22px;
     color: #F0047F;
     margin: 0 11px;
@@ -58,7 +64,7 @@ img{
     cursor: pointer;
 }
 
-.flex{
+.flex {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,12 +74,73 @@ img{
     opacity: 0;
 }
 
-p{  
+p {
     margin: 0 88px;
     text-align: center;
     flex: 1;
     letter-spacing: 1px;
 }
-#file-uploader{
+
+#file-uploader {
     display: none;
+}
+
+.pf-top {
+    border-bottom: gray 0.5px solid;
+
+}
+
+.recording-detail {
+    background-color: #202020;
+    color: gray;
+    font-size: 14px;
+    border: gray 0.5px solid;
+}
+
+video {
+    height: 70px;
+}
+
+.video-ct-rw {
+    height: 90px;
+    border-bottom: gray 0.5px solid;
+}
+
+.flex-sb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-no {
+    display: flex;
+    align-items: center;
+}
+
+.pf-colum {
+    width: 100px;
+    color: gray;
+    margin: 10px 0;
+}
+
+.pf-colums {
+    width: 100px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.pf-video {
+    margin-left: 10px;
+    width: 500px;
+    color: gray;
+}
+
+.pf-date {
+    width: 150px;
+}
+#video-title {
+    color: #fff;
+    margin: 20px;
+    width: 330px;
+    word-wrap: break-word;
 }
