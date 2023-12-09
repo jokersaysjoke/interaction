@@ -4,7 +4,6 @@ const live = express.Router();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-const { jwtVerify, jwtSign } = require('./jwt');
 live.use(cookieParser());
 live.use(bodyParser.json());
 
@@ -12,19 +11,27 @@ live.get('/:ID', async(req, res) => {
   try {
     const {ID}=req.params
     let sql=`
-    SELECT *
+    SELECT 
+    MEMBER.NAME
+    
     FROM ROOM
-    WHERE HOST = ?
+
+    JOIN
+    MEMBER
+    ON
+    MEMBER.USER_ID = ROOM.USER_ID
+
+    WHERE MEMBER.NAME = ?
     AND 
     (STATUS = ? OR STATUS = ?)
     `;
     const [record]=await pool.promise().query(sql, [ID, 'LIVE', 'Upcoming']);
-    const [{HOST}]=record;
+    const [{NAME}]=record;
 
     if(record!==null){
-      if(ID===HOST && HOST===ID){
+      if(ID===NAME && NAME===ID){
         res.render('live.ejs', {});
-      }else if(record.length<2 && ID===HOST){
+      }else if(record.length<2 && ID===NAME){
         res.render('live.ejs', {});
       }else{
         res.redirect(`/`)        
@@ -33,7 +40,8 @@ live.get('/:ID', async(req, res) => {
       res.redirect(`/room/${ID}`);
     }
   } catch (error) {
-      return res.status(500).json({"error":true, "message":"Database error"});
+      console.error('error:', error);
+      return res.status(500).json({"error":true, "message":error});
   }
 
 });

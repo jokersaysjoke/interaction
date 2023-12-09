@@ -11,15 +11,15 @@ imgAPI.get('/image', async(req, res)=>{
     try {
         const cookie=req.cookies['cookie'];
         const result=jwtVerify(cookie);
-        const host=result.email
+        const userId=result.userId
 
         let sql=`
         SELECT * 
         FROM AVATAR
         WHERE 
-        EMAIL = ?
+        USER_ID = ?
         `
-        const [record]=await pool.promise().query(sql, [host]);
+        const [record]=await pool.promise().query(sql, [userId]);
         if(record.length>0){
             const [{ADDRESS:address}]=record;
             return res.status(200).json({'data':{'address':address}})
@@ -36,13 +36,13 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
     try {
         const file=req.file;
         const fileName=file.filename;
-        const host=req.body.host;
+        const userID=req.body.userID;
         let sql=`
         SELECT *
         FROM AVATAR
         WHERE EMAIL = ?
         `
-        const [record]=await pool.promise().query(sql, [host])
+        const [record]=await pool.promise().query(sql, [userID])
         if(record.length>0){
             await s3.uploadImg(file);
             let sql=`
@@ -50,7 +50,7 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
             SET ADDRESS = ?
             WHERE EMAIL = ?
             `
-            await pool.promise().query(sql, [fileName, host]);
+            await pool.promise().query(sql, [fileName, userID]);
             fs.unlinkSync(file.path);
             return res.status(200).json({'ok':true})
         }else{
@@ -60,13 +60,14 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
             AVATAR (EMAIL, ADDRESS)
             VALUE (?, ?)
             `
-            await pool.promise().query(sql, [host, fileName]);
+            await pool.promise().query(sql, [userID, fileName]);
             fs.unlinkSync(file.path);
             return res.status(200).json({'ok':true})
         }
         
 
     } catch (error) {
+        console.error('error:', error);
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 

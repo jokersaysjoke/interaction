@@ -36,11 +36,11 @@ async function fetchImgtoEdit() {
 upload.addEventListener('click', async () => {
     const user = await fetch(`/api/user`);
     const result = await user.json();
-    const host = result.data.email;
+    const userID = result.data.userID;
 
     const formData = new FormData();
     formData.append('image', fileUploader.files[0]);
-    formData.append('host', host);
+    formData.append('userID', userID);
 
     const response = await fetch('/api/image', {
         method: 'POST',

@@ -185,12 +185,12 @@ userAPI.get('/user/auth', async (req, res) => {
       SELECT MEMBER.NAME, AVATAR.ADDRESS
       FROM MEMBER
       JOIN AVATAR
-      ON MEMBER.EMAIL = AVATAR.EMAIL
-      WHERE MEMBER.EMAIL = ?
+      ON MEMBER.USER_ID = AVATAR.USER_ID
+      WHERE MEMBER.USER_ID = ?
       `
       const response = jwtVerify(cookie);
-      const email = response.email
-      const [data] = await pool.promise().query(sql, [email]);
+      const userId = response.userId
+      const [data] = await pool.promise().query(sql, [userId]);
       const [{ NAME: name }] = data;
       const [{ ADDRESS: address }] = data;
 

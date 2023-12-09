@@ -42,9 +42,12 @@ async function closeRoom() {
     const user = await fetch(`/api/user`);
     const result = await user.json();
     const host = result.data.name;
+    const userId = result.data.userId
+
     await fetch(`/api/room`, {
         method: 'DELETE',
         body: JSON.stringify({
+            userId: userId,
             host: host
         }),
         headers: new Headers({ "Content-type": "application/json" })
@@ -94,12 +97,13 @@ async function createStreamingRoom(streamkey) {
     const user = await fetch(`/api/user`);
     const result = await user.json();
     const host = result.data.name;
+    const userId = result.data.userId;
     const videoDate = document.querySelector('.video-date');
 
     const response = await fetch(`/api/room`, {
         method: 'PUT',
         body: JSON.stringify({
-            host: host,
+            userId: userId,
             status: 'LIVE',
             streamkey: streamkey,
             head: videoHeader.value,
