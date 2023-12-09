@@ -31,7 +31,13 @@ userAPI.get('/user', async (req, res) => {
       let sql2 = `
       SELECT *
       FROM ROOM
-      WHERE HOST = ?
+
+      JOIN
+      MEMBER
+      ON
+      MEMBER.USER_ID = ROOM.USER_ID
+
+      WHERE MEMBER.NAME = ?
       `;
       const [room] = await pool.promise().query(sql2, [name]);
       if (email === 'host') {
@@ -50,6 +56,7 @@ userAPI.get('/user', async (req, res) => {
     }
 
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
 });
@@ -74,6 +81,7 @@ userAPI.put('/user', async (req, res) => {
     }
   }
   catch (error) {
+    console.error(error);
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
 })
@@ -109,6 +117,7 @@ userAPI.post('/user', async (req, res) => {
     }
   }
   catch (error) {
+    console.error(error);
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
 });
@@ -201,6 +210,7 @@ userAPI.get('/user/auth', async (req, res) => {
     }
 
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
 });
@@ -238,7 +248,7 @@ userAPI.get('/user/recording', async(req, res) => {
     
     return res.status(200).json({'data': data});
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ "error": true, "message": "Database error" });
   }
 

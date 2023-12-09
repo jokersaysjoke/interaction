@@ -7,7 +7,7 @@ const home=async (req, res)=>{
 const root=async (req, res)=>{
   try {
     let sql=`
-    SELECT HOST
+    SELECT ID
     FROM ROOM
     WHERE STATUS = ?
     `
