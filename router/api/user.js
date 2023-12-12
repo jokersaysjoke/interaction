@@ -226,26 +226,17 @@ userAPI.get('/user/recording', async(req, res) => {
     SELECT 
     RECORDING.RECORDING_ID,
     RECORDING.VISIBILITY,
-    ROOM.TITLE,
-    ROOM.DATE,
-    ROOM.VIEWCOUNT,
-    ROOM.COMMENT
+    RECORDING.TITLE,
+    RECORDING.CREATED_AT,
+    RECORDING.VIEWS,
+    RECORDING.COMMENTS
     
-    FROM
-    RECORDING
+    FROM RECORDING
 
-    JOIN 
-    MEMBER
-    ON 
-    MEMBER.USER_ID = RECORDING.USER_ID
-
-    JOIN
-    ROOM
-    ON
-    ROOM.ID = RECORDING.ROOM_ID
+    JOIN MEMBER
+    ON MEMBER.USER_ID = RECORDING.USER_ID
     
-    WHERE 
-    RECORDING.USER_ID = ?
+    WHERE RECORDING.USER_ID = ?
     `
   
     const response = jwtVerify(cookie);

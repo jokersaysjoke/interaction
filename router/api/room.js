@@ -128,14 +128,18 @@ roomAPI.delete('/room', async (req, res) => {
     try {
         const userId = req.body['userId'];
         const host = req.body['host'];
+        
         let sql =`
         SELECT RECORDING.RECORDING_ID
         FROM RECORDING
         
         JOIN ROOM
         ON ROOM.ID = RECORDING.ROOM_ID
+        
+        WHERE RECORDING.USER_ID = ?
         `
-        const [{RECORDING_ID:recordingid}] = await pool.promise().query(sql, []);
+        const [record] = await pool.promise().query(sql, [userId]);
+        const [{ RECORDING_ID:recordingId }] = record
         let sql2 = `
         DELETE
         FROM ROOM
@@ -144,8 +148,8 @@ roomAPI.delete('/room', async (req, res) => {
         
         await pool.promise().query(sql2, [userId]);
         await redis.cleanCache(host);
-
-        return res.status(200).json({ "ok": true, 'data': recordingid });
+        
+        return res.status(200).json({ "ok": true, 'recordingId': recordingId });
     } catch (error) {
         console.error('error:', error);
         return res.status(500).json({ "error": true, "message": "Database error" });
