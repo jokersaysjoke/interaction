@@ -23,15 +23,9 @@ function socket(server){
       
       socket.on('join-room', async roomID => {
         let sql=`
-        UPDATE ROOM
-        
-        JOIN
-        MEMBER
-        ON 
-        MEMBER.USER_ID = ROOM.USER_ID
-
+        UPDATE RECORDING
         SET CONCURRENT = ?
-        WHERE MEMBER.NAME = ?
+        WHERE RECORDING.ROOM_ID = ?
         `;
         socket.join(roomID)
         const count=io.sockets.adapter.rooms.get(roomID).size;

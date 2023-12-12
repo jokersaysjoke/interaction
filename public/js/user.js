@@ -80,7 +80,7 @@ async function memberStatus(){
         accountContent.textContent='Sign out';
         accountContent.addEventListener('click', logOut)
 
-        if(data.data.room===0){
+        if(!data.data.roomId){
             createStreamBtn.forEach((item, index)=>{
                 item.addEventListener('click', registerLiveRoom)
             })
@@ -88,7 +88,7 @@ async function memberStatus(){
         }else{
             createStreamBtn.forEach((item, index)=>{
                 item.addEventListener('click', ()=>{
-                    location.href=`/live/${data.data.name}`
+                    location.href=`/live/${data.data.roomId}`
                 })
             })
         }
@@ -272,7 +272,7 @@ async function registerLiveRoom(){
     });
     const data=await response.json();
     if(data.ok){
-        location.href=`/live/${name}`
+        location.href=`/live/${data.roomId}`
     }
 };
 

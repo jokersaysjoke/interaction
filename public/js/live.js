@@ -17,14 +17,13 @@ async function closeStreaming() {
     hlsPLAYer('');
     const user = await fetch(`/api/user`);
     const result = await user.json();
-    const host = result.data.name;
+    const userId = result.data.userId;
 
-    await fetch(`/api/room`, {
+    await fetch(`/api/room/close`, {
         method: 'PUT',
         body: JSON.stringify({
-            host: host,
-            status: `Upcoming`,
-            streamkey: streamKey.value
+            userId: userId,
+            status: `Close`
         }),
         headers: new Headers({ "Content-type": "application/json" })
     });
@@ -42,13 +41,12 @@ async function closeRoom() {
     const user = await fetch(`/api/user`);
     const result = await user.json();
     const host = result.data.name;
-    const userId = result.data.userId
-
+    const userId = result.data.userId;
     await fetch(`/api/room`, {
         method: 'DELETE',
         body: JSON.stringify({
-            userId: userId,
-            host: host
+            host: host,
+            userId: userId
         }),
         headers: new Headers({ "Content-type": "application/json" })
     });
@@ -68,22 +66,24 @@ async function closeRoom() {
 async function upload2S3() {
     const user = await fetch(`/api/user`);
     const result = await user.json();
-    const host = result.data.name;
     const userId = result.data.userId;
-    await fetch(`/api/room`, {
+    const host = result.data.name;
+    const res = await fetch(`/api/room`, {
         method: 'DELETE',
         body: JSON.stringify({
+            userId: userId,
             host: host
         }),
         headers: new Headers({ "Content-type": "application/json" })
     });
+    const data = await res.json();
+    const recordingId = data.recordingId;
 
-    const response = await fetch(`/api/s3`, {
+    await fetch(`/api/s3`, {
         method: 'POST',
         body: JSON.stringify({
             streamkey: streamKey.textContent,
-            head: videoHeader.value,
-            userId: userId
+            recordingId: recordingId
         }),
         headers: new Headers({ "Content-type": "application/json" })
 
@@ -93,21 +93,18 @@ async function upload2S3() {
 
 
 // 發布串流
-async function createStreamingRoom(streamkey) {
+async function createStreamingRoom() {
     const user = await fetch(`/api/user`);
     const result = await user.json();
     const host = result.data.name;
     const userId = result.data.userId;
-    const videoDate = document.querySelector('.video-date');
 
-    const response = await fetch(`/api/room`, {
+    const response = await fetch(`/api/room/publish`, {
         method: 'PUT',
         body: JSON.stringify({
             userId: userId,
             status: 'LIVE',
-            streamkey: streamkey,
-            head: videoHeader.value,
-            date: videoDate.textContent
+            title: videoHeader.value
         }),
         headers: new Headers({ "Content-type": "application/json" })
     });

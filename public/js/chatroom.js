@@ -12,14 +12,16 @@ async function joinRoom(){
     videoDetailBack.style.display='block';
     
     const creator=document.querySelector('.video-creator');
-    creator.textContent=dd.HOST;
+    creator.textContent=dd.NAME;
     
     const sqlvideoHeader=document.querySelector('.video-head');
     sqlvideoHeader.style.display='block';
-    sqlvideoHeader.textContent=dd.HEAD;
+    sqlvideoHeader.textContent=dd.TITLE;
 
     const videoDate=document.querySelector('.video-date');
-    videoDate.textContent=dd.DATE;
+    const date = new Date(dd.CREATED_AT);
+    const formattedDate = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
+    videoDate.textContent=formattedDate.split(' ')[0];
 
     hlsClientPLAYer(dd.STREAMKEY);
 

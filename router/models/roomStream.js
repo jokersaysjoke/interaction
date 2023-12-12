@@ -12,26 +12,17 @@ room.get('/:ID', async (req, res) => {
     try {
         const { ID } = req.params;
         let sql = `
-        SELECT 
-        ROOM.*,
-        MEMBER.NAME
-
+        SELECT ROOM.ID, MEMBER.NAME
         FROM ROOM
-        
-        JOIN
-        MEMBER
-        ON
-        MEMBER.USER_ID = ROOM.USER_ID
-
-        WHERE 
-        MEMBER.NAME = ?
-        AND 
-        STATUS = ?
+        JOIN MEMBER
+        ON MEMBER.USER_ID = ROOM.USER_ID
+        WHERE ROOM.ID = ? AND STATUS = ?
         `;
         const cookie = req.cookies['cookie'];
         const response = jwtVerify(cookie);
         const userName = response['name'];
         const [record] = await pool.promise().query(sql, [ID, 'LIVE']);
+        
         if (record !== null) {
             const [{ NAME }] = record
             if (NAME === userName) {

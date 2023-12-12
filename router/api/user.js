@@ -14,41 +14,44 @@ userAPI.get('/user', async (req, res) => {
   try {
     const cookie = req.cookies['cookie'];
     let sql = `
-    SELECT ID, NAME, EMAIL, STREAMKEY, USER_ID
+    SELECT NAME, EMAIL, STREAMKEY, USER_ID
     FROM MEMBER
-    WHERE EMAIL = ?
+    WHERE USER_ID = ?
     `;
     if (cookie) {
       const response = jwtVerify(cookie);
-      const target = response.email
+      const target = response.userId
       const [record] = await pool.promise().query(sql, [target]);
-      const [{ ID: id }] = record
       const [{ NAME: name }] = record
       const [{ EMAIL: email }] = record
       const [{ STREAMKEY: streamkey }] = record
       const [{ USER_ID: userId}] = record
-      
-      let sql2 = `
-      SELECT *
-      FROM ROOM
 
-      JOIN
-      MEMBER
-      ON
-      MEMBER.USER_ID = ROOM.USER_ID
-
-      WHERE MEMBER.NAME = ?
-      `;
-      const [room] = await pool.promise().query(sql2, [name]);
       if (email === 'host') {
         let sql3 = `
         SELECT * FROM LOGIN_HISTORY
         ORDER BY ID DESC;
         `
         const [histroy] = await pool.promise().query(sql3, []);
-        return res.status(200).json({ "data": { 'id': id, 'name': name, 'email': email, 'streamkey': streamkey, 'room': room.length, 'history': histroy } });
+        return res.status(200).json({ "data": { 'name': name, 'email': email, 'streamkey': streamkey, 'roomId': roomId, 'history': histroy } });
+      }
+      
+      let sql2 = `
+      SELECT ROOM.ID
+      FROM ROOM
+
+      JOIN MEMBER
+      ON MEMBER.USER_ID = ROOM.USER_ID
+
+      WHERE MEMBER.USER_ID = ?
+      `;
+      const [result] = await pool.promise().query(sql2, [userId]);
+      if(result.length>0){
+        const [{ID:roomId}] = result;
+        return res.status(200).json({ "data": { 'name': name, 'email': email, 'streamkey': streamkey, 'roomId': roomId, 'userId': userId } });
       } else {
-        return res.status(200).json({ "data": { 'id': id, 'name': name, 'email': email, 'streamkey': streamkey, 'room': room.length, 'userId': userId } });
+        return res.status(200).json({ "data": { 'name': name, 'email': email, 'streamkey': streamkey, 'userId': userId } });
+        
       }
 
     } else {
@@ -221,21 +224,25 @@ userAPI.get('/user/recording', async(req, res) => {
 
     let sql = `
     SELECT 
-    RECORDING.RECORDING_ID, 
-    RECORDING.CONTENT, 
-    RECORDING.CREATED_AT,
+    RECORDING.RECORDING_ID,
     RECORDING.VISIBILITY,
-    RECORDING.VIEWS,
-    RECORDING.COMMENTS
-
+    ROOM.TITLE,
+    ROOM.DATE,
+    ROOM.VIEWCOUNT,
+    ROOM.COMMENT
+    
     FROM
     RECORDING
 
     JOIN 
     MEMBER
-
     ON 
     MEMBER.USER_ID = RECORDING.USER_ID
+
+    JOIN
+    ROOM
+    ON
+    ROOM.ID = RECORDING.ROOM_ID
     
     WHERE 
     RECORDING.USER_ID = ?

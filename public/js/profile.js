@@ -36,8 +36,7 @@ async function fetchImgtoEdit() {
 upload.addEventListener('click', async () => {
     const user = await fetch(`/api/user`);
     const result = await user.json();
-    const userID = result.data.userID;
-
+    const userID = result.data.userId;
     const formData = new FormData();
     formData.append('image', fileUploader.files[0]);
     formData.append('userID', userID);
@@ -179,7 +178,7 @@ function genRecordingBody(recordings) {
 
         const videoTitle = document.createElement('div');
         videoTitle.id = 'video-title';
-        videoTitle.textContent = recording.CONTENT;
+        videoTitle.textContent = recording.TITLE;
 
         videoDiv.appendChild(video);
         videoDiv.appendChild(videoTitle);

@@ -7,7 +7,6 @@ async function fetchLiveRoom(){
     const response=await fetch(`/api/room`);
     const data=await response.json();
     const dd=data.data;
-    console.log(dd);
     if(dd){
         for(let i=0; i<dd.length; i++){
             createLiveRoom(dd[i]);
@@ -29,7 +28,7 @@ function createLiveRoom(data){
     videoPreview.classList.add('video-preview');
     videoPreview.innerText = data.NAME;
     videoPreview.addEventListener('click', ()=>{
-        location.href=`/room/${data.NAME}`
+        location.href=`/room/${data.ID}`
     });
     div.appendChild(videoPreview);
 
@@ -64,7 +63,7 @@ function createLiveRoom(data){
         // 建立 video-title-head 元素
         const videoTitleHead = document.createElement('div');
         videoTitleHead.classList.add('video-title-head');
-        videoTitleHead.innerText = data.HEAD;
+        videoTitleHead.innerText = data.TITLE;
         videoTitleHead.addEventListener('click', ()=>{
             location.href=`/room/${data.NAME}`
         });
@@ -79,7 +78,7 @@ function createLiveRoom(data){
         // 建立 video-view-count 元素
         const videoViewCount = document.createElement('div');
         videoViewCount.classList.add('video-view-count');
-        videoViewCount.innerText = `觀看次數：${data.VIEWCOUNT}次`;
+        videoViewCount.innerText = `觀看次數：${data.VIEWS}次`;
         videoTitle.appendChild(videoViewCount);
 
 

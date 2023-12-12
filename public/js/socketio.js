@@ -74,7 +74,6 @@ form.addEventListener('submit', async function(e) {
   const name=dd.name, address=dd.address, msg=input.value;
   const t=new Date;
   const tt=`${t.getHours()}:${t.getMinutes()}`;
-  console.log('form', tt);
 
   if(msg.length>0){
     displayMessage({username:name, message:msg, img:address, time:tt});

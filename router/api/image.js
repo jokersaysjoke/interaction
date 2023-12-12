@@ -40,7 +40,7 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
         let sql=`
         SELECT *
         FROM AVATAR
-        WHERE EMAIL = ?
+        WHERE USER_ID = ?
         `
         const [record]=await pool.promise().query(sql, [userID])
         if(record.length>0){
@@ -48,7 +48,7 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
             let sql=`
             UPDATE AVATAR
             SET ADDRESS = ?
-            WHERE EMAIL = ?
+            WHERE USER_ID = ?
             `
             await pool.promise().query(sql, [fileName, userID]);
             fs.unlinkSync(file.path);
@@ -57,7 +57,7 @@ imgAPI.post('/image', upload.single('image'), async(req, res)=>{
             await s3.uploadImg(file);
             let sql=`
             INSERT INTO
-            AVATAR (EMAIL, ADDRESS)
+            AVATAR (USER_ID, ADDRESS)
             VALUE (?, ?)
             `
             await pool.promise().query(sql, [userID, fileName]);
