@@ -42,7 +42,7 @@ upload.addEventListener('click', async () => {
     formData.append('userID', userID);
 
     const response = await fetch('/api/image', {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     })
     const data = await response.json();

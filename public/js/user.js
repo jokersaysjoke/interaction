@@ -262,6 +262,7 @@ async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
     const name=result.data.name, userId = result.data.userId
+    console.log('userId:', userId);
     const response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({

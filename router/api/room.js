@@ -82,13 +82,15 @@ roomAPI.put('/room/close', async (req, res) => {
     try {
         let sql = `
         UPDATE ROOM
-        SET STATUS = ?
-        WHERE USER_ID = ?
+        JOIN RECORDING
+        ON ROOM.ID = RECORDING.ROOM_ID
+        SET ROOM.STATUS = ?, RECORDING.VISIBILITY = ?
+        WHERE ROOM.USER_ID = ?
         `;
         const body = req.body;
         const status = body.status, userId = body.userId;
 
-        await pool.promise().query(sql, [status, userId]);
+        await pool.promise().query(sql, [status, 'public', userId]);
 
         return res.status(200).json({ "ok": true });
     } catch (error) {
@@ -115,7 +117,6 @@ roomAPI.put('/room/publish', async (req, res) => {
         `;
         
         await pool.promise().query(sql, [status, title, createdAt, userId]);
-        
 
         return res.status(200).json({ "ok": true });
     } catch (error) {
@@ -141,9 +142,11 @@ roomAPI.delete('/room', async (req, res) => {
         const [record] = await pool.promise().query(sql, [userId]);
         const [{ RECORDING_ID:recordingId }] = record
         let sql2 = `
-        DELETE
+        DELETE ROOM
         FROM ROOM
-        WHERE USER_ID = ?
+        JOIN RECORDING
+        ON RECORDING.ROOM_ID = ROOM.ID
+        WHERE ROOM.USER_ID = ?
         `;
         
         await pool.promise().query(sql2, [userId]);
@@ -155,6 +158,29 @@ roomAPI.delete('/room', async (req, res) => {
         return res.status(500).json({ "error": true, "message": "Database error" });
     }
 });
+
+roomAPI.delete('/room/close', async (req, res) => {
+    try {
+        const userId = req.body['userId'];
+        const host = req.body['host'];
+
+        let sql = `
+        DELETE ROOM, RECORDING
+        FROM ROOM
+        JOIN RECORDING
+        ON RECORDING.ROOM_ID = ROOM.ID
+        WHERE ROOM.USER_ID = ? OR RECORDING.VISIBILITY = ?
+        `;
+        
+        await pool.promise().query(sql, [userId, 'Upcoming']);
+        await redis.cleanCache(host);
+        
+        return res.status(200).json({ "ok": true});
+    } catch (error) {
+        console.error('error:', error);
+        return res.status(500).json({ "error": true, "message": "Database error" });
+    }
+})
 
 roomAPI.get('/room/join', async (req, res) => {
     try {

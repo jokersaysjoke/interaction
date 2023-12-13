@@ -26,7 +26,7 @@ userAPI.get('/user', async (req, res) => {
       const [{ EMAIL: email }] = record
       const [{ STREAMKEY: streamkey }] = record
       const [{ USER_ID: userId}] = record
-
+      
       if (email === 'host') {
         let sql3 = `
         SELECT * FROM LOGIN_HISTORY
@@ -46,6 +46,7 @@ userAPI.get('/user', async (req, res) => {
       WHERE MEMBER.USER_ID = ?
       `;
       const [result] = await pool.promise().query(sql2, [userId]);
+      
       if(result.length>0){
         const [{ID:roomId}] = result;
         return res.status(200).json({ "data": { 'name': name, 'email': email, 'streamkey': streamkey, 'roomId': roomId, 'userId': userId } });
@@ -102,7 +103,7 @@ userAPI.post('/user', async (req, res) => {
     const name = data.name, email = data.email, password = data.password, streamkey = data.streamkey;
     const userId = uuid.v4();
     const createdAt = current.getTaipeiTime()
-    console.log(createdAt);
+    
     let sql = `
     SELECT *
     FROM MEMBER
@@ -112,10 +113,17 @@ userAPI.post('/user', async (req, res) => {
     if (record.length > 0) {
       return res.status(400).json({ "error": true, "message": "Email already exist" });
     } else {
-      let sql = `INSERT INTO MEMBER (NAME, EMAIL, PASSWORD, STREAMKEY, USER_ID, CREATED_AT) 
-                 VALUES (?,?,?,?,?,?)`;
+      let sql = `
+      INSERT INTO MEMBER (NAME, EMAIL, PASSWORD, STREAMKEY, USER_ID, CREATED_AT) 
+      VALUES (?,?,?,?,?,?)
+      `;
+      let sql2 = `
+      INSERT INTO AVATAR (USER_ID)
+      VALUES (?)
+      `
 
       await pool.promise().query(sql, [name, email, password, streamkey, userId, createdAt]);
+      await pool.promise().query(sql2, [userId])
       return res.status(200).json({ "ok": true });
     }
   }
@@ -196,7 +204,7 @@ userAPI.get('/user/auth', async (req, res) => {
       const sql = `
       SELECT MEMBER.NAME, AVATAR.ADDRESS
       FROM MEMBER
-      JOIN AVATAR
+      LEFT JOIN AVATAR
       ON MEMBER.USER_ID = AVATAR.USER_ID
       WHERE MEMBER.USER_ID = ?
       `

@@ -42,7 +42,7 @@ async function closeRoom() {
     const result = await user.json();
     const host = result.data.name;
     const userId = result.data.userId;
-    await fetch(`/api/room`, {
+    await fetch(`/api/room/close`, {
         method: 'DELETE',
         body: JSON.stringify({
             host: host,

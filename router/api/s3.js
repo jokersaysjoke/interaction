@@ -20,8 +20,8 @@ s3API.get('/s3', async (req, res) => {
         const [rows, fields] = await pool.promise().query(sql);
         return res.status(200).json({ "data": rows });
     } catch (error) {
+        console.error('error:', error);
         return res.status(500).json({ "error": true, "message": "Database error" });
-
     }
 });
 

@@ -32,40 +32,20 @@ imgAPI.get('/image', async(req, res)=>{
     }
 
 })
-imgAPI.post('/image', upload.single('image'), async(req, res)=>{
+imgAPI.put('/image', upload.single('image'), async(req, res)=>{
     try {
         const file=req.file;
         const fileName=file.filename;
         const userID=req.body.userID;
+        await s3.uploadImg(file);
         let sql=`
-        SELECT *
-        FROM AVATAR
+        UPDATE AVATAR
+        SET ADDRESS = ?
         WHERE USER_ID = ?
         `
-        const [record]=await pool.promise().query(sql, [userID])
-        if(record.length>0){
-            await s3.uploadImg(file);
-            let sql=`
-            UPDATE AVATAR
-            SET ADDRESS = ?
-            WHERE USER_ID = ?
-            `
-            await pool.promise().query(sql, [fileName, userID]);
-            fs.unlinkSync(file.path);
-            return res.status(200).json({'ok':true})
-        }else{
-            await s3.uploadImg(file);
-            let sql=`
-            INSERT INTO
-            AVATAR (USER_ID, ADDRESS)
-            VALUE (?, ?)
-            `
-            await pool.promise().query(sql, [userID, fileName]);
-            fs.unlinkSync(file.path);
-            return res.status(200).json({'ok':true})
-        }
-        
-
+        await pool.promise().query(sql, [fileName, userID]);
+        fs.unlinkSync(file.path);
+        return res.status(200).json({'ok':true})
     } catch (error) {
         console.error('error:', error);
         return res.status(500).json({"error":true, "message":"Database error"});

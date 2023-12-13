@@ -1,6 +1,5 @@
 .video-preview-background{
     position: relative;
-    background-color: #202020;
     margin: 30px auto;
     max-width: 999px;
     width: 90%;
@@ -24,6 +23,10 @@
     margin-top: 5px;
     color: #fff;
     display: flex;
+    font-size: 18px;
+    width: 210px;
+    height: 130px;
+    overflow: hidden;
 }
 .video-account-pic-background{
     width: 50px;
@@ -47,10 +50,14 @@
     
 }
 .video-title-head{
-    width: 100%;
-    max-height: 66px;
-    overflow: hidden;
+    max-width: 160px;
+    max-height: 45px;
     cursor: pointer;
+    white-space: pre-line;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .video-creator, .video-status-live-background{
     margin-top: 10px;

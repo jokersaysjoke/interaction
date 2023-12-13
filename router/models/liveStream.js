@@ -25,12 +25,12 @@ live.get('/:roomId', async(req, res) => {
     (STATUS = ? OR STATUS = ?)
     `;
     const [record]=await pool.promise().query(sql, [roomId, 'LIVE', 'Upcoming']);
-    const [{ID}]=record;
+    
     const [{USER_ID:userId}]=record;
 
     const cookie = req.cookies['cookie'];
     const response = jwtVerify(cookie);
-    const target = response.userId
+    const target = response.userId;
     
 
     if(record !== null){

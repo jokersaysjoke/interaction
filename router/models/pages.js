@@ -1,20 +1,11 @@
-const pool = require('./model');
-
 const home=async (req, res)=>{
   res.render('../views/home.ejs', {});
 };
 
 const root=async (req, res)=>{
   try {
-    let sql=`
-    SELECT ID
-    FROM ROOM
-    WHERE STATUS = ?
-    `
     const cookie = req.cookies['cookie'];
-    const [record]=await pool.promise().query(sql, ['LIVE']);
-    
-    if (cookie&&record.length>0) {
+    if (cookie) {
       res.render('../views/index.ejs', {});
     } else {
       res.redirect('/home');
