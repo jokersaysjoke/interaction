@@ -36,14 +36,13 @@ async function fetchImgtoEdit() {
 upload.addEventListener('click', async () => {
     const user = await fetch(`/api/user`);
     const result = await user.json();
-    const host = result.data.email;
-
+    const userID = result.data.userId;
     const formData = new FormData();
     formData.append('image', fileUploader.files[0]);
-    formData.append('host', host);
+    formData.append('userID', userID);
 
     const response = await fetch('/api/image', {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     })
     const data = await response.json();
@@ -179,7 +178,7 @@ function genRecordingBody(recordings) {
 
         const videoTitle = document.createElement('div');
         videoTitle.id = 'video-title';
-        videoTitle.textContent = recording.CONTENT;
+        videoTitle.textContent = recording.TITLE;
 
         videoDiv.appendChild(video);
         videoDiv.appendChild(videoTitle);

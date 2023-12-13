@@ -48,7 +48,7 @@ function hlsPLAYer(streamkey){
             vdb.style.display='block';
 
             input.focus();
-            createStreamingRoom(streamKey.textContent);
+            createStreamingRoom();
         });
     }else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = videoSrc;
@@ -80,5 +80,5 @@ function fakehlsPLAYer(){
 
 
     input.focus();
-    createStreamingRoom(streamKey.textContent);
+    createStreamingRoom();
 };

@@ -61,6 +61,7 @@ async function memberStatus(){
     const welcome=document.querySelector('.welcome');
     const response=await fetch(`/api/user`);
     const data=await response.json();
+    
     if(data.data!==null){
         if(data.data.history!==null){
             host(data.data.history);
@@ -79,7 +80,7 @@ async function memberStatus(){
         accountContent.textContent='Sign out';
         accountContent.addEventListener('click', logOut)
 
-        if(data.data.room===0){
+        if(!data.data.roomId){
             createStreamBtn.forEach((item, index)=>{
                 item.addEventListener('click', registerLiveRoom)
             })
@@ -87,7 +88,7 @@ async function memberStatus(){
         }else{
             createStreamBtn.forEach((item, index)=>{
                 item.addEventListener('click', ()=>{
-                    location.href=`/live/${data.data.name}`
+                    location.href=`/live/${data.data.roomId}`
                 })
             })
         }
@@ -260,18 +261,19 @@ window.onload=memberStatus();
 async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const name=result.data.name, email=result.data.email;
+    const name=result.data.name, userId = result.data.userId
+    console.log('userId:', userId);
     const response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
             name: name,
-            email: email
+            userId: userId
         }),
         headers: new Headers({"Content-type":"application/json"})
     });
     const data=await response.json();
     if(data.ok){
-        location.href=`/live/${name}`
+        location.href=`/live/${data.roomId}`
     }
 };
 
@@ -295,8 +297,6 @@ function host(ddh){
         const main=document.querySelectorAll('.main');
         main[1].innerHTML='';
         for(let i=0; i<ddh.length; i++){
-            console.log('id', ddh[i].ID);
-
             const li=document.createElement('li');
             li.textContent=`ID:${ddh[i].ID}, user:${ddh[i].USER_ID}, loginAt:${ddh[i].LOGIN_TIME}`;
             contain.appendChild(li);

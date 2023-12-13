@@ -11,15 +11,15 @@ imgAPI.get('/image', async(req, res)=>{
     try {
         const cookie=req.cookies['cookie'];
         const result=jwtVerify(cookie);
-        const host=result.email
+        const userId=result.userId
 
         let sql=`
         SELECT * 
         FROM AVATAR
         WHERE 
-        EMAIL = ?
+        USER_ID = ?
         `
-        const [record]=await pool.promise().query(sql, [host]);
+        const [record]=await pool.promise().query(sql, [userId]);
         if(record.length>0){
             const [{ADDRESS:address}]=record;
             return res.status(200).json({'data':{'address':address}})
@@ -32,41 +32,22 @@ imgAPI.get('/image', async(req, res)=>{
     }
 
 })
-imgAPI.post('/image', upload.single('image'), async(req, res)=>{
+imgAPI.put('/image', upload.single('image'), async(req, res)=>{
     try {
         const file=req.file;
         const fileName=file.filename;
-        const host=req.body.host;
+        const userID=req.body.userID;
+        await s3.uploadImg(file);
         let sql=`
-        SELECT *
-        FROM AVATAR
-        WHERE EMAIL = ?
+        UPDATE AVATAR
+        SET ADDRESS = ?
+        WHERE USER_ID = ?
         `
-        const [record]=await pool.promise().query(sql, [host])
-        if(record.length>0){
-            await s3.uploadImg(file);
-            let sql=`
-            UPDATE AVATAR
-            SET ADDRESS = ?
-            WHERE EMAIL = ?
-            `
-            await pool.promise().query(sql, [fileName, host]);
-            fs.unlinkSync(file.path);
-            return res.status(200).json({'ok':true})
-        }else{
-            await s3.uploadImg(file);
-            let sql=`
-            INSERT INTO
-            AVATAR (EMAIL, ADDRESS)
-            VALUE (?, ?)
-            `
-            await pool.promise().query(sql, [host, fileName]);
-            fs.unlinkSync(file.path);
-            return res.status(200).json({'ok':true})
-        }
-        
-
+        await pool.promise().query(sql, [fileName, userID]);
+        fs.unlinkSync(file.path);
+        return res.status(200).json({'ok':true})
     } catch (error) {
+        console.error('error:', error);
         return res.status(500).json({"error":true, "message":"Database error"});
     }
 

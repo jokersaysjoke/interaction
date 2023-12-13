@@ -3,37 +3,48 @@ const pool = require('./model')
 const live = express.Router();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { jwtVerify } = require('../models/jwt');
 
-const { jwtVerify, jwtSign } = require('./jwt');
 live.use(cookieParser());
 live.use(bodyParser.json());
 
-live.get('/:ID', async(req, res) => {
+live.get('/:roomId', async(req, res) => {
   try {
-    const {ID}=req.params
+    const {roomId}=req.params
     let sql=`
-    SELECT *
+    SELECT ROOM.ID, ROOM.USER_ID
     FROM ROOM
-    WHERE HOST = ?
+
+    JOIN
+    MEMBER
+    ON
+    MEMBER.USER_ID = ROOM.USER_ID
+
+    WHERE ROOM.ID = ?
     AND 
     (STATUS = ? OR STATUS = ?)
     `;
-    const [record]=await pool.promise().query(sql, [ID, 'LIVE', 'Upcoming']);
-    const [{HOST}]=record;
+    const [record]=await pool.promise().query(sql, [roomId, 'LIVE', 'Upcoming']);
+    
+    const [{USER_ID:userId}]=record;
 
-    if(record!==null){
-      if(ID===HOST && HOST===ID){
-        res.render('live.ejs', {});
-      }else if(record.length<2 && ID===HOST){
+    const cookie = req.cookies['cookie'];
+    const response = jwtVerify(cookie);
+    const target = response.userId;
+    
+
+    if(record !== null){
+      if( userId === target){
         res.render('live.ejs', {});
       }else{
-        res.redirect(`/`)        
+        res.redirect(`/`)
       }
     }else{
-      res.redirect(`/room/${ID}`);
+      res.redirect(`/`)
     }
   } catch (error) {
-      return res.status(500).json({"error":true, "message":"Database error"});
+      console.error('error:', error);
+      return res.status(500).json({"error":true, "message":error});
   }
 
 });

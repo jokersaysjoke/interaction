@@ -1,17 +1,16 @@
 .video-preview-background{
     position: relative;
-    background-color: #202020;
     margin: 30px auto;
     max-width: 999px;
     width: 90%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
     gap: 20px;
+    grid-template-columns: repeat(3,1fr);
 }
 .video-preview{
-    width: auto;
+    width: 320px;
     height: 200px;
-    background-color: #BB86FC;
+    background-color: black;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -19,11 +18,15 @@
     cursor: pointer;
     color: #fff;
     font-size: 44px;
+    overflow: hidden;
 }
 .video-detail{
     margin-top: 5px;
     color: #fff;
     display: flex;
+    font-size: 17px;
+    height: 130px;
+    overflow: hidden;
 }
 .video-account-pic-background{
     width: 50px;
@@ -47,10 +50,13 @@
     
 }
 .video-title-head{
-    width: 100%;
-    max-height: 66px;
-    overflow: hidden;
+    max-height: 45px;
     cursor: pointer;
+    white-space: pre-line;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .video-creator, .video-status-live-background{
     margin-top: 10px;
@@ -64,9 +70,7 @@
 .video-view-count, .video-status-live-rate, .video-creator{
     color: gray;
 }
-.video-view-count, .video-status{
-    /* display: none; */
-}
+
 .create{
     width: 77px;
     height: 44px;
@@ -79,4 +83,8 @@
     top: 10px;
     cursor: pointer;
     display: none;
+}
+
+video {
+    height: 110%;
 }
