@@ -193,7 +193,8 @@ roomAPI.get('/room/join', async (req, res) => {
         RECORDING.VIEWS,
         RECORDING.CONCURRENT,
         AVATAR.ADDRESS,
-        MEMBER.NAME
+        MEMBER.NAME,
+        MEMBER.STREAMKEY
 
         FROM ROOM
         
