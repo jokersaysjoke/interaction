@@ -15,6 +15,7 @@ roomAPI.get('/room', async (req, res) => {
     try {
         let sql = `
         SELECT
+            RECORDING.RECORDING_ID,
             RECORDING.TITLE,
             RECORDING.CREATED_AT,
             RECORDING.VISIBILITY,
@@ -35,7 +36,7 @@ roomAPI.get('/room', async (req, res) => {
         return res.status(200).json({ 'data': result });
     
     } catch (error) {
-        console.error(err);
+        console.error(error);
         return res.status(500).json({ "error": true, "message": "Database error" });
     }
 });

@@ -22,11 +22,14 @@ function createLiveRoom(data){
     // 建立 video-preview 元素
     const videoPreview = document.createElement('div');
     videoPreview.classList.add('video-preview');
-    videoPreview.innerText = data.NAME;
-    videoPreview.addEventListener('click', ()=>{
-        location.href=`/room/${data.ID}`
-    });
     div.appendChild(videoPreview);
+    
+    // 建立串流連結
+    const video = document.createElement('video');
+    const source = document.createElement('source');
+    source.setAttribute('src', `https://d3b7qlfvgcw4yw.cloudfront.net/${data.RECORDING_ID}`);
+    video.appendChild(source);
+    videoPreview.appendChild(video)
 
     // 建立 video-detail 元素
     const videoDetail = document.createElement('div');
@@ -80,9 +83,14 @@ function createLiveRoom(data){
     const videoStatusLiveRate = document.createElement('div');
     videoStatusLiveRate.classList.add('video-status', 'video-status-live-rate');
     videoTitle.appendChild(videoStatusLiveRate);
-    
+
     // 如果 LIVE
     if(data.STATUS==='LIVE'){
+        videoPreview.innerText = data.NAME;
+        videoPreview.addEventListener('click', ()=>{
+            location.href=`/room/${data.ID}`
+        });
+
         videoTitle.removeChild(videoViewCount);
         // 在 video-status-live-rate 元素後面添加文字節點
         videoStatusLiveRate.appendChild(document.createTextNode(`${data.CONCURRENT}人正在觀看`));
@@ -98,7 +106,26 @@ function createLiveRoom(data){
         videoStatusLive.innerText = '※正在直播';
         videoStatusLiveBackground.appendChild(videoStatusLive);
         videoStatusLive.classList.add('video-status-live');
+
+        const videoPreviewBackground=document.querySelector('.video-preview-background');
+        videoPreviewBackground.appendChild(div);
+
+        return
     }
+    
+    videoPreview.addEventListener('click', async () => {
+        await fetch(`/api/watch`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                recordingId: data.RECORDING_ID
+            }),
+            headers: new Headers({ "Content-type": "application/json" })
+        });
+        
+        location.href=`/watch?v=${data.RECORDING_ID}`
+        
+    });
+
     const videoPreviewBackground=document.querySelector('.video-preview-background');
     videoPreviewBackground.appendChild(div);
 

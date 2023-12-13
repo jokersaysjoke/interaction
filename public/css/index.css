@@ -4,13 +4,13 @@
     max-width: 999px;
     width: 90%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
     gap: 20px;
+    grid-template-columns: repeat(3,1fr);
 }
 .video-preview{
-    width: auto;
+    width: 320px;
     height: 200px;
-    background-color: #BB86FC;
+    background-color: black;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -18,13 +18,13 @@
     cursor: pointer;
     color: #fff;
     font-size: 44px;
+    overflow: hidden;
 }
 .video-detail{
     margin-top: 5px;
     color: #fff;
     display: flex;
-    font-size: 18px;
-    width: 210px;
+    font-size: 17px;
     height: 130px;
     overflow: hidden;
 }
@@ -50,7 +50,6 @@
     
 }
 .video-title-head{
-    max-width: 160px;
     max-height: 45px;
     cursor: pointer;
     white-space: pre-line;
@@ -71,9 +70,7 @@
 .video-view-count, .video-status-live-rate, .video-creator{
     color: gray;
 }
-.video-view-count, .video-status{
-    /* display: none; */
-}
+
 .create{
     width: 77px;
     height: 44px;
@@ -86,4 +83,8 @@
     top: 10px;
     cursor: pointer;
     display: none;
+}
+
+video {
+    height: 110%;
 }
