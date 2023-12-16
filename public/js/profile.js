@@ -226,7 +226,6 @@ function visibilityWindow(recordingId) {
     document.body.style.overflow = 'hidden'
     saveBtn.addEventListener('click', async () => {
         const visibility = document.querySelector('input[name="item"]:checked').value
-        console.log(recordingId);
         if (visibility === 'delete' ) {
             await fetch('/api/recording', {
                 method: 'DELETE',

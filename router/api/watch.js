@@ -25,7 +25,6 @@ watchAPI.get('/watch', async (req, res) => {
         WHERE RECORDING.RECORDING_ID = ? AND RECORDING.VISIBILITY = ?
         `
         const [data] = await pool.promise().query(sql, [recordingId, 'public']);
-        console.log(data);
         
         return res.status(200).json({ 'data':data[0] });
     } catch (error) {
