@@ -103,11 +103,12 @@
         <input class="input confirm" placeholder="confirm password" type="password">
         <div class="edit password-edit" onclick=newPassword()>edit</div>
       </div>
+      <br>
       <!-- recording detail -->
       <div id="recording-detail-body"  class="member-content recording-detail">
         <li class="flex pf-top">
           <div class="pf-colum pf-video ">Video</div>
-          <div class="pf-colum pf-visibility ">Visibility</div>
+          <div class="pf-colum ">Visibility</div>
           <div class="pf-colum pf-views ">Views</div>
           <div class="pf-colum pf-comments ">Comments</div>
           <div class="pf-colum pf-date ">Date</div>
@@ -115,7 +116,23 @@
       </div>
       <!-- recording detail end -->
     </div>
-    
+    <div id="visibility-bg" class="pf-visibility-bg ">
+      <div class="pf-visibility-window">
+        <div class="pf-visibility-ct">
+          <input type="radio" id="private" name="item" value="private">
+          <label for="private">Private</label><br>
+          <input type="radio" id="public" name="item" value="public">
+          <label for="public">Public</label><br>
+          <input type="radio" id="delete" name="item" value="delete">
+          <label for="delete">Delete</label><br>
+        </div>
+      </div>
+      <div class="pf-visibility-cf flex">
+        <div id="cancelBtn" class="cancelBtn">CANCEL</div>
+        <div id="saveBtn" class="saveBtn">SAVE</div>
+      </div>
+      
+    </div>
     <footer >Copyright © 2023 interaction&nbsp;
       <a href="https://github.com/jokersaysjoke/interaction">
           <img src="img/github.png" height="22px" cursor="pointer">

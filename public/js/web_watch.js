@@ -14,10 +14,9 @@ async function fetchVideo() {
     const source = video.querySelector('source');
     source.setAttribute('src', `https://d3b7qlfvgcw4yw.cloudfront.net/${recordingId}`);
     video.load();
-    document.addEventListener('click', video.play())
 
     const videoHead = document.querySelector('.video-head');
-    videoHead.textContent = dd.title;
+    videoHead.textContent = dd.TITLE;
 
     const avatar = document.querySelector('.video-creator-img');
     avatar.setAttribute('src', `https://dmhk9lgz90alf.cloudfront.net/${dd.ADDRESS}`);

@@ -4,7 +4,6 @@ const s3API = express.Router();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const s3 = require('../models/awsS3');
-const uuid = require('uuid');
 
 s3API.use(cookieParser());
 s3API.use(bodyParser.json());

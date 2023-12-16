@@ -12,6 +12,7 @@ const roomAPI = require('./router/api/room');
 const msgAPI = require('./router/api/message');
 const s3API = require('./router/api/s3');
 const watchAPI = require('./router/api/watch');
+const recordAPI = require('./router/api/recording');
 
 const live = require('./router/models/liveStream.js');
 const room = require('./router/models/roomStream.js');
@@ -32,6 +33,7 @@ app.use('/api', roomAPI);
 app.use('/api', msgAPI);
 app.use('/api', s3API);
 app.use('/api', watchAPI);
+app.use('/api', recordAPI);
 
 app.use('/live', live);
 app.use('/room', room);
