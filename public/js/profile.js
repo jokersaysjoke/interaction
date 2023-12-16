@@ -9,6 +9,8 @@ const previous = document.querySelector('.previous');
 // previous.focus();
 const newP = document.querySelector('.new');
 const confirmP = document.querySelector('.confirm');
+const cancelBtn = document.querySelector('#cancelBtn');
+const saveBtn = document.querySelector('#saveBtn');
 
 window.onload = fetchEmail();
 
@@ -186,6 +188,10 @@ function genRecordingBody(recordings) {
         const visibilityDiv = document.createElement('div');
         visibilityDiv.classList.add('pf-visibility', 'pf-colums');
         visibilityDiv.textContent = recording.VISIBILITY;
+        
+        visibilityDiv.addEventListener('click', () => {
+            visibilityWindow(recording.RECORDING_ID);
+        });
 
         const viewsDiv = document.createElement('div');
         viewsDiv.classList.add('pf-views', 'pf-colums');
@@ -213,3 +219,41 @@ function genRecordingBody(recordings) {
     });
 
 };
+
+function visibilityWindow(recordingId) {
+    const visibilityBg = document.querySelector('#visibility-bg');
+    visibilityBg.style.display = 'block';
+    document.body.style.overflow = 'hidden'
+    saveBtn.addEventListener('click', async () => {
+        const visibility = document.querySelector('input[name="item"]:checked').value
+        console.log(recordingId);
+        if (visibility === 'delete' ) {
+            await fetch('/api/recording', {
+                method: 'DELETE',
+                body:JSON.stringify({
+                    recordingId: recordingId
+                }),
+                headers: new Headers({"Content-type":"application/json"})
+            })
+            window.location.reload();
+            
+        } else {
+            await fetch('/api/recording', {
+                method: 'PUT',
+                body:JSON.stringify({
+                    recordingId: recordingId,
+                    visibility: visibility
+                }),
+                headers: new Headers({"Content-type":"application/json"})
+            })
+            window.location.reload();
+        }
+    })
+
+    cancelBtn.addEventListener('click', () => {
+        window.location.reload();
+    });
+    
+
+};
+

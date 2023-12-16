@@ -3,6 +3,7 @@
 }
 
 .main-background {
+    position: relative;
     margin: 30px auto;
     width: 999px;
 }
@@ -104,6 +105,10 @@ video {
 .video-ct-rw {
     height: 90px;
     border-bottom: gray 0.5px solid;
+    transition: background-color 0.3s ease;
+}
+.video-ct-rw:hover {
+    background-color: #181818;
 }
 
 .flex-sb {
@@ -138,9 +143,64 @@ video {
 .pf-date {
     width: 150px;
 }
+
 #video-title {
     color: #fff;
     margin: 20px;
     width: 330px;
-    word-wrap: break-word;
+    white-space: pre-line;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.pf-visibility {
+    cursor: pointer;
+}
+
+.pf-visibility-bg {
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    background-color: #181818;
+    display: none;
+  }
+.pf-visibility-window {
+    width: 200px;
+    border: #fff solid 1px;
+    margin: 0 auto; 
+    margin-top: 30px;
+    
+    /* background-color:#F0047F */
+}
+.pf-visibility-ct {
+    border-radius: 5px;
+    width: 200px;
+    margin: 20px;
+    
+}
+.pf-visibility-ct>input {
+    margin: 20px 20px;
+}
+.pf-visibility-cf {
+    width: 330px;
+    height: fit-content;
+    height: 50px;
+}
+.pf-visibility-cf>div{
+    margin: 20px;
+}
+.cancelBtn {
+    color: #3ea6ff;
+    cursor: pointer;
+}
+
+.saveBtn {
+    cursor: pointer;
+}
+
+input[type='radio'] {
+    transform: scale(1.5);
 }
