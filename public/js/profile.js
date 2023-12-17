@@ -188,6 +188,11 @@ function genRecordingBody(recordings) {
         const visibilityDiv = document.createElement('div');
         visibilityDiv.classList.add('pf-visibility', 'pf-colums');
         visibilityDiv.textContent = recording.VISIBILITY;
+
+        const downArrow = document.createElement('img');
+        downArrow.classList.add('downArrow');
+        downArrow.setAttribute('src', `https://dmhk9lgz90alf.cloudfront.net/down-filled-triangular-arrow.png`)
+        visibilityDiv.appendChild(downArrow);
         
         visibilityDiv.addEventListener('click', () => {
             visibilityWindow(recording.RECORDING_ID);
@@ -197,36 +202,42 @@ function genRecordingBody(recordings) {
         viewsDiv.classList.add('pf-views', 'pf-colums');
         viewsDiv.textContent = recording.VIEWS;
 
-        const commentsDiv = document.createElement('div');
-        commentsDiv.classList.add('pf-comments', 'pf-colums');
-        commentsDiv.textContent = recording.COMMENTS;
-
         const dateDiv = document.createElement('div');
         dateDiv.classList.add('pf-date', 'pf-colums');
         const date = new Date(recording.CREATED_AT);
-        const formattedDate = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
+        const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\.\d+Z$/, '');
 
         dateDiv.textContent = formattedDate;
 
         li.appendChild(videoDiv);
         li.appendChild(visibilityDiv);
         li.appendChild(viewsDiv);
-        li.appendChild(commentsDiv);
         li.appendChild(dateDiv);
 
         recordingBody.appendChild(li);
         recordingBody.style.display = 'block';
+
+        li.addEventListener('mouseover', () => {
+            downArrow.style.display = 'block';
+        });
+
+        li.addEventListener('mouseout', () => {
+            downArrow.style.display = 'none';
+        });
     });
 
 };
 
 function visibilityWindow(recordingId) {
     const visibilityBg = document.querySelector('#visibility-bg');
+    const fullBg = document.querySelector('#full-bg');
+
+    fullBg.style.display = 'block';
     visibilityBg.style.display = 'block';
     document.body.style.overflow = 'hidden'
+    
     saveBtn.addEventListener('click', async () => {
         const visibility = document.querySelector('input[name="item"]:checked').value
-        console.log(recordingId);
         if (visibility === 'delete' ) {
             await fetch('/api/recording', {
                 method: 'DELETE',
@@ -253,7 +264,8 @@ function visibilityWindow(recordingId) {
     cancelBtn.addEventListener('click', () => {
         window.location.reload();
     });
-    
 
+    fullBg.addEventListener('click', () => {
+        window.location.reload();
+    });
 };
-

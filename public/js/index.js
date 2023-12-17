@@ -62,7 +62,7 @@ function createLiveRoom(data){
     videoTitleHead.classList.add('video-title-head');
     videoTitleHead.innerText = data.TITLE;
     videoTitleHead.addEventListener('click', ()=>{
-        location.href=`/room/${data.NAME}`
+        watchVideo(data.RECORDING_ID)
     });
     videoTitle.appendChild(videoTitleHead);
 
@@ -114,15 +114,7 @@ function createLiveRoom(data){
     }
     
     videoPreview.addEventListener('click', async () => {
-        await fetch(`/api/watch`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                recordingId: data.RECORDING_ID
-            }),
-            headers: new Headers({ "Content-type": "application/json" })
-        });
-        
-        location.href=`/watch?v=${data.RECORDING_ID}`
+        watchVideo(data.RECORDING_ID);
         
     });
 
@@ -130,3 +122,14 @@ function createLiveRoom(data){
     videoPreviewBackground.appendChild(div);
 
 };
+
+async function watchVideo(recordingId) {
+    await fetch(`/api/watch`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            recordingId: recordingId
+        }),
+        headers: new Headers({ "Content-type": "application/json" })
+    });
+    location.href=`/watch?v=${recordingId}`
+}
