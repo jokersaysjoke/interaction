@@ -17,7 +17,7 @@ async function fetchVideo() {
     document.addEventListener('click', video.play())
 
     const videoHead = document.querySelector('.video-head');
-    videoHead.textContent = dd.title;
+    videoHead.textContent = dd.TITLE;
 
     const avatar = document.querySelector('.video-creator-img');
     avatar.setAttribute('src', `https://dmhk9lgz90alf.cloudfront.net/${dd.ADDRESS}`);
