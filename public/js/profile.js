@@ -204,11 +204,8 @@ function genRecordingBody(recordings) {
 
         const dateDiv = document.createElement('div');
         dateDiv.classList.add('pf-date', 'pf-colums');
-        console.log('recording.CREATED_AT:', recording.CREATED_AT);
         const date = new Date(recording.CREATED_AT);
-        console.log('date:', date);
-        const formattedDate = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
-        console.log('formatted:', formattedDate);
+        const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\.\d+Z$/, '');
 
         dateDiv.textContent = formattedDate;
 
