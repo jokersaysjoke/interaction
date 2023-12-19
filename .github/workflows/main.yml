@@ -21,11 +21,11 @@ jobs:
           key: ${{secrets.AWS_PRIVATE_KEY }}
           script: |
             cd /var/projects/interaction
-            sudo docker-compose stop interaction
+            sudo docker-compose down
             sudo git checkout dev
             sudo git pull origin dev
             sudo git checkout main
             sudo git merge dev
             sudo docker build -t interaction .
             echo "y" | sudo docker system prune
-            sudo docker-compose start interaction
+            sudo docker-compose up -d
