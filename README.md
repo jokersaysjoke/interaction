@@ -1,4 +1,3 @@
-![交互作用架構圖-V1 0](https://github.com/jokersaysjoke/interaction/assets/110945189/a851028f-4f74-418d-9261-e3c8a5b24a5f)# [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 
 Website URL: <https://jokersaysjoke.online/home>
