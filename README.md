@@ -18,7 +18,7 @@ Test account:
 
 ## System Design
 ### Server Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/3efbb6e9-8740-465c-a1f1-e3542c95f9cf' width='100%'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/3bb93ff1-a280-4528-a871-ddc306854fc1' width='100%'>
 
 
 ### Live Stream Platform Architecture
