@@ -40,7 +40,7 @@ services:
   nginx-rtmp:
     restart: always
 
-    image: tiangolo/nginx-rtmp
+    image: nginx-rtmp
 
     container_name: nginx-rtmp
 
