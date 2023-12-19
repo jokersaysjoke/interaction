@@ -1,4 +1,4 @@
-# [Interaction](https://jokersaysjoke.online/home)
+![交互作用架構圖-V1 0](https://github.com/jokersaysjoke/interaction/assets/110945189/a851028f-4f74-418d-9261-e3c8a5b24a5f)# [Interaction](https://jokersaysjoke.online/home)
 *"Interaction" is a streaming platform that provides interactive features such as live streaming and messaging.*
 
 Website URL: <https://jokersaysjoke.online/home>
@@ -22,7 +22,7 @@ Test account:
 
 
 ### Live Stream Platform Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e43d728d-807d-4a2a-97e0-36db7efc55a8' width='100%'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/4eda5dca-d9eb-478e-9f82-664e3c3f6f40' width='100%'>
 
 ## Backend Technique
 #### Key Points
