@@ -18,11 +18,11 @@ Test account:
 
 ## System Design
 ### Server Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e337d031-0ff7-45a4-aaee-835e473dcba3' width='100%'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/3efbb6e9-8740-465c-a1f1-e3542c95f9cf' width='100%'>
 
 
 ### Live Stream Platform Architecture
-<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/488daf04-ae8b-40a6-b788-979da51c1d00' width='100%'>
+<img src='https://github.com/jokersaysjoke/interaction/assets/110945189/e43d728d-807d-4a2a-97e0-36db7efc55a8' width='100%'>
 
 ## Backend Technique
 #### Key Points
