@@ -1,9 +1,9 @@
 const Redis=require('ioredis');
-const redis=new Redis();
-// const redis = new Redis({
-//     host: 'redis',
-//     port: 6379,
-//   });
+// const redis=new Redis();
+const redis = new Redis({
+    host: 'redis',
+    port: 6379,
+  });
 
 function hsetCache(key, value){
     return new Promise((resolve, reject)=>{
