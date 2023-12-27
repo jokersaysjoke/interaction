@@ -30,7 +30,7 @@ s3API.post('/s3', async (req, res) => {
         const streamkey = req.body.streamkey;
         const recordingId = req.body.recordingId;
 
-        // await s3.uploadFile(streamkey, recordingId);
+        await s3.uploadFile(streamkey, recordingId);
 
         return res.status(200).json({ data: true });
     } catch (error) {
