@@ -30,12 +30,12 @@ function socket(server){
         socket.join(roomID)
         const count=io.sockets.adapter.rooms.get(roomID).size;
         io.to(roomID).emit('roomCount', count);
-        console.log('count:', count);
         await pool.promise().query(sql, [count, roomID]);
     
         socket.on('disconnecting', async ()=>{
           const discount=count-1;
           io.to(roomID).emit('roomCount', discount);
+          console.log('discount:', discount);
           await pool.promise().query(sql, [discount, roomID]);
         });
 
