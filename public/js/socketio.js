@@ -164,3 +164,14 @@ async function selectMessage(data){
 
   window.scrollTo(0, document.body.scrollHeight);
 };
+
+// 離開房間
+function leaveRoom(roomID) {
+  socket.emit('leaveRoom', roomID);
+}
+
+// 監聽瀏覽器事件
+window.onbeforeunload = () => {
+  // 在這裡可以嘗試確定用戶正在觀看的直播房間
+  leaveRoom(roomID);
+};

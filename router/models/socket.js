@@ -32,8 +32,7 @@ function socket(server){
         io.to(roomID).emit('roomCount', count);
         await pool.promise().query(sql, [count, roomID]);
     
-        socket.on('disconnecting', async ()=>{
-          console.log('diconnecting')
+        socket.on('leaveRoom', async ()=>{
           const discount=count-1;
           io.to(roomID).emit('roomCount', discount);
           await pool.promise().query(sql, [discount, roomID]);
