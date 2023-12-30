@@ -12,7 +12,7 @@ async function ioJoinRoom(){
   await fetch(`/api/room/join`, {
     method:'PUT',
     body:JSON.stringify({
-        host:roomID
+        roomId:roomID
     }),
     headers: new Headers({"Content-type":"application/json"})
   });
@@ -47,16 +47,16 @@ ioJoinRoom();
 getAuth();
 
 // listen room count
-socket.on('roomCount', (count)=>{
+socket.on('roomCount', (concurrent)=>{
   const videoConcrrent=document.querySelector('.video-concurrent');
-  videoConcrrent.innerText=`${count} 人正在觀看`;
+  videoConcrrent.innerText=`${concurrent} 人正在觀看`;
 
 })
 
 // listen view total count
-socket.on('viewCount', (count)=>{
+socket.on('viewCount', (viewCount)=>{
   const videoCount=document.querySelector('.video-count');
-  videoCount.innerText=`觀看次數：${count}次`;
+  videoCount.innerText=`觀看次數：${viewCount}次`;
 })
 
 // listen receive-message
@@ -165,13 +165,11 @@ async function selectMessage(data){
   window.scrollTo(0, document.body.scrollHeight);
 };
 
-// 離開房間
+
 function leaveRoom(roomID) {
   socket.emit('leaveRoom', roomID);
 }
 
-// 監聽瀏覽器事件
 window.onbeforeunload = () => {
-  // 在這裡可以嘗試確定用戶正在觀看的直播房間
   leaveRoom(roomID);
 };
