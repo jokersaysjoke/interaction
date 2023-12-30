@@ -94,7 +94,7 @@ function createLiveRoom(data, liveStreamsData){
 
         videoTitle.removeChild(videoViewCount);
         // 在 video-status-live-rate 元素後面添加文字節點
-        videoStatusLiveRate.appendChild(document.createTextNode(`${data.concurrentconcurrent}人正在觀看`));
+        videoStatusLiveRate.appendChild(document.createTextNode(`${data.concurrent}人正在觀看`));
 
         // 建立 video-status-live-background 元素
         const videoStatusLiveBackground = document.createElement('div');
