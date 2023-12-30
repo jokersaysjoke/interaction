@@ -12,7 +12,7 @@ async function ioJoinRoom(){
   await fetch(`/api/room/join`, {
     method:'PUT',
     body:JSON.stringify({
-        host:roomID
+        roomId:roomID
     }),
     headers: new Headers({"Content-type":"application/json"})
   });
@@ -47,16 +47,16 @@ ioJoinRoom();
 getAuth();
 
 // listen room count
-socket.on('roomCount', (count)=>{
+socket.on('roomCount', (concurrent)=>{
   const videoConcrrent=document.querySelector('.video-concurrent');
-  videoConcrrent.innerText=`${count} 人正在觀看`;
+  videoConcrrent.innerText=`${concurrent} 人正在觀看`;
 
 })
 
 // listen view total count
-socket.on('viewCount', (count)=>{
+socket.on('viewCount', (viewCount)=>{
   const videoCount=document.querySelector('.video-count');
-  videoCount.innerText=`觀看次數：${count}次`;
+  videoCount.innerText=`觀看次數：${viewCount}次`;
 })
 
 // listen receive-message
@@ -163,4 +163,13 @@ async function selectMessage(data){
   message.scrollTop = message.scrollHeight;
 
   window.scrollTo(0, document.body.scrollHeight);
+};
+
+
+function leaveRoom(roomID) {
+  socket.emit('leaveRoom', roomID);
+}
+
+window.onbeforeunload = () => {
+  leaveRoom(roomID);
 };

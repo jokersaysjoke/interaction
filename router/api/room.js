@@ -20,7 +20,6 @@ roomAPI.get('/room', async (req, res) => {
             RECORDING.CREATED_AT,
             RECORDING.VISIBILITY,
             RECORDING.VIEWS,
-            RECORDING.CONCURRENT,
             ROOM.STATUS,
             ROOM.ID,
             AVATAR.ADDRESS,
@@ -33,7 +32,16 @@ roomAPI.get('/room', async (req, res) => {
         `;
     
         let [result] = await pool.promise().query(sql, ['public', 'LIVE']);
-        return res.status(200).json({ 'data': result });
+        let liveStreamsData = await redis.getAllLiveStreams();
+        let data = result.map(item1 => {
+            let found = liveStreamsData.find(item2 => item2.roomId === item1.ID);
+            if (found){
+                return {...item1, ...found};
+            } else {
+                return item1;
+            }
+        })
+        return res.status(200).json({ 'data': data });
     
     } catch (error) {
         console.error(error);
@@ -43,7 +51,7 @@ roomAPI.get('/room', async (req, res) => {
 
 roomAPI.post('/room', async (req, res) => {
     try {
-        const name = req.body['name'], userId = req.body['userId'];
+        const userId = req.body['userId'];
         let sql = `
         SELECT ROOM.USER_ID
         FROM ROOM
@@ -68,9 +76,7 @@ roomAPI.post('/room', async (req, res) => {
 
             await pool.promise().query(sql, [roomId, recordingId, userId]);
             await pool.promise().query(sql2, [roomId, userId, recordingId]);
-
-            
-            await redis.hsetCache(name, 0);
+            await redis.hsetCache(roomId, 0);
             return res.status(200).json({ "ok": true, 'roomId':roomId });
         }
     } catch (error) {
@@ -163,7 +169,7 @@ roomAPI.delete('/room', async (req, res) => {
 roomAPI.delete('/room/close', async (req, res) => {
     try {
         const userId = req.body['userId'];
-        const host = req.body['host'];
+        const roomId = req.body['roomId'];
 
         let sql = `
         DELETE ROOM, RECORDING
@@ -174,7 +180,15 @@ roomAPI.delete('/room/close', async (req, res) => {
         `;
         
         await pool.promise().query(sql, [userId, 'Upcoming']);
-        await redis.cleanCache(host);
+        const views = await redis.hgetCache(roomId, 'totalViews');
+
+        let sql2 = `
+        UPDATE RECORDING
+        SET RECORDING.VIEWS = ?
+        WHERE RECORDING.ROOM_ID = ?
+        `
+        await pool.promise().query(sql2, [views, roomId])
+        await redis.cleanCache(roomId);
         
         return res.status(200).json({ "ok": true});
     } catch (error) {
@@ -185,37 +199,26 @@ roomAPI.delete('/room/close', async (req, res) => {
 
 roomAPI.get('/room/join', async (req, res) => {
     try {
-        const host = req.query.host;
+        const roomId = req.query.roomId;
         let sql = `
         SELECT 
-        RECORDING.TITLE,
-        RECORDING.CREATED_AT,
-        RECORDING.VIEWS,
-        RECORDING.CONCURRENT,
-        AVATAR.ADDRESS,
-        MEMBER.NAME,
-        MEMBER.STREAMKEY
-
+            RECORDING.TITLE,
+            RECORDING.CREATED_AT,
+            RECORDING.VIEWS,
+            AVATAR.ADDRESS,
+            MEMBER.NAME,
+            MEMBER.STREAMKEY
         FROM ROOM
-        
-        JOIN 
-        AVATAR
-        ON 
-        ROOM.USER_ID = AVATAR.USER_ID
-        
-        JOIN
-        RECORDING
-        ON
-        ROOM.USER_ID = AVATAR.USER_ID
-
-        JOIN
-        MEMBER
-        ON
-        MEMBER.USER_ID = ROOM.USER_ID
-
-        WHERE ROOM.ID = ?
+        JOIN AVATAR
+        ON ROOM.USER_ID = AVATAR.USER_ID
+        JOIN RECORDING
+        ON ROOM.ID = RECORDING.ROOM_ID
+        JOIN MEMBER
+        ON MEMBER.USER_ID = ROOM.USER_ID
+        WHERE ROOM.ID = ? AND ROOM.STATUS = ?
         `
-        const [record] = await pool.promise().query(sql, [host]);
+        const [record] = await pool.promise().query(sql, [roomId, 'LIVE']);
+        
         return res.status(200).json({ 'data': record })
 
     } catch (error) {
@@ -227,19 +230,9 @@ roomAPI.get('/room/join', async (req, res) => {
 roomAPI.put('/room/join', async (req, res) => {
     try {
         const body = req.body;
-        const host = body['host'];
-        
-        let sql = `
-        UPDATE RECORDING
-        JOIN ROOM
-        ON RECORDING.USER_ID = ROOM.USER_ID
-        SET VIEWS = ?
-        WHERE RECORDING.ROOM_ID = ?
-        `;
+        const roomId = body['roomId'];
 
-        const viewcount = await redis.updateCache(host);
-        await pool.promise().query(sql, [viewcount, host]);
-
+        await redis.updateTotalViews(roomId)
         return res.status(200).json({ "ok": true });
     } catch (error) {
         console.error('error:', error);

@@ -2,7 +2,7 @@ window.onload=joinRoom();
 async function joinRoom(){
     input.focus();
 
-    const response=await fetch(`/api/room/join?host=${roomID}`)
+    const response=await fetch(`/api/room/join?roomId=${roomID}`)
     const data=await response.json();
     const dd=data.data[0];
     

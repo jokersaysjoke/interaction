@@ -261,12 +261,11 @@ window.onload=memberStatus();
 async function registerLiveRoom(){
     const user=await fetch(`/api/user`);
     const result=await user.json();
-    const name=result.data.name, userId = result.data.userId
-    console.log('userId:', userId);
+    const userId = result.data.userId
+    
     const response=await fetch(`/api/room`, {
         method:'POST',
         body:JSON.stringify({
-            name: name,
             userId: userId
         }),
         headers: new Headers({"Content-type":"application/json"})

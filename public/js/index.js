@@ -7,14 +7,15 @@ async function fetchLiveRoom(){
     const response=await fetch(`/api/room`);
     const data=await response.json();
     const dd=data.data;
-    dd.forEach(d => {
-        createLiveRoom(d)
+    
+    dd.forEach( (val) => {
+        createLiveRoom(val)
     })
     
 };
 
 //create live-room
-function createLiveRoom(data){
+function createLiveRoom(data, liveStreamsData){
 
     // 建立 div 元素
     const div = document.createElement('div');
@@ -93,7 +94,7 @@ function createLiveRoom(data){
 
         videoTitle.removeChild(videoViewCount);
         // 在 video-status-live-rate 元素後面添加文字節點
-        videoStatusLiveRate.appendChild(document.createTextNode(`${data.CONCURRENT}人正在觀看`));
+        videoStatusLiveRate.appendChild(document.createTextNode(`${data.concurrent}人正在觀看`));
 
         // 建立 video-status-live-background 元素
         const videoStatusLiveBackground = document.createElement('div');
